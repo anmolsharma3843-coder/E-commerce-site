@@ -127,9 +127,9 @@ const Header = () => {
             </button>
 
             {/* 🛒 CART */}
-            <Link to="/cart" aria-label="Cart" className="relative">
+            <Link to="/cart" aria-label="Cart" className="relative dark:text-gray-200">
               {cartitem.length > 0 && (
-                <span className="absolute -top-2 -right-2 bg-purple-600 text-white text-xs h-5 w-5 flex items-center justify-center rounded-full">
+                <span className="absolute -top-2 -right-2 bg-purple-600 text-white text-xs h-5 w-5 flex items-center justify-center rounded-full ">
                   {cartitem.length}
                 </span>
               )}
@@ -137,7 +137,7 @@ const Header = () => {
             </Link>
 
             {/* 🌙 THEME */}
-            <button onClick={toggleTheme} aria-label="Toggle theme">
+            <button onClick={toggleTheme} aria-label="Toggle theme" className="dark:text-gray-200">
               {darkMode ? <MdLightMode /> : <MdDarkMode />}
             </button>
 

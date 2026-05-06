@@ -1,11 +1,10 @@
-import CategoryStrip from "../. CategoryStrip";
+import React, { Suspense } from "react";
+import CategoryStrip from "../CategoryStrip";
 import Banner from "../Banner";
 import Deals from "../Deals";
 import Hero from "../Hero";
-import Itemspart from "./Itemspart";
-import Products from "./Products";
-
-
+const Itemspart = React.lazy(() => import("./Itemspart"))
+const Products = React.lazy(() => import("./Products"));
 const Home = () => {
   return (
     <div className="bg-gray-50 dark:bg-gray-900">
@@ -13,8 +12,10 @@ const Home = () => {
       <Hero />
       <CategoryStrip />
       <Deals />
-      <Products />     {/* your existing */}
-      <Itemspart />    {/* your existing */}
+     <Suspense fallback={<div>Loading...</div>}>
+  <Products />
+  <Itemspart />
+</Suspense> {/* your existing */}
       <Banner />
 
     </div>

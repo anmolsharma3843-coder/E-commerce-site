@@ -1,4 +1,15 @@
 import { useNavigate } from "react-router-dom";
+import women from '../assets/Images/women.jpeg'
+import men from '../assets/Images/men.jpeg'
+import dresses from '../assets/Images/dresses.jpeg'
+import kurti from '../assets/Images/kurti.jpg'
+import saree from '../assets/Images/saree.jpg'
+import shirts from '../assets/Images/shirts.jpg'
+import shorts from '../assets/Images/Shorts.jpg'
+import NightDress from '../assets/Images/NightDress.jpg'
+import BaggyPants from '../assets/Images/BaggyPants.jpg'
+import Trackpants from '../assets/Images/TrackPants.jpg'
+import formalPants from '../assets/Images/formalPants.jpg'
 
 const CategoryStrip = () => {
   const navigate = useNavigate();
@@ -6,15 +17,15 @@ const CategoryStrip = () => {
   const categories = [
     {
       name: "Women",
-      img: "https://images.unsplash.com/photo-1529139574466-a303027c1d8b",
+      img: women,
     },
     {
       name: "Men",
-      img: "https://images.unsplash.com/photo-1520975916090-3105956dac38",
+      img: men,
     },
     {
       name: "Dresses",
-      img: "https://images.unsplash.com/photo-1585487000160-6ebcfceb0d03",
+      img: dresses,
       link: "/category/Women",
     },
     {
@@ -24,47 +35,47 @@ const CategoryStrip = () => {
     },
     {
       name: "Kurti",
-      img: "https://m.media-amazon.com/images/I/71I53evweVL._SY879_.jpg",
+      img: kurti,
       link: "/category/Women",
     },
      {
       name: "Jeans",
-      img: "https://m.media-amazon.com/images/I/71I53evweVL._SY879_.https://m.media-amazon.com/images/I/71Q7GVOcCRL._AC_UL480_FMwebp_QL65_.jpg",
+      img: kurti,
       link: "/category/Men",
     },
     {
       name: "Saree",
-      img: "https://m.media-amazon.com/images/I/61BpGC5FXeL._SX679_.jpg",
+      img: saree,
       link: "/category/Women",
     },
     {
       name: "Shirt",
-      img: "https://m.media-amazon.com/images/I/61H1HxfTAUL._SY741_.jpg",
+      img: shirts,
       link: "/category/Men",
     },
      {
       name: "Shorts",
-      img: "https://m.media-amazon.com/images/I/71qJNrZhd1L._SY741_.jpg",
+      img: shorts,
       link: "/category/Men",
     },
      {
       name: "Night Dress",
-      img: "https://m.media-amazon.com/images/I/51KxsuYvXGL._SX679_.jpg",
+      img: NightDress,
       link: "/category/Women",
     },
     {
       name: "Baggy Pants",
-      img: "https://m.media-amazon.com/images/I/51ugSQyrOiL._SY879_.jpg",
+      img: BaggyPants,
       link: "/category/Women",
     },
     {
       name: "Track Pants",
-      img: "https://m.media-amazon.com/images/I/410AMn8KAUL._SY741_.jpg",
+      img: Trackpants,
       link: "/category/Men",
     },
     {
       name: "Formal Pants",
-      img: "https://m.media-amazon.com/images/I/5152ghnzPJL._SX679_.jpg",
+      img: formalPants,
       link: "/category/Men",
     },
   ];

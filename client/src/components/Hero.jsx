@@ -1,10 +1,10 @@
-import banner from '../assets/Images/banner.jpeg'
+
 
 const Hero = () => {
   return (
     <section className="relative w-full h-[60vh] md:h-[75vh] overflow-hidden">
       <img
-        src={banner}
+        src="/banner.jpeg"
         className="w-full h-full object-cover"
         alt="Banner"
         loading='eager'

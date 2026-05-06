@@ -4,7 +4,7 @@ import Footer from './components/footer'
 import { Outlet } from 'react-router-dom'
 import ScrollToTop from './components/Scroll'
 import { SearchProvider } from './context/SearchContext'
-
+import { Suspense } from 'react'
 
 function App() {
     
@@ -13,7 +13,9 @@ function App() {
 <SearchProvider>
     <ScrollToTop/>
      <Header />
-     <Outlet/>
+     <Suspense fallback={<div>Loading...</div>}>
+        <Outlet />   {/* lazy pages */}
+      </Suspense> 
      <Footer />
 </SearchProvider>
      
