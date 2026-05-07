@@ -18,6 +18,24 @@ const Base_url= 'http://localhost:5100'
         throw error;
     }
 }
+ export const fetchAllproduct=async()=>{
+    try{
+        const response=await fetch(`${Base_url}/products/all`,{
+            method:'GET',
+            headers:{
+                'Content-Type':'application/json'
+            }
+        })
+        if(!response.ok){
+            throw new Error(`Error:${response.status}`)
+        }
+        return await response.json();
+        
+    }catch(error){
+        console.log("API call Failed",error)
+        throw error;
+    }
+}
 export const fetchCategory=async(endpoint)=>{
     try{
         const response=await fetch(`${Base_url}/${endpoint}`,{

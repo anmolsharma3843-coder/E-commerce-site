@@ -29,6 +29,7 @@ import CategoryItems from './Pages/CategoryItems.jsx';
 import Home from './components/Homepage/Home.jsx';
 import Wishlist from './Pages/Wishlist.jsx';
 import MyOrders from './Pages/MyOrders.jsx';
+import Shop from './Pages/shop.jsx';
 const router = createBrowserRouter(
   [
     {
@@ -49,6 +50,7 @@ const router = createBrowserRouter(
      {
       path:"/orders", element:<MyOrders/>
     },
+    {path:"/shop" ,element:<Shop />}
 
       ]
     },

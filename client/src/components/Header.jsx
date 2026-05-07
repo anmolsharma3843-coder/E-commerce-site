@@ -52,12 +52,17 @@ const Header = () => {
     localStorage.setItem("theme", next ? "dark" : "light");
   };
 
-  const handleSearch = (e) => {
-    e.preventDefault();
-    if (searchQuery.trim()) {
-      navigate(`/shop?search=${searchQuery}`);
-    }
-  };
+ const handleSearch = (e) => {
+  e.preventDefault();
+
+  const query = searchQuery.trim();
+
+  if (!query) return;
+
+  navigate(`/shop?search=${encodeURIComponent(query)}`);
+
+  setSearchQuery("");
+};
 
   return (
     <>
@@ -68,7 +73,7 @@ const Header = () => {
 
           {/* LOGO */}
           <Link to="/" aria-label="Go to homepage" className="flex items-center gap-2">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-500 text-white flex items-center justify-center font-bold">
+            <div className="w-10 h-10 rounded-xl bg-linear-to-r from-purple-600 to-indigo-500 text-white flex items-center justify-center font-bold">
               S
             </div>
             <span className="text-xl font-bold text-gray-800 dark:text-white">
@@ -81,7 +86,11 @@ const Header = () => {
             {["Home", "Women", "Men", "Shop"].map((item) => (
               <NavLink
                 key={item}
-                to={item === "Home" ? "/" : `/category/${item}`}
+                to={ item === "Home"
+          ? "/"
+          : item === "Shop"
+          ? "/shop"
+          : `/category/${item}`}
                 className={({ isActive }) =>
                   `pb-1 border-b-2 ${
                     isActive

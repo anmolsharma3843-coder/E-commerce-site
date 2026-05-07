@@ -6,12 +6,14 @@ import { toast } from "react-toastify";
 import Cookies from "js-cookie";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
 import { getWishlist, toggleWishlist } from "../services/WishlistService";
+import CategorySkeleton from "../components/Skeleton/CategorySkeleton";
 const CategoryItems = () => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
   const [wishlist, setWishlist] = useState([]);
+  const [totalPages, setTotalPages] = useState(1);
   const token = Cookies.get("jwt");
-   
+
   const { category } = useParams();
   const navigate = useNavigate();
 
@@ -22,33 +24,33 @@ const CategoryItems = () => {
     maxPrice: "",
     page: 1,
   });
-     useEffect(() => {
-       const fetchWishlist = async () => {
-         try {
-   
-           const data = await getWishlist();
-           setWishlist(data);
-         } catch (err) {
-           console.log("Wishlist fetch error:", err);
-         }
-       };
-   
-       fetchWishlist();
-     }, []);
-   
-     // ✅ Toggle Wishlist (Backend)
-     const handleWishlist = async (id, e) => {
-       e.stopPropagation();
-   
-       try {
-   
-         const updated = await toggleWishlist(id);
-         setWishlist(updated);
-       } catch (err) {
-         console.log("Wishlist toggle error:", err);
-       }
-     };
-   
+  useEffect(() => {
+    const fetchWishlist = async () => {
+      try {
+
+        const data = await getWishlist();
+        setWishlist(data);
+      } catch (err) {
+        console.log("Wishlist fetch error:", err);
+      }
+    };
+
+    fetchWishlist();
+  }, []);
+
+  // ✅ Toggle Wishlist (Backend)
+  const handleWishlist = async (id, e) => {
+    e.stopPropagation();
+
+    try {
+
+      const updated = await toggleWishlist(id);
+      setWishlist(updated);
+    } catch (err) {
+      console.log("Wishlist toggle error:", err);
+    }
+  };
+
   // 🔥 FETCH
   const fetchItems = async (currentFilters) => {
     setLoading(true);
@@ -56,8 +58,8 @@ const CategoryItems = () => {
       const query = new URLSearchParams(currentFilters).toString();
 
       const data = await getProducts(currentFilters);
-
       setItems(data.products || []);
+      setTotalPages(data.pages || 1);
     } catch (error) {
       console.error("Fetch error:", error);
     } finally {
@@ -104,14 +106,14 @@ const CategoryItems = () => {
   const AddToCart = async (item) => {
     if (!token) { navigate("/login"); return; } try {
       // call backend API with full product object 
-      const response = await addToCart(item); 
-      if (response.message === "Item already in cart")
-         { toast.success("Already in cart"); 
-         } else { toast.success("Added to cart"); }
-    } catch (error) { 
+      const response = await addToCart(item);
+      if (response.message === "Item already in cart") {
+        toast.success("Already in cart");
+      } else { toast.success("Added to cart"); }
+    } catch (error) {
       console.log("fetching error", error);
       toast.error("Failed to add to cart");
-     }
+    }
   };
   return (
     <div className="bg-gray-100 dark:bg-gray-900 min-h-screen">
@@ -166,121 +168,135 @@ const CategoryItems = () => {
         <div className="col-span-4">
 
           {/* LOADING */}
-          {loading ? (
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
-              {Array.from({ length: 8 }).map((_, i) => (
-                <div
-                  key={i}
-                  className="animate-pulse bg-white dark:bg-gray-800 rounded-xl h-64"
-                />
-              ))}
-            </div>
-          ) : (
+          {loading ? <CategorySkeleton /> : (
 
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
 
               {items.map((item) => {
                 const isWishlisted = wishlist.some(
-            (i) => i._id === item._id
-          );
-          return(
-                <div
-                  key={item._id}
-                  onClick={() => navigate(`/product/${item._id}`)}
-                  className="group bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition cursor-pointer  flex flex-col h-full"
-                >
+                  (i) => i._id === item._id
+                );
+                return (
+                  <div
+                    key={item._id}
+                    onClick={() => navigate(`/product/${item._id}`)}
+                    className="group bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition cursor-pointer  flex flex-col h-full"
+                  >
 
-                  {/* IMAGE */}
-                  <div className="relative h-48 bg-gray-100 dark:bg-gray-700 flex items-center justify-center overflow-hidden">
-                    <img
-                      src={item.imageUrl}
-                      alt={item.title}
-                      className="max-h-full max-w-full object-contain group-hover:scale-105 transition duration-300"
-                    />
+                    {/* IMAGE */}
+                    <div className="relative h-48 bg-gray-100 dark:bg-gray-700 flex items-center justify-center overflow-hidden">
+                      <img
+                        src={item.imageUrl}
+                        alt={item.title}
+                        className="max-h-full max-w-full object-contain group-hover:scale-105 transition duration-300"
+                      />
 
-                   <button
-                                     onClick={(e) => handleWishlist(item._id, e)}
-                                     className={`absolute top-3 right-3 p-2 rounded-full shadow-md transition
-                                     ${
-                                       isWishlisted
-                                         ? "bg-red-500 text-white scale-110"
-                                         : "bg-white text-gray-700 hover:bg-red-100"
-                                     }`}
-                                   >
-                                     {isWishlisted ? (
-                                       <FaHeart size={14} />
-                                     ) : (
-                                       <FaRegHeart size={14} />
-                                     )}
-                                   </button>
-                  </div>
-
-                  {/* DETAILS */}
-                  <div className="p-3 space-y-2">
-                    <p className="text-sm text-gray-800 dark:text-gray-200 line-clamp-1 ">
-                      {item.title}
-                    </p>
-
-                    <div className="flex items-center gap-2">
-                      <span className="bg-green-600 text-white text-xs px-2 py-0.5 rounded">
-                        {item.rating || 4.2} ★
-                      </span>
+                      <button
+                        onClick={(e) => handleWishlist(item._id, e)}
+                        className={`absolute top-3 right-3 p-2 rounded-full shadow-md transition
+                                     ${isWishlisted
+                            ? "bg-red-500 text-white scale-110"
+                            : "bg-white text-gray-700 hover:bg-red-100"
+                          }`}
+                      >
+                        {isWishlisted ? (
+                          <FaHeart size={14} />
+                        ) : (
+                          <FaRegHeart size={14} />
+                        )}
+                      </button>
                     </div>
 
-                    <div>
-                      <span className="text-lg font-bold text-gray-900 dark:text-white">
-                        ₹{item.price}
-                      </span>
-                      <span className="text-sm text-gray-400 line-through ml-2">
-                        ₹{item.price + 500}
-                      </span>
-                    </div>
+                    {/* DETAILS */}
+                    <div className="p-3 space-y-2">
+                      <p className="text-sm text-gray-800 dark:text-gray-200 line-clamp-1 ">
+                        {item.title}
+                      </p>
 
-                    <button
-                      onClick={(e) => { e.stopPropagation(); AddToCart(item) }}
-                      className="w-full mt-2 bg-yellow-400 hover:bg-yellow-500 text-sm py-2 rounded-md font-medium hover:cursor-pointer"
-                    >
-                      Add to Cart
-                    </button>
+                      <div className="flex items-center gap-2">
+                        <span className="bg-green-600 text-white text-xs px-2 py-0.5 rounded">
+                          {item.rating || 4.2} ★
+                        </span>
+                      </div>
+
+                      <div>
+                        <span className="text-lg font-bold text-gray-900 dark:text-white">
+                          ₹{item.price}
+                        </span>
+                        <span className="text-sm text-gray-400 line-through ml-2">
+                          ₹{item.price + 500}
+                        </span>
+                      </div>
+
+                      <button
+                        onClick={(e) => { e.stopPropagation(); AddToCart(item) }}
+                        className="w-full mt-2 bg-yellow-400 hover:bg-yellow-500 text-sm py-2 rounded-md font-medium hover:cursor-pointer"
+                      >
+                        Add to Cart
+                      </button>
+                    </div>
                   </div>
-                </div>
-          )
-})}
+                )
+              })}
 
             </div>
           )}
 
           {/* PAGINATION */}
-          <div className="flex justify-center items-center gap-4 mt-10">
-            <button
-              disabled={filters.page === 1}
-              onClick={() =>
-                setFilters((prev) => ({
-                  ...prev,
-                  page: prev.page - 1,
-                }))
-              }
-              className="px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded disabled:opacity-50"
-            >
-              Prev
-            </button>
+          <div className="flex justify-center items-center gap-4 mt-12 flex-wrap">
 
-            <span className="text-gray-700 dark:text-gray-300">
-              Page {filters.page}
-            </span>
+  {/* PREV */}
+  <button
+    disabled={filters.page === 1}
+    onClick={() =>
+      setFilters((prev) => ({
+        ...prev,
+        page: prev.page - 1,
+      }))
+    }
+    className="
+      px-5 py-2.5 rounded-xl font-medium transition-all duration-200
+      bg-white text-gray-800 border border-gray-300 shadow-sm
+      hover:bg-gray-100 hover:shadow
+      dark:bg-gray-800 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700
+      disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-transparent
+    "
+  >
+    ← Prev
+  </button>
 
-            <button
-              onClick={() =>
-                setFilters((prev) => ({
-                  ...prev,
-                  page: prev.page + 1,
-                }))
-              }
-              className="px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded"
-            >
-              Next
-            </button>
-          </div>
+  {/* PAGE INFO */}
+  <div
+    className="
+      px-5 py-2.5 rounded-xl font-semibold shadow-sm
+      bg-gradient-to-r from-purple-600 to-indigo-600
+      text-white
+    "
+  >
+    Page {filters.page} of {totalPages}
+  </div>
+
+  {/* NEXT */}
+  <button
+    disabled={filters.page >= totalPages}
+    onClick={() =>
+      setFilters((prev) => ({
+        ...prev,
+        page: prev.page + 1,
+      }))
+    }
+    className="
+      px-5 py-2.5 rounded-xl font-medium transition-all duration-200
+      bg-white text-gray-800 border border-gray-300 shadow-sm
+      hover:bg-gray-100 hover:shadow
+      dark:bg-gray-800 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700
+      disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-transparent
+    "
+  >
+    Next →
+  </button>
+
+</div>
 
         </div>
       </div>

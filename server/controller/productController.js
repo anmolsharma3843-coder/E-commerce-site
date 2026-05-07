@@ -1,16 +1,30 @@
 import { items } from "../Model/UserModelSchema.js";
 
-// GET ALL
+// GET list
 export const getProductslist = async (req, res) => {
   const data = await items.find({}).limit(6);
   res.json(data);
 };
+//GET ALL PRODUCTS
+export const getAllProducts = async (req, res) => {
+  try {
+    const products = await items.find({});
 
+    res.status(200).json(products);
+  } catch (error) {
+    console.log(error);
+
+    res.status(500).json({
+      message: "Failed to fetch products",
+    });
+  }
+};
 // GET BY ID
 export const getProductDetails = async (req, res) => {
   const product = await items.findById(req.params.id);
   res.json(product);
 };
+
 
 // 🔥 ADVANCED GET PRODUCTS
 export const getProducts = async (req, res) => {
