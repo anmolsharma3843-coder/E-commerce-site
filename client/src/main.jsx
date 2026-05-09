@@ -8,7 +8,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import Cart from './Pages/Cart/Cart.jsx';
 import Main from './Pages/Main.jsx';
 import ItemDetails from './Pages/ItemDetails.jsx';
-import Emptycart from './Pages/Emptycart.jsx'
+import Emptycart from './Pages/Cart/Emptycart.jsx'
 import { ToastContainer } from 'react-toastify';
 import Login from './components/Login.jsx'
 import SignUp from './components/Signup.jsx';

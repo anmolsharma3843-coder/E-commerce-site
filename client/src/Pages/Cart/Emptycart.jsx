@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import Header from '../components/Header';
-import cart from '../assets/cart.png'
+import Header from '../../components/Header';
+import cart from '../../assets/Images/cart.webp'
 const Emptycart = () => {
   const navigate=useNavigate();
   const shopping=()=>{

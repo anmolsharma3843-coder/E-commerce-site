@@ -8,7 +8,7 @@ import CartSummary from "./CartSummary";
 
 import { cartActions } from "../../store/cartSlice";
 import { getCart, removeFromCart } from "../../services/Cartitems";
-import Emptycart from "../Emptycart";
+import Emptycart from "../Cart/Emptycart";
 
 const Cart = () => {
   const dispatch = useDispatch();

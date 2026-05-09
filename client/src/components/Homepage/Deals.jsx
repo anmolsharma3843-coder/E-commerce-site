@@ -65,6 +65,9 @@ const Deals = () => {
                 src={item.image}
                 alt={item.title}
                 className="w-full h-44 object-cover group-hover:scale-110 transition duration-500"
+                     width="72"
+  height="72"
+  loading="lazy"
               />
             </div>
 

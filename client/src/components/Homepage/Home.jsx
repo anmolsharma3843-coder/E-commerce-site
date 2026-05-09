@@ -1,5 +1,5 @@
 import React, { Suspense } from "react";
-import CategoryStrip from "./CategoryStrip";
+const CategoryStrip =React.lazy(()=>import( "./CategoryStrip"));
 import Banner from "./Banner";
 import Deals from "./Deals";
 import Hero from "./Hero";

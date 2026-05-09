@@ -71,26 +71,14 @@ const Products = () => {
               dark:shadow-gray-800
               hover:shadow-2xl
               hover:-translate-y-2
-              transition-all
+              transition-transform
               duration-300
               cursor-pointer
             "
           >
             {/* IMAGE */}
             <div className="aspect-3/4 overflow-hidden">
-              <img
-                loading="lazy"
-                src={cat.img}
-                alt={cat.title}
-                className="
-                  w-full
-                  h-full
-                  object-cover
-                  group-hover:scale-110
-                  transition-transform
-                  duration-500
-                "
-              />
+              <img src={cat.img} alt={cat.title} loading="lazy" decoding="async" width="400" height="533" className=" w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 " />
             </div>
 
             {/* GRADIENT OVERLAY */}

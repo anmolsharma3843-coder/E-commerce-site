@@ -114,7 +114,7 @@ const Itemspart = () => {
           </div>
         </div>
 
-        <div className="flex gap-6 overflow-x-auto scrollbar-hide">
+        <div className="flex gap-6 overflow-x-auto scrollbar-hide min-h-125">
           {Array.from({ length: 6 }).map((_, i) => (
             <ProductSkeleton key={i} />
           ))}
@@ -188,7 +188,7 @@ const Itemspart = () => {
               onClick={() => handleClick(item._id)}
               role="button"
               tabIndex={0}
-              className="min-w-55 max-w-55 bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-md hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 cursor-pointer group"
+              className="min-w-55 max-w-55 bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-md hover:shadow-2xl hover:-translate-y-1 transition-transform duration-300 cursor-pointer group"
             >
               {/* IMAGE */}
               <div className="relative h-60 overflow-hidden">
@@ -212,7 +212,7 @@ const Itemspart = () => {
                       ? "Remove from wishlist"
                       : "Add to wishlist"
                   }
-                  className={`absolute top-3 right-3 p-2 rounded-full shadow-md transition-all duration-300
+                  className={`absolute top-3 right-3 p-2 rounded-full shadow-md transition-transform duration-300
                     ${
                       isWishlisted
                         ? "bg-red-600 text-white scale-110"
