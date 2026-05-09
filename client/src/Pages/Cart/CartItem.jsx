@@ -20,7 +20,7 @@ const CartItem = ({ item, onRemove }) => {
   };
 
   return (
-    <div className="bg-white dark:bg-gray-900 p-4 rounded-xl shadow-sm dark:shadow-none flex gap-4 border border-transparent dark:border-gray-700 transition">
+    <div className="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-sm dark:shadow-none flex gap-4 border border-transparent dark:border-gray-700 transition">
 
       {/* IMAGE */}
       <img
@@ -69,7 +69,7 @@ const CartItem = ({ item, onRemove }) => {
           {/* REMOVE */}
           <button
             onClick={() => onRemove(item.productId, item.title)}
-            className="flex items-center gap-1 text-red-500 hover:text-red-600 dark:hover:text-red-400"
+            className="flex items-center gap-1 text-red-500 hover:text-red-600 dark:hover:text-red-100"
              aria-label="Remove item"
           >
             <MdDeleteOutline /> Remove
@@ -83,7 +83,7 @@ const CartItem = ({ item, onRemove }) => {
           ₹{item.price * item.qty}
         </p>
 
-        <p className="text-sm text-gray-400 dark:text-gray-500 line-through">
+        <p className="text-sm text-gray-400 dark:text-gray-300 line-through">
           ₹{item.price * item.qty + 200}
         </p>
       </div>

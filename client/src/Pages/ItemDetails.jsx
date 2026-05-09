@@ -10,8 +10,7 @@ import { addToCart } from "../services/Cartitems";
 const ItemDetails = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [items, setItems] = useState({});
-  const [relatedItems, setRelatedItems] = useState([]);
+  const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const token = Cookies.get("jwt");
   const { id } = useParams();
@@ -20,9 +19,7 @@ const ItemDetails = () => {
     const productslist = async () => {
       try {
         const data = await getProductDetails(id);
-        // const relatedData = await getrelatedProduct(id);
         setItems(data);
-        setRelatedItems(relatedData);
       } catch (error) {
         console.log("fetching error", error);
       } finally {
@@ -182,51 +179,6 @@ const ItemDetails = () => {
           </div>
         </div>
       </div>
-
-      {/* RELATED PRODUCTS */}
-      {/* <div className="max-w-7xl mx-auto mt-16">
-        <h3 className="text-2xl font-bold mb-6 text-gray-800 dark:text-white">
-          Related Products
-        </h3>
-
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-          {relatedItems.map((item) => (
-            <div
-              key={item._id}
-              onClick={() => navigate(`/product/${item._id}`)}
-              className="group bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition cursor-pointer"
-            >
-              <div className="relative w-full h-48 bg-gray-100 dark:bg-gray-700 flex items-center justify-center">
-                <img
-                  src={item.imageUrl}
-                  alt={item.title}
-                  className="max-h-full max-w-full object-contain group-hover:scale-105 transition"
-                />
-
-                <span className="absolute top-2 left-2 bg-green-600 text-white text-xs px-2 py-1 rounded-md">
-                  {item.rating} ★
-                </span>
-              </div>
-
-              <div className="p-3">
-                <p className="text-sm font-medium line-clamp-2 dark:text-gray-200">
-                  {item.title}
-                </p>
-
-                <div className="flex justify-between mt-2">
-                  <p className="font-semibold dark:text-white">
-                    ₹{item.price}
-                  </p>
-
-                  <span className="text-xs text-green-600">
-                    In Stock
-                  </span>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div> */}
 
       {/* 🔥 MOBILE STICKY BAR */}
       <div className="fixed bottom-0 left-0 w-full bg-white dark:bg-gray-800 border-t p-3 flex gap-3 lg:hidden z-50">

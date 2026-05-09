@@ -1,8 +1,8 @@
 import React, { Suspense } from "react";
-import CategoryStrip from "../CategoryStrip";
-import Banner from "../Banner";
-import Deals from "../Deals";
-import Hero from "../Hero";
+import CategoryStrip from "./CategoryStrip";
+import Banner from "./Banner";
+import Deals from "./Deals";
+import Hero from "./Hero";
 const Itemspart = React.lazy(() => import("./Itemspart"))
 const Products = React.lazy(() => import("./Products"));
 const Home = () => {

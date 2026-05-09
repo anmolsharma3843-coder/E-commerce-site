@@ -1,6 +1,8 @@
+import { useNavigate } from "react-router-dom";
 
 
 const Hero = () => {
+  const navigate = useNavigate();
   return (
     <section className="relative w-full h-[60vh] md:h-[75vh] overflow-hidden">
       <img
@@ -8,7 +10,7 @@ const Hero = () => {
         className="w-full h-full object-cover"
         alt="Banner"
         loading='eager'
-         fetchpriority="high"
+         fetchPriority="high"
       />
 
       <div className="absolute inset-0 bg-black/40 flex flex-col justify-center px-10">
@@ -19,7 +21,7 @@ const Hero = () => {
           Up to 70% OFF on trending styles
         </p>
 
-        <button className="mt-6 w-fit px-6 py-3 bg-yellow-400 text-black rounded-lg font-semibold hover:bg-yellow-500 transition" aria-label='Shop Now'>
+        <button className="mt-6 w-fit px-6 py-3 bg-yellow-400 text-black rounded-lg font-semibold hover:bg-yellow-500 transition hover:cursor-pointer" aria-label='Shop Now' onClick={()=>navigate("/shop")}>
           Shop Now
         </button>
       </div>
