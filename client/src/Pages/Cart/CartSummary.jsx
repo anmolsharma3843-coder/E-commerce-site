@@ -5,44 +5,97 @@ const CartSummary = ({ cartItems, totalPrice }) => {
   const navigate = useNavigate();
 
   return (
-    <div className="bg-white dark:bg-gray-900 p-5 rounded-xl shadow dark:shadow-none h-fit sticky top-20 border border-transparent dark:border-gray-700 transition">
-
-      <h3 className="text-lg font-semibold mb-4 text-gray-800 dark:text-gray-100">
+    <div
+      className="
+        bg-white dark:bg-gray-900
+        p-5 rounded-2xl
+        shadow-sm dark:shadow-none
+        h-fit sticky top-20
+        border border-gray-200 dark:border-gray-700
+        transition-colors
+      "
+    >
+      <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-5">
         Price Details
       </h3>
 
-      <div className="flex justify-between text-gray-600 dark:text-gray-400 mb-2">
-        <span>Price ({cartItems.length} items)</span>
-        <span>₹{totalPrice}</span>
+      {/* PRICE ROWS */}
+      <div className="space-y-3 text-sm">
+
+        <div className="flex justify-between text-gray-700 dark:text-gray-300">
+          <span>Price ({cartItems.length} items)</span>
+          <span className="font-medium text-gray-900 dark:text-white">
+            ₹{totalPrice}
+          </span>
+        </div>
+
+        <div className="flex justify-between text-green-700 dark:text-green-400">
+          <span>Discount</span>
+          <span className="font-medium">- ₹200</span>
+        </div>
+
+        <div className="flex justify-between text-gray-700 dark:text-gray-300">
+          <span>Delivery Charges</span>
+          <span className="font-medium text-green-700 dark:text-green-400">
+            FREE
+          </span>
+        </div>
       </div>
 
-      <div className="flex justify-between text-green-600 dark:text-green-400 mb-2">
-        <span>Discount</span>
-        <span>- ₹200</span>
+      {/* DIVIDER */}
+      <div className="border-t border-gray-200 dark:border-gray-700 my-5" />
+
+      {/* TOTAL */}
+      <div className="flex justify-between items-center">
+        <span className="text-lg font-bold text-gray-900 dark:text-white">
+          Total Amount
+        </span>
+
+        <span className="text-xl font-bold text-purple-700 dark:text-purple-400">
+          ₹{totalPrice - 200}
+        </span>
       </div>
 
-      <div className="flex justify-between text-gray-700 dark:text-gray-300 mb-2">
-        <span>Delivery</span>
-        <span className="text-green-600 dark:text-green-400">FREE</span>
-      </div>
+      {/* SAVING */}
+      <p className="mt-3 text-sm font-medium text-green-700 dark:text-green-400">
+        You will save ₹200 on this order
+      </p>
 
-      <hr className="my-3 border-gray-200 dark:border-gray-700" />
-
-      <div className="flex justify-between font-bold text-lg text-gray-900 dark:text-white">
-        <span>Total</span>
-        <span>₹{totalPrice - 200}</span>
-      </div>
-
+      {/* BUTTON */}
       <button
         onClick={() => navigate("/payment")}
-        className="w-full mt-5 bg-purple-700 hover:bg-purple-600 dark:bg-purple-600 dark:hover:bg-purple-500 text-white py-3 rounded-lg font-semibold transition hover:cursor-pointer"
+        className="
+          w-full mt-6
+          bg-purple-700 hover:bg-purple-800
+          dark:bg-purple-600 dark:hover:bg-purple-500
+          text-white
+          py-3 rounded-xl
+          font-semibold
+          transition-colors
+          focus:outline-none
+          focus:ring-2 focus:ring-purple-500 focus:ring-offset-2
+          dark:focus:ring-offset-gray-900
+          hover:cursor-pointer
+        "
+        aria-label="Proceed to checkout"
       >
         Proceed to Checkout
       </button>
 
-      <p className="text-xs text-gray-500 dark:text-gray-400 mt-4">
-        🔒 Safe and Secure Payments. Easy returns.
-      </p>
+      {/* FOOTER TEXT */}
+      <div
+        className="
+          mt-5
+          rounded-lg
+          bg-gray-100 dark:bg-gray-800
+          px-3 py-2
+          text-xs
+          text-gray-700 dark:text-gray-300
+          border border-gray-200 dark:border-gray-700
+        "
+      >
+        🔒 Safe & Secure Payments with easy returns and fast refunds.
+      </div>
     </div>
   );
 };

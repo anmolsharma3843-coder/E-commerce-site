@@ -8,9 +8,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../store/authSlice";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { cartActions } from "../store/cartSlice";
 
 const Header = () => {
-  const cartitem = useSelector((state) => state.cart) || [];
+  const cartitem = useSelector((state) => state.cart);
   const user = useSelector((store) => store.auth.user);
 
   const navigate = useNavigate();
@@ -23,6 +24,7 @@ const Header = () => {
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme");
     const isDark = savedTheme === "dark";
+
     setDarkMode(isDark);
     document.documentElement.classList.toggle("dark", isDark);
   }, []);
@@ -35,9 +37,13 @@ const Header = () => {
       });
 
       const data = await res.json();
+
       if (res.ok) {
+        dispatch(cartActions.clearCart());
         dispatch(logout());
+
         toast.success(data.message);
+
         navigate("/login");
       }
     } catch (err) {
@@ -47,36 +53,40 @@ const Header = () => {
 
   const toggleTheme = () => {
     const next = !darkMode;
+
     setDarkMode(next);
+
     document.documentElement.classList.toggle("dark", next);
+
     localStorage.setItem("theme", next ? "dark" : "light");
   };
 
- const handleSearch = (e) => {
-  e.preventDefault();
+  const handleSearch = (e) => {
+    e.preventDefault();
 
-  const query = searchQuery.trim();
+    const query = searchQuery.trim();
 
-  if (!query) return;
+    if (!query) return;
 
-  navigate(`/shop?search=${encodeURIComponent(query)}`);
+    navigate(`/shop?search=${encodeURIComponent(query)}`);
 
-  setSearchQuery("");
-};
+    setSearchQuery("");
+  };
 
   return (
     <>
       {/* HEADER */}
-      <header className="sticky top-0 z-40 bg-white/90 dark:bg-gray-900/90 backdrop-blur border-b border-gray-200 dark:border-gray-800">
+      <header className="sticky top-0 z-40 bg-white dark:bg-gray-950 border-b border-gray-300 dark:border-gray-800 shadow-sm">
 
         <div className="flex items-center justify-between px-4 md:px-8 py-3">
 
           {/* LOGO */}
-          <Link to="/" aria-label="Go to homepage" className="flex items-center gap-2">
-            <div className="w-10 h-10 rounded-xl bg-linear-to-r from-purple-600 to-indigo-500 text-white flex items-center justify-center font-bold">
+          <Link to="/" aria-label="Go to homepage" className="flex items-center gap-2" >
+            <div className="w-10 h-10 rounded-xl bg-linear-to-r from-purple-700 to-indigo-600 text-white flex items-center justify-center font-bold shadow-md">
               S
             </div>
-            <span className="text-xl font-bold text-gray-800 dark:text-white">
+
+            <span className="text-xl font-bold text-gray-900 dark:text-white">
               ShopX
             </span>
           </Link>
@@ -86,16 +96,18 @@ const Header = () => {
             {["Home", "Women", "Men", "Shop"].map((item) => (
               <NavLink
                 key={item}
-                to={ item === "Home"
-          ? "/"
-          : item === "Shop"
-          ? "/shop"
-          : `/category/${item}`}
+                to={
+                  item === "Home"
+                    ? "/"
+                    : item === "Shop"
+                    ? "/shop"
+                    : `/category/${item}`
+                }
                 className={({ isActive }) =>
-                  `pb-1 border-b-2 ${
+                  `pb-1 border-b-2 transition-colors duration-200 ${
                     isActive
-                      ? "border-purple-600 text-purple-600"
-                      : "border-transparent text-gray-700 dark:text-gray-300 hover:text-purple-600"
+                      ? "border-purple-700 text-purple-700 dark:text-purple-400"
+                      : "border-transparent text-gray-800 dark:text-gray-200 hover:text-purple-700 dark:hover:text-purple-400"
                   }`
                 }
               >
@@ -110,20 +122,15 @@ const Header = () => {
             {/* SEARCH */}
             <form
               onSubmit={handleSearch}
-              className="hidden md:flex items-center bg-gray-100 dark:bg-gray-800 px-4 py-2 rounded-full focus-within:ring-2 focus-within:ring-purple-500"
+              className="hidden md:flex items-center bg-gray-200 dark:bg-gray-800 px-4 py-2 rounded-full focus-within:ring-2 focus-within:ring-purple-600 transition"
             >
               <label htmlFor="search" className="sr-only">
                 Search products
               </label>
-              <FiSearch className="mr-2 text-gray-500" />
-              <input
-                id="search"
-                type="text"
-                placeholder="Search..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="bg-transparent outline-none text-sm w-40 text-gray-700 dark:text-white"
-              />
+
+              <FiSearch className="mr-2 text-gray-700 dark:text-gray-300" />
+
+              <input id="search" type="text" placeholder="Search products..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="bg-transparent outline-none text-sm w-40 text-gray-900 dark:text-white placeholder:text-gray-600 dark:placeholder:text-gray-400" />
             </form>
 
             {/* ❤️ Wishlist */}
@@ -132,22 +139,38 @@ const Header = () => {
               aria-label="Wishlist"
               className="hidden sm:block"
             >
-              <FaHeart size={20} className="text-gray-700 dark:text-gray-300 hover:text-red-500" />
+              <FaHeart
+                size={20}
+                className="text-gray-800 dark:text-gray-200 hover:text-red-500 transition"
+              />
             </button>
 
             {/* 🛒 CART */}
-            <Link to="/cart" aria-label="Cart" className="relative dark:text-gray-200">
+            <Link
+              to="/cart"
+              aria-label="Cart"
+              className="relative text-gray-800 dark:text-gray-200"
+            >
               {cartitem.length > 0 && (
-                <span className="absolute -top-2 -right-2 bg-purple-600 text-white text-xs h-5 w-5 flex items-center justify-center rounded-full ">
+                <span className="absolute -top-2 -right-2 bg-purple-700 text-white text-xs h-5 w-5 flex items-center justify-center rounded-full shadow">
                   {cartitem.length}
                 </span>
               )}
-              <IoCartOutline size={22} />
+
+              <IoCartOutline size={23} />
             </Link>
 
             {/* 🌙 THEME */}
-            <button onClick={toggleTheme} aria-label="Toggle theme" className="dark:text-gray-200">
-              {darkMode ? <MdLightMode /> : <MdDarkMode />}
+            <button
+              onClick={toggleTheme}
+              aria-label="Toggle theme"
+              className="text-gray-800 dark:text-gray-200 hover:text-purple-700 dark:hover:text-purple-400 transition"
+            >
+              {darkMode ? (
+                <MdLightMode size={22} />
+              ) : (
+                <MdDarkMode size={22} />
+              )}
             </button>
 
             {/* USER */}
@@ -155,53 +178,81 @@ const Header = () => {
               <button
                 onClick={() => setMobileMenuOpen(true)}
                 aria-label="Open profile menu"
-                className="flex items-center gap-2 px-2 py-1 rounded-full bg-gray-100 dark:bg-gray-800"
-              >
-                <div className="w-8 h-8 rounded-full bg-purple-500 text-white flex items-center justify-center">
+                className="flex items-center gap-2 sm:px-2 sm:py-1 rounded-full bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700 transition" >
+                <div className="w-8 h-8 rounded-full bg-purple-700 text-white flex items-center justify-center font-semibold">
                   {user.username?.charAt(0).toUpperCase()}
                 </div>
-                <span className="hidden sm:block text-sm text-gray-700 dark:text-gray-200">
+
+                <span className="hidden sm:block text-sm text-gray-800 dark:text-gray-200">
                   {user.username}
                 </span>
               </button>
             ) : (
-              <Link to="/signin" aria-label="Login">
-                <CiUser size={20} />
+              <Link
+                to="/signin"
+                aria-label="Login"
+                className="text-gray-800 dark:text-gray-200 hover:text-purple-700 dark:hover:text-purple-400 transition"
+              >
+                <CiUser size={22} />
               </Link>
             )}
           </div>
         </div>
 
         {/* MOBILE NAV */}
-        <div className="md:hidden flex justify-around py-3 border-t text-sm text-gray-700 dark:text-gray-300">
+        <div className="md:hidden flex justify-around py-3 border-t border-gray-300 dark:border-gray-800 text-sm text-gray-800 dark:text-gray-200 bg-white dark:bg-gray-950">
           {["Home", "Women", "Men", "Shop"].map((item) => (
-            <Link key={item} to={item === "Home" ? "/" : `/category/${item}`}>
+            <Link
+              key={item}
+              to={item === "Home" ? "/" : `/category/${item}`}
+              className="hover:text-purple-700 dark:hover:text-purple-400 transition"
+            >
               {item}
             </Link>
           ))}
         </div>
       </header>
 
-      {/* 📱 DRAWER (OUTSIDE HEADER) */}
+      {/* 📱 DRAWER */}
       <div
-        className={`fixed top-0 right-0 h-full w-64 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 z-60 shadow-lg transform transition-transform duration-300
+        className={`fixed top-0 right-0 h-full w-64 bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 z-60 shadow-xl transform transition-transform duration-300
         ${mobileMenuOpen ? "translate-x-0" : "translate-x-full"}`}
       >
-        <div className="flex justify-between p-4 border-b dark:border-gray-700">
-          <span className="font-semibold">{user?.username}</span>
-          <button onClick={() => setMobileMenuOpen(false)} aria-label="Close menu">✕</button>
+
+        <div className="flex justify-between items-center p-4 border-b border-gray-300 dark:border-gray-800">
+          <span className="font-semibold">
+            {user?.username}
+          </span>
+
+          <button
+            onClick={() => setMobileMenuOpen(false)}
+            aria-label="Close menu"
+            className="text-lg hover:text-red-500 transition"
+          >
+            ✕
+          </button>
         </div>
 
-        <button onClick={() => navigate("/orders")} className="block w-full text-left px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-800">
+        <button
+          onClick={() => navigate("/orders")}
+          className="block w-full text-left px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-800 transition"
+        >
           Orders
         </button>
-        <button onClick={() => navigate("/wishlist")} className="block w-full text-left px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-800">
+
+        <button
+          onClick={() => navigate("/wishlist")}
+          className="block w-full text-left px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-800 transition"
+        >
           Wishlist
         </button>
 
-        <div className="border-t dark:border-gray-700 my-2" />
+        <div className="border-t border-gray-300 dark:border-gray-800 my-2" />
 
-        <button onClick={handleLogout} className="block w-full text-left px-4 py-3 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20">
+        <button
+          onClick={handleLogout}
+          className="block w-full text-left px-4 py-3 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 transition"
+        >
           Logout
         </button>
       </div>
@@ -209,7 +260,7 @@ const Header = () => {
       {/* OVERLAY */}
       {mobileMenuOpen && (
         <div
-          className="fixed inset-0 bg-black/40 z-50"
+          className="fixed inset-0 bg-black/50 z-50"
           onClick={() => setMobileMenuOpen(false)}
         />
       )}

@@ -4,13 +4,18 @@ import React, {
   useMemo,
   useCallback,
 } from "react";
+
 import { useNavigate } from "react-router-dom";
+
 import { products } from "../../services/ApiService";
+
 import {
   getWishlist,
   toggleWishlist,
 } from "../../services/WishlistService";
+
 import { FaRegHeart, FaHeart } from "react-icons/fa";
+
 import ProductSkeleton from "../Skeleton/ProductSkeleton";
 
 const Itemspart = () => {
@@ -55,12 +60,12 @@ const Itemspart = () => {
     fetchWishlist();
   }, []);
 
-  // ✅ Fast Wishlist Lookup
+  // ✅ Fast Lookup
   const wishlistIds = useMemo(() => {
     return new Set(wishlist.map((i) => i._id));
   }, [wishlist]);
 
-  // ✅ Navigate Product Page
+  // ✅ Navigate
   const handleClick = useCallback(
     (id) => {
       navigate(`/product/${id}`);
@@ -68,7 +73,7 @@ const Itemspart = () => {
     [navigate]
   );
 
-  // ✅ Optimistic Wishlist Update
+  // ✅ Optimistic Wishlist
   const handleWishlist = useCallback(
     async (id, e) => {
       e.stopPropagation();
@@ -96,25 +101,27 @@ const Itemspart = () => {
       } catch (err) {
         console.log("Wishlist toggle error:", err);
 
-        // rollback if API fails
+        // rollback
         setWishlist(previousWishlist);
       }
     },
     [wishlist]
   );
 
-  // ✅ Loading UI
+  // ✅ LOADING UI
   if (loading) {
     return (
-      <section className="bg-gray-50 dark:bg-gray-900 py-10 px-4 md:px-10">
+      <section className="bg-gray-50 dark:bg-gray-950 py-10 px-4 md:px-10">
         <div className="flex items-center justify-between mb-8">
           <div>
-            <div className="h-8 w-52 bg-gray-300 dark:bg-gray-700 rounded animate-pulse mb-2" />
-            <div className="h-4 w-32 bg-gray-200 dark:bg-gray-800 rounded animate-pulse" />
+            <div className="h-8 w-52 rounded-lg bg-gray-200 dark:bg-gray-800 animate-pulse mb-3" />
+            <div className="h-4 w-40 rounded bg-gray-200 dark:bg-gray-800 animate-pulse" />
           </div>
+
+          <div className="h-5 w-20 rounded bg-gray-200 dark:bg-gray-800 animate-pulse" />
         </div>
 
-        <div className="flex gap-6 overflow-x-auto scrollbar-hide min-h-125">
+        <div className="flex gap-6 overflow-x-auto scrollbar-hide pb-3 min-h-107.5">
           {Array.from({ length: 6 }).map((_, i) => (
             <ProductSkeleton key={i} />
           ))}
@@ -123,26 +130,26 @@ const Itemspart = () => {
     );
   }
 
-  // ✅ Error State
+  // ✅ ERROR UI
   if (error) {
     return (
-      <div className="py-20 text-center">
-        <h2 className="text-red-500 text-xl font-semibold">
+      <div className="bg-gray-50 dark:bg-gray-950 py-20 text-center">
+        <h2 className="text-red-600 dark:text-red-400 text-xl font-semibold">
           {error}
         </h2>
       </div>
     );
   }
 
-  // ✅ Empty Products
+  // ✅ EMPTY UI
   if (items.length === 0) {
     return (
-      <div className="py-20 text-center">
-        <h2 className="text-2xl font-bold text-gray-700 dark:text-gray-200">
+      <div className="bg-gray-50 dark:bg-gray-950 py-20 text-center">
+        <h2 className="text-2xl font-bold text-gray-800 dark:text-white">
           No Products Available
         </h2>
 
-        <p className="text-gray-500 mt-2">
+        <p className="text-gray-600 dark:text-gray-400 mt-2">
           Please check again later
         </p>
       </div>
@@ -150,31 +157,32 @@ const Itemspart = () => {
   }
 
   return (
-    <section className="bg-gray-50 dark:bg-gray-900 py-10 px-4 md:px-10">
+    <section className="bg-gray-50 dark:bg-gray-950 py-10 px-4 md:px-10 transition-colors">
+
       {/* HEADER */}
       <div className="flex justify-between items-center mb-8">
         <div>
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-800 dark:text-white">
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">
             Trending Products
           </h2>
 
-          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+          <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
             Discover the latest fashion trends
           </p>
         </div>
 
-        <button className="text-sm font-medium text-indigo-600 hover:text-indigo-700 hover:underline transition hover:cursor-pointer" onClick={()=>navigate("/shop")}>
-          View All
-        </button>
+        <button onClick={() => navigate("/shop")} className=" text-sm font-semibold text-purple-700 dark:text-purple-400 hover:text-purple-800 dark:hover:text-purple-300 transition-colors hover:underline hover:cursor-pointer " aria-label="View all products" > View All </button>
       </div>
 
       {/* PRODUCTS */}
       <div className="flex gap-6 overflow-x-auto scrollbar-hide pb-3">
+
         {items.map((item) => {
           const isWishlisted =
             wishlistIds.has(item._id);
 
-          const originalPrice = item.price + 500;
+          const originalPrice =
+            item.price + 500;
 
           const discount = Math.round(
             ((originalPrice - item.price) /
@@ -183,42 +191,17 @@ const Itemspart = () => {
           );
 
           return (
-            <div
-              key={item._id}
-              onClick={() => handleClick(item._id)}
-              role="button"
-              tabIndex={0}
-              className="min-w-55 max-w-55 bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-md hover:shadow-2xl hover:-translate-y-1 transition-transform duration-300 cursor-pointer group"
-            >
+            <div key={item._id} onClick={() => handleClick(item._id) } role="button" tabIndex={0} className=" min-w-55 max-w-55 bg-white dark:bg-gray-900 rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-800 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer group " >
               {/* IMAGE */}
-              <div className="relative h-60 overflow-hidden">
-                <img
-                  loading="lazy"
-                  src={item.imageUrl}
-                  alt={item.title}
-                  className="w-full h-full object-cover group-hover:scale-110 transition duration-500"
-                />
+              <div className="relative h-60 overflow-hidden bg-gray-100 dark:bg-gray-800">
+
+                <img loading="lazy" decoding="async" width="220" height="240" src={item.imageUrl} alt={item.title} className=" w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 " />
 
                 {/* OVERLAY */}
-                <div className="absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition" />
+                <div className=" absolute inset-0 bg-linear-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity " />
 
                 {/* ❤️ WISHLIST */}
-                <button
-                  onClick={(e) =>
-                    handleWishlist(item._id, e)
-                  }
-                  aria-label={
-                    isWishlisted
-                      ? "Remove from wishlist"
-                      : "Add to wishlist"
-                  }
-                  className={`absolute top-3 right-3 p-2 rounded-full shadow-md transition-transform duration-300
-                    ${
-                      isWishlisted
-                        ? "bg-red-600 text-white scale-110"
-                        : "bg-white text-gray-800 hover:bg-red-100"
-                    }`}
-                >
+                <button onClick={(e) => handleWishlist(item._id, e) } aria-label={ isWishlisted ? "Remove from wishlist" : "Add to wishlist" } className={` absolute top-3 right-3 p-2 rounded-full shadow-md transition-all duration-300 border ${ isWishlisted ? "bg-red-600 text-white border-red-600 scale-110" : "bg-white/95 text-gray-800 border-gray-200 hover:bg-red-50" } `} >
                   {isWishlisted ? (
                     <FaHeart size={15} />
                   ) : (
@@ -226,37 +209,36 @@ const Itemspart = () => {
                   )}
                 </button>
 
-                {/* DISCOUNT BADGE */}
-                <div className="absolute top-3 left-3 bg-green-600 text-white text-xs font-semibold px-2 py-1 rounded-md">
+                {/* DISCOUNT */}
+                <div className=" absolute top-3 left-3 bg-green-700 text-white text-xs font-semibold px-2 py-1 rounded-lg shadow " >
                   {discount}% OFF
                 </div>
               </div>
 
               {/* DETAILS */}
               <div className="p-4 space-y-3">
+
                 {/* TITLE */}
-                <h3 className="text-sm font-medium text-gray-700 dark:text-gray-200 line-clamp-2 min-h-10">
+                <h3 className=" text-sm font-medium text-gray-800 dark:text-gray-200 line-clamp-2 min-h-10 " >
                   {item.title}
                 </h3>
 
                 {/* RATING */}
                 <div className="flex items-center gap-2 text-xs">
-                  <span className="bg-green-700 text-white px-2 py-1 rounded">
-                    {item.rating || 4.2} ★
-                  </span>
-
-                  <span className="text-gray-500">
+                  <span className=" bg-green-700 text-white px-2 py-1 rounded-md font-medium " > {item.rating || 4.2} ★ </span>
+                  <span className="text-gray-500 dark:text-gray-400">
                     (1.2k Reviews)
                   </span>
                 </div>
 
                 {/* PRICE */}
                 <div className="flex items-center gap-2 flex-wrap">
+
                   <span className="text-lg font-bold text-gray-900 dark:text-white">
                     ₹{Math.round(item.price)}
                   </span>
 
-                  <span className="text-sm text-gray-500 line-through">
+                  <span className="text-sm text-gray-500 dark:text-gray-400 line-through">
                     ₹{originalPrice}
                   </span>
                 </div>

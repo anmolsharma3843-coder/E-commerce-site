@@ -36,26 +36,53 @@ const Products = () => {
   };
 
   return (
-    <section className="bg-white dark:bg-gray-900 py-12 px-4 md:px-10 transition">
+    <section className="bg-gray-50 dark:bg-gray-950 py-14 px-4 md:px-10 transition-colors duration-300">
+
       {/* HEADER */}
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex items-end justify-between mb-10">
+
         <div>
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-800 dark:text-white">
+          <div className="inline-flex items-center px-4 py-1 rounded-full bg-purple-100 dark:bg-purple-900/40 mb-4">
+            <span className="text-xs font-semibold tracking-wide text-purple-700 dark:text-purple-300 uppercase">
+              Trending Collections
+            </span>
+          </div>
+
+          <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white leading-tight">
             Featured Categories
           </h2>
 
-          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-            Explore trending fashion collections
+          <p className="text-sm md:text-base text-gray-600 dark:text-gray-400 mt-3 max-w-lg">
+            Discover curated fashion collections designed for every style and season.
           </p>
         </div>
 
-        <button className="hidden md:block text-sm font-medium text-indigo-600 hover:text-indigo-700 hover:underline transition hover:cursor-pointer" onClick={()=>navigate("/shop")}>
+        <button
+          onClick={() => navigate("/shop")}
+          className="
+            hidden md:flex
+            items-center gap-2
+            px-5 py-2.5
+            rounded-xl
+            bg-white dark:bg-gray-900
+            border border-gray-200 dark:border-gray-700
+            text-sm font-semibold
+            text-gray-800 dark:text-gray-100
+            shadow-sm
+            hover:shadow-md
+            hover:-translate-y-0.5
+            transition-all duration-300
+            cursor-pointer
+          "
+        >
           View All
+          <span>→</span>
         </button>
       </div>
 
       {/* GRID */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 lg:gap-8">
+
         {categories.map((cat) => (
           <div
             key={cat.id}
@@ -66,62 +93,141 @@ const Products = () => {
               group
               relative
               overflow-hidden
-              rounded-2xl
-              shadow-md
-              dark:shadow-gray-800
+              rounded-3xl
+              bg-white dark:bg-gray-900
+              border border-gray-200 dark:border-gray-800
+              shadow-sm
               hover:shadow-2xl
               hover:-translate-y-2
-              transition-transform
-              duration-300
+              transition-all
+              duration-500
               cursor-pointer
             "
           >
+
             {/* IMAGE */}
-            <div className="aspect-3/4 overflow-hidden">
-              <img src={cat.img} alt={cat.title} loading="lazy" decoding="async" width="400" height="533" className=" w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 " />
+            <div className="aspect-[3/4] overflow-hidden bg-gray-200 dark:bg-gray-800">
+
+              <img
+                src={cat.img}
+                alt={cat.title}
+                loading="lazy"
+                decoding="async"
+                width="400"
+                height="533"
+                className="
+                  w-full
+                  h-full
+                  object-cover
+                  group-hover:scale-110
+                  transition-transform
+                  duration-700
+                "
+              />
             </div>
 
-            {/* GRADIENT OVERLAY */}
+            {/* OVERLAY */}
             <div
               className="
                 absolute
                 inset-0
-                bg-linear-to-t
-                from-black/80
+                bg-gradient-to-t
+                from-black/85
                 via-black/20
                 to-transparent
               "
             />
 
-            {/* CATEGORY NAME */}
-            <div className="absolute bottom-0 left-0 w-full p-4">
+            {/* CONTENT */}
+            <div className="absolute bottom-0 left-0 w-full p-4 md:p-5">
+
+              {/* SMALL TAG */}
+              <div
+                className="
+                  inline-flex
+                  items-center
+                  px-3 py-1
+                  rounded-full
+                  bg-white/15
+                  backdrop-blur-md
+                  border border-white/20
+                  text-[10px]
+                  md:text-xs
+                  font-medium
+                  text-white
+                  mb-3
+                "
+              >
+                New Collection
+              </div>
+
+              {/* TITLE */}
               <h3
                 className="
                   text-white
                   text-sm
-                  md:text-lg
-                  font-semibold
-                  tracking-wide
+                  md:text-xl
+                  font-bold
+                  leading-snug
+                  drop-shadow-md
                 "
               >
                 {cat.title}
               </h3>
 
-              <p
+              {/* HOVER TEXT */}
+              <div
                 className="
-                  text-xs
-                  text-gray-200
-                  mt-1
+                  mt-3
+                  flex items-center gap-2
+                  text-xs md:text-sm
+                  text-gray-100
                   opacity-0
+                  translate-y-2
                   group-hover:opacity-100
-                  transition
+                  group-hover:translate-y-0
+                  transition-all
+                  duration-300
                 "
               >
-                Explore Collection →
-              </p>
+                <span>Explore Collection</span>
+                <span>→</span>
+              </div>
             </div>
+
+            {/* HOVER BORDER */}
+            <div
+              className="
+                absolute inset-0
+                rounded-3xl
+                ring-0
+                group-hover:ring-2
+                ring-purple-400/60
+                transition
+              "
+            />
           </div>
         ))}
+      </div>
+
+      {/* MOBILE BUTTON */}
+      <div className="mt-8 flex justify-center md:hidden">
+        <button
+          onClick={() => navigate("/shop")}
+          className="
+            px-6 py-3
+            rounded-xl
+            bg-purple-600
+            hover:bg-purple-500
+            text-white
+            font-semibold
+            shadow-lg
+            transition-all
+            duration-300
+          "
+        >
+          View All Categories
+        </button>
       </div>
     </section>
   );

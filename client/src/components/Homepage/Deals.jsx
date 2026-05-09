@@ -31,63 +31,87 @@ const dealsData = [
 
 const Deals = () => {
   return (
-    <section className="px-4 md:px-10 py-10">
+    <section className="bg-gray-50 dark:bg-gray-950 px-4 md:px-10 pt-5 transition-colors duration-300">
 
-      {/* 🔥 Header */}
-      <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-  Deals of the Day
-</h2>
+      {/* HEADER */}
+      <div className="flex items-end justify-between mb-10">
 
-<button
-  className="text-sm text-purple-700 dark:text-purple-400 hover:underline"
-  aria-label="View all deals"
->
-  View All
-</button>
+        <div>
+          {/* SMALL BADGE */}
+          <div className="inline-flex items-center px-4 py-1 rounded-full bg-red-100 dark:bg-red-900/30 mb-4">
+            <span className="text-xs font-semibold tracking-wide uppercase text-red-700 dark:text-red-300">
+              Limited Offers
+            </span>
+          </div>
 
-      {/* 🔥 Grid */}
+          {/* TITLE */}
+          <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white leading-tight">
+            Deals of the Day
+          </h2>
+
+          {/* DESCRIPTION */}
+          <p className="mt-3 text-sm md:text-base text-gray-600 dark:text-gray-400 max-w-lg">
+            Grab today’s best offers on trending products before the sale ends.
+          </p>
+        </div>
+
+        {/* VIEW ALL */}
+        <button aria-label="View all deals" className=" hidden md:flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-sm font-semibold text-gray-800 dark:text-gray-100 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 cursor-pointer " >
+          View All
+          <span>→</span>
+        </button>
+      </div>
+
+      {/* GRID */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
 
         {dealsData.map((item) => (
-          <div
-            key={item.id}
-            className="group relative bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow hover:shadow-xl transition duration-300 cursor-pointer"
-          >
+          <div key={item.id} className=" group relative overflow-hidden rounded-3xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 cursor-pointer " >
 
-            {/* 🔥 Badge */}
-            <span className="absolute top-2 left-2 bg-red-600 text-white text-xs px-2 py-1 rounded z-10 font-medium">
+            {/* BADGE */}
+            <span className=" absolute top-3 left-3 z-10 px-3 py-1 rounded-full bg-red-600 text-white text-[11px] font-semibold tracking-wide shadow-md " >
               {item.tag}
             </span>
 
-            {/* 🔥 Image */}
-            <div className="overflow-hidden">
-              <img
-                src={item.image}
-                alt={item.title}
-                className="w-full h-44 object-cover group-hover:scale-110 transition duration-500"
-                     width="72"
-  height="72"
-  loading="lazy"
-              />
+            {/* IMAGE */}
+            <div className="relative overflow-hidden bg-gray-100 dark:bg-gray-800">
+
+              <img src={item.image} alt={item.title} width="300" height="300" loading="lazy" className=" w-full h-52 object-cover group-hover:scale-110 transition-transform duration-700 " />
+
+              {/* OVERLAY */}
+              <div className=" absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition duration-500 " />
             </div>
 
-            {/* 🔥 Content */}
-            <div className="p-3">
-              <p className="text-sm font-medium dark:text-gray-200">
+            {/* CONTENT */}
+            <div className="p-4">
+
+              {/* PRODUCT TITLE */}
+              <h3 className=" text-sm md:text-base font-semibold text-gray-900 dark:text-gray-100 line-clamp-2 leading-relaxed min-h-12 " >
                 {item.title}
-              </p>
+              </h3>
 
-              <p className="text-green-700 dark:text-green-400 font-semibold text-sm mt-1">
-                {item.discount}
-              </p>
+              {/* DISCOUNT */}
+              <div className="mt-3 flex items-center justify-between">
+                <p
+                  className="
+                    text-sm
+                    font-bold
+                    text-green-700 dark:text-green-400
+                  "
+                >
+                  {item.discount}
+                </p>
+
+                <span className=" text-xs font-medium text-gray-500 dark:text-gray-400 " >
+                  Shop Now →
+                </span>
+              </div>
             </div>
 
-            {/* 🔥 Hover Overlay */}
-            <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition duration-300" />
-
+            {/* HOVER RING */}
+            <div className=" absolute inset-0 rounded-3xl ring-0 group-hover:ring-2 ring-purple-400/50 transition " />
           </div>
         ))}
-
       </div>
     </section>
   );
