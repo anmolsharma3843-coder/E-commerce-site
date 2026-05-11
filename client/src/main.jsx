@@ -10,8 +10,8 @@ import Main from './Pages/Main.jsx';
 import ItemDetails from './Pages/ItemDetails.jsx';
 import Emptycart from './Pages/Cart/Emptycart.jsx'
 import { ToastContainer } from 'react-toastify';
-import Login from './components/Login.jsx'
-import SignUp from './components/Signup.jsx';
+import Login from './Pages/Login.jsx'
+import SignUp from './Pages/Signup.jsx';
 import Protected from './context/Protect.jsx';
 import AdminRoute from './context/AdminRoute.jsx';
 import Dashboard from './Admin/Dashboard.jsx';

@@ -3,6 +3,7 @@ import Footer from "./components/footer";
 import { Outlet } from "react-router-dom";
 import ScrollToTop from "./components/Scroll";
 import { Suspense } from "react";
+import LoadingSpinner from "./components/LoadingSpinner";
 
 function App() {
   return (
@@ -15,7 +16,7 @@ function App() {
         <Suspense
           fallback={
             <div className="min-h-screen flex items-center justify-center">
-              Loading...
+              <LoadingSpinner/>
             </div>
           }
         >

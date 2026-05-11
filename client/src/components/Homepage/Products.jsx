@@ -57,24 +57,7 @@ const Products = () => {
           </p>
         </div>
 
-        <button
-          onClick={() => navigate("/shop")}
-          className="
-            hidden md:flex
-            items-center gap-2
-            px-5 py-2.5
-            rounded-xl
-            bg-white dark:bg-gray-900
-            border border-gray-200 dark:border-gray-700
-            text-sm font-semibold
-            text-gray-800 dark:text-gray-100
-            shadow-sm
-            hover:shadow-md
-            hover:-translate-y-0.5
-            transition-all duration-300
-            cursor-pointer
-          "
-        >
+        <button onClick={() => navigate("/shop")} className=" hidden md:flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-sm font-semibold text-gray-800 dark:text-gray-100 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 cursor-pointer " >
           View All
           <span>→</span>
         </button>
@@ -82,150 +65,43 @@ const Products = () => {
 
       {/* GRID */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-6 lg:gap-8">
-
-        {categories.map((cat) => (
-          <div
-            key={cat.id}
-            role="button"
-            tabIndex={0}
-            onClick={() => handleCategory(cat.slug)}
-            className="
-              group
-              relative
-              overflow-hidden
-              rounded-3xl
-              bg-white dark:bg-gray-900
-              border border-gray-200 dark:border-gray-800
-              shadow-sm
-              hover:shadow-2xl
-              hover:-translate-y-2
-              transition-all
-              duration-500
-              cursor-pointer
-            "
-          >
+{categories.map((cat) => ( <div key={cat.id} role="button" tabIndex={0} onClick={() => handleCategory(cat.slug)} className=" group relative overflow-hidden rounded-3xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 cursor-pointer " >
 
             {/* IMAGE */}
-            <div className="aspect-[3/4] overflow-hidden bg-gray-200 dark:bg-gray-800">
+            <div className="aspect-3/4 overflow-hidden bg-gray-200 dark:bg-gray-800">
 
-              <img
-                src={cat.img}
-                alt={cat.title}
-                loading="lazy"
-                decoding="async"
-                width="400"
-                height="533"
-                className="
-                  w-full
-                  h-full
-                  object-cover
-                  group-hover:scale-110
-                  transition-transform
-                  duration-700
-                "
-              />
+              <img src={cat.img} alt={cat.title} loading="lazy" decoding="async" width="400" height="533" className=" w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 " />
             </div>
 
             {/* OVERLAY */}
-            <div
-              className="
-                absolute
-                inset-0
-                bg-gradient-to-t
-                from-black/85
-                via-black/20
-                to-transparent
-              "
-            />
+            <div className=" absolute inset-0 bg-linear-to-t from-black/85 via-black/20 to-transparent " />
 
             {/* CONTENT */}
             <div className="absolute bottom-0 left-0 w-full p-4 md:p-5">
 
               {/* SMALL TAG */}
-              <div
-                className="
-                  inline-flex
-                  items-center
-                  px-3 py-1
-                  rounded-full
-                  bg-white/15
-                  backdrop-blur-md
-                  border border-white/20
-                  text-[10px]
-                  md:text-xs
-                  font-medium
-                  text-white
-                  mb-3
-                "
-              >
-                New Collection
-              </div>
+              <div className=" inline-flex items-center px-3 py-1 rounded-full bg-white/15 backdrop-blur-md border border-white/20 text-[10px] md:text-xs font-medium text-white mb-3 " > New Collection </div>
 
               {/* TITLE */}
-              <h3
-                className="
-                  text-white
-                  text-sm
-                  md:text-xl
-                  font-bold
-                  leading-snug
-                  drop-shadow-md
-                "
-              >
+              <h3 className=" text-white text-sm md:text-xl font-bold leading-snug drop-shadow-md " >
                 {cat.title}
               </h3>
 
               {/* HOVER TEXT */}
-              <div
-                className="
-                  mt-3
-                  flex items-center gap-2
-                  text-xs md:text-sm
-                  text-gray-100
-                  opacity-0
-                  translate-y-2
-                  group-hover:opacity-100
-                  group-hover:translate-y-0
-                  transition-all
-                  duration-300
-                "
-              >
+              <div className=" mt-3 flex items-center gap-2 text-xs md:text-sm text-gray-100 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 " >
                 <span>Explore Collection</span>
                 <span>→</span>
               </div>
             </div>
 
             {/* HOVER BORDER */}
-            <div
-              className="
-                absolute inset-0
-                rounded-3xl
-                ring-0
-                group-hover:ring-2
-                ring-purple-400/60
-                transition
-              "
-            />
-          </div>
+            <div className=" absolute inset-0 rounded-3xl ring-0 group-hover:ring-2 ring-purple-400/60 transition " /> </div>
         ))}
       </div>
 
       {/* MOBILE BUTTON */}
       <div className="mt-8 flex justify-center md:hidden">
-        <button
-          onClick={() => navigate("/shop")}
-          className="
-            px-6 py-3
-            rounded-xl
-            bg-purple-600
-            hover:bg-purple-500
-            text-white
-            font-semibold
-            shadow-lg
-            transition-all
-            duration-300
-          "
-        >
+        <button onClick={() => navigate("/shop")} className=" px-6 py-3 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-semibold shadow-lg transition-all duration-300 " >
           View All Categories
         </button>
       </div>

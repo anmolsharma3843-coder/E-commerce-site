@@ -92,164 +92,173 @@ const Shop = () => {
   };
 
   return (
-    <section className="bg-gray-50 dark:bg-gray-900 min-h-screen">
+   <section className="min-h-screen bg-gray-100 dark:bg-[#0f172a] transition-colors duration-300">
+  <div className="px-4 md:px-8 lg:px-12 py-8">
 
-      <div className="px-4 md:px-10 py-8">
+    {/* TOP BAR */}
+    <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-5 mb-8">
 
-        {/* TOP BAR */}
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
+      {/* TITLE */}
+      <div>
+        <h2 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
+          {search
+            ? `Search Results for "${search}"`
+            : "Discover Products"}
+        </h2>
 
-          {/* RESULTS */}
-          <div>
-            <h2 className="text-2xl font-bold text-gray-800 dark:text-white">
-              {search
-                ? `Search Results for "${search}"`
-                : "All Products"}
-            </h2>
-
-            <p className="text-sm text-gray-500 mt-1">
-              {filteredProducts.length} Products Found
-            </p>
-          </div>
-
-          {/* FILTERS */}
-          <div className="flex flex-wrap gap-3">
-
-            {/* CATEGORY */}
-            <select
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-              className="px-4 py-2 rounded-lg border bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-            >
-              {categories.map((cat) => (
-                <option key={cat}>
-                  {cat}
-                </option>
-              ))}
-            </select>
-
-            {/* SORT */}
-            <select
-              value={sort}
-              onChange={(e) => setSort(e.target.value)}
-              className="px-4 py-2 rounded-lg border bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-            >
-              <option value="latest">Latest</option>
-              <option value="low">Price: Low to High</option>
-              <option value="high">Price: High to Low</option>
-            </select>
-          </div>
-        </div>
-
-        {/* LOADING */}
-        {loading ? <ShopSkeleton/>: filteredProducts.length === 0 ? (
-          // EMPTY STATE
-          <div className="flex flex-col items-center justify-center py-20">
-            <img
-              src="https://cdn-icons-png.flaticon.com/512/7486/7486740.png"
-              alt="No products"
-              className="w-40 opacity-80"
-            />
-
-            <h3 className="mt-6 text-2xl font-bold text-gray-700 dark:text-white">
-              No Products Found
-            </h3>
-
-            <p className="text-gray-500 mt-2">
-              Try searching something else
-            </p>
-          </div>
-        ) : (
-          // PRODUCTS
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-
-            {filteredProducts.map((item) => {
-              const isWishlisted = wishlist.includes(item._id);
-
-              return (
-                <div
-                  key={item._id}
-                  onClick={() => navigate(`/product/${item._id}`)}
-                  className="group bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300 cursor-pointer relative"
-                >
-
-                  {/* IMAGE */}
-                  <div className="relative overflow-hidden">
-
-                    <img
-                      src={item.imageUrl}
-                      alt={item.title}
-                      loading="lazy"
-                      className="w-full h-70 object-cover group-hover:scale-110 transition duration-500"
-                    />
-
-                    {/* WISHLIST */}
-                    <button
-                      onClick={(e) =>
-                        toggleWishlist(item._id, e)
-                      }
-                      aria-label="Wishlist"
-                      className={`absolute top-3 right-3 p-2 rounded-full shadow-md transition
-                      ${
-                        isWishlisted
-                          ? "bg-red-500 text-white"
-                          : "bg-white text-gray-700"
-                      }`}
-                    >
-                      {isWishlisted ? (
-                        <FaHeart />
-                      ) : (
-                        <FaRegHeart />
-                      )}
-                    </button>
-                  </div>
-
-                  {/* CONTENT */}
-                  <div className="p-4">
-
-                    {/* CATEGORY */}
-                    <p className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
-                      {item.category}
-                    </p>
-
-                    {/* TITLE */}
-                    <h3 className="mt-1 text-sm md:text-base font-semibold text-gray-800 dark:text-white line-clamp-2">
-                      {item.title}
-                    </h3>
-
-                    {/* RATING */}
-                    <div className="flex items-center gap-1 mt-2">
-                      <FaStar className="text-yellow-400 text-sm" />
-                      <span className="text-sm text-gray-600 dark:text-gray-300">
-                        {item.rating || 4.5}
-                      </span>
-                    </div>
-
-                    {/* PRICE */}
-                    <div className="flex items-center gap-2 mt-3">
-                      <span className="text-lg font-bold">
-                        ₹{item.price}
-                      </span>
-
-                      <span className="text-sm text-gray-500 line-through">
-                        ₹{item.price + 800}
-                      </span>
-                    </div>
-
-                    {/* BUTTON */}
-                    <button
-                      className="mt-4 w-full  bg-yellow-400 hover:bg-yellow-500 text-white py-2 rounded-xl hover:scale-[1.02] transition"
-                    >
-                      Add to Cart
-                    </button>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        )}
+        <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
+          {filteredProducts.length} products available
+        </p>
       </div>
-    </section>
+
+      {/* FILTERS */}
+      <div className="flex flex-wrap gap-3">
+
+        {/* CATEGORY */}
+        <select
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+          className="px-4 py-2.5 rounded-xl border border-gray-300 dark:border-gray-700 
+          bg-white dark:bg-[#1e293b]
+          text-gray-800 dark:text-gray-100
+          shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        >
+          {categories.map((cat) => (
+            <option key={cat}>{cat}</option>
+          ))}
+        </select>
+
+        {/* SORT */}
+        <select
+          value={sort}
+          onChange={(e) => setSort(e.target.value)}
+          className="px-4 py-2.5 rounded-xl border border-gray-300 dark:border-gray-700 
+          bg-white dark:bg-[#1e293b]
+          text-gray-800 dark:text-gray-100
+          shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        >
+          <option value="latest">Latest</option>
+          <option value="low">Price: Low to High</option>
+          <option value="high">Price: High to Low</option>
+        </select>
+      </div>
+    </div>
+
+    {/* LOADING */}
+    {loading ? (
+      <ShopSkeleton />
+    ) : filteredProducts.length === 0 ? (
+      // EMPTY STATE
+      <div className="flex flex-col items-center justify-center py-24">
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/7486/7486740.png"
+          alt="No products"
+          className="w-40 opacity-80"
+        />
+
+        <h3 className="mt-6 text-2xl font-bold text-gray-800 dark:text-white">
+          No Products Found
+        </h3>
+
+        <p className="mt-2 text-gray-600 dark:text-gray-400">
+          Try searching for something else
+        </p>
+      </div>
+    ) : (
+      // PRODUCTS GRID
+      <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
+        {filteredProducts.map((item) => {
+          const isWishlisted = wishlist.includes(item._id);
+
+          return (
+            <div
+              key={item._id}
+              onClick={() => navigate(`/product/${item._id}`)}
+              className="group relative overflow-hidden rounded-2xl bg-white dark:bg-[#1e293b] border border-gray-200 dark:border-gray-800 shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 cursor-pointer" >
+              {/* IMAGE SECTION */}
+              <div className="relative overflow-hidden bg-gray-100 dark:bg-gray-800">
+
+                {/* IMAGE */}
+                <img
+                  src={item.imageUrl}
+                  alt={item.title}
+                  loading="lazy"
+                  className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+
+                {/* WISHLIST */}
+                <button
+                  onClick={(e) => toggleWishlist(item._id, e)}
+                  aria-label="Wishlist"
+                  className={`absolute top-3 right-3 z-10 w-10 h-10 flex items-center justify-center rounded-full border backdrop-blur-md transition-all duration-300 ${ isWishlisted ? "bg-red-500 border-red-500 text-white" : "bg-white/90 dark:bg-black/40 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-200 hover:bg-red-500 hover:text-white hover:border-red-500" }`} >
+                  {isWishlisted ? <FaHeart /> : <FaRegHeart />}
+                </button>
+              </div>
+
+              {/* CONTENT */}
+              <div className="p-4">
+
+                {/* CATEGORY */}
+                <p className="text-xs uppercase tracking-wide font-medium text-indigo-600 dark:text-indigo-400">
+                  {item.category}
+                </p>
+
+                {/* TITLE */}
+                <h2 className="mt-1 text-sm md:text-base font-bold text-gray-900 dark:text-gray-100 line-clamp-1 leading-6" >
+                  {item.title}
+                </h2>
+                <h3 className="text-xs md:text-sm  text-gray-500 dark:text-gray-300 line-clamp-2 leading-tight min-h-9" >
+                  {item.description}
+                </h3>
+
+                {/* RATING + STOCK */}
+                <div className="flex items-center justify-between mt-3">
+
+                  {/* RATING */}
+                  <div
+                    className="flex items-center gap-1
+                    px-2 py-1 rounded-lg
+                    bg-amber-50 dark:bg-amber-500/10"
+                  >
+                    <FaStar className="text-amber-500 text-sm" />
+
+                    <span className="text-sm font-medium text-gray-800 dark:text-gray-200">
+                      {item.rating || 4.5}
+                    </span>
+                  </div>
+
+                  {/* STOCK */}
+                  <span className="text-xs font-medium text-emerald-600 dark:text-emerald-400">
+                    In Stock
+                  </span>
+                </div>
+
+                {/* PRICE */}
+                <div className="mt-4 flex items-end gap-2 flex-wrap">
+
+                  {/* CURRENT PRICE */}
+                  <span className="text-2xl font-bold text-gray-900 dark:text-white">
+                    ₹{item.price}
+                  </span>
+
+                  {/* OLD PRICE */}
+                  <span className="text-sm line-through text-gray-500 dark:text-gray-400">
+                    ₹{item.price + 800}
+                  </span>
+                </div>
+
+                {/* BUTTON */}
+                <button className="mt-5 w-full rounded-xl bg-yellow-400 hover:bg-yellow-500 text-white font-medium py-2.5 shadow-md hover:shadow-lg active:scale-[0.98] transition-all duration-200" >
+                  Add to Cart
+                </button>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    )}
+  </div>
+</section>
   );
 };
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { products } from "../services/ApiService";
+import { fetchAllproduct} from "../services/ApiService";
 import { useNavigate } from "react-router-dom";
 import LoadingSpinner from "../components/LoadingSpinner";
 
@@ -10,7 +10,7 @@ const ManageProducts = () => {
   const navigate = useNavigate()
   const fetchProducts = async () => {
     try {
-      const data = await products();
+      const data = await fetchAllproduct();
       setProduct(data);
     } catch (error) {
       console.log("fetching error", error);

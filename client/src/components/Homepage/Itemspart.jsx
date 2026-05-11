@@ -171,7 +171,10 @@ const Itemspart = () => {
           </p>
         </div>
 
-        <button onClick={() => navigate("/shop")} className=" text-sm font-semibold text-purple-700 dark:text-purple-400 hover:text-purple-800 dark:hover:text-purple-300 transition-colors hover:underline hover:cursor-pointer " aria-label="View all products" > View All </button>
+       <button onClick={() => navigate("/shop")} className=" hidden md:flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-sm font-semibold text-gray-800 dark:text-gray-100 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 cursor-pointer " >
+          View All
+          <span>→</span>
+        </button>
       </div>
 
       {/* PRODUCTS */}

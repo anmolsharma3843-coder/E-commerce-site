@@ -299,7 +299,7 @@ const CategoryItems = () => {
                     {/* DETAILS */}
                     <div className="p-4 flex flex-col flex-1">
 
-                      <p className="text-sm text-gray-900 dark:text-gray-100 line-clamp-2 min-h-[40px]">
+                      <p className="text-sm text-gray-900 dark:text-gray-100 line-clamp-2 min-h-10">
                         {item.title}
                       </p>
 
@@ -325,16 +325,7 @@ const CategoryItems = () => {
                           e.stopPropagation();
                           AddToCart(item);
                         }}
-                        className="
-                          mt-4 w-full
-                          bg-yellow-400 hover:bg-yellow-500
-                          text-black font-semibold
-                          py-2.5 rounded-lg
-                          transition
-                          focus:outline-none
-                          focus:ring-2 focus:ring-yellow-500
-                        "
-                      >
+                        className=" mt-4 w-full bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-2.5 rounded-lg transition focus:outline-none focus:ring-2 focus:ring-yellow-500 " >
                         Add to Cart
                       </button>
                     </div>
@@ -356,25 +347,12 @@ const CategoryItems = () => {
                   page: prev.page - 1,
                 }))
               }
-              className="
-                px-5 py-2.5 rounded-xl font-medium transition-all duration-200
-                bg-white text-gray-900 border border-gray-300 shadow-sm
-                hover:bg-gray-100 hover:shadow
-                dark:bg-gray-800 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700
-                disabled:opacity-40 disabled:cursor-not-allowed
-              "
-            >
+              className=" px-5 py-2.5 rounded-xl font-medium transition-all duration-200 bg-white text-gray-900 border border-gray-300 shadow-sm hover:bg-gray-100 hover:shadow dark:bg-gray-800 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 disabled:opacity-40 disabled:cursor-not-allowed " >
               ← Prev
             </button>
 
             {/* PAGE */}
-            <div
-              className="
-                px-5 py-2.5 rounded-xl font-semibold shadow-sm
-                bg-gradient-to-r from-purple-700 to-indigo-700
-                text-white
-              "
-            >
+            <div className=" px-5 py-2.5 rounded-xl font-semibold shadow-sm bg-linear-to-r from-purple-700 to-indigo-700 text-white " >
               Page {filters.page} of {totalPages}
             </div>
 
@@ -387,14 +365,7 @@ const CategoryItems = () => {
                   page: prev.page + 1,
                 }))
               }
-              className="
-                px-5 py-2.5 rounded-xl font-medium transition-all duration-200
-                bg-white text-gray-900 border border-gray-300 shadow-sm
-                hover:bg-gray-100 hover:shadow
-                dark:bg-gray-800 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700
-                disabled:opacity-40 disabled:cursor-not-allowed
-              "
-            >
+              className=" px-5 py-2.5 rounded-xl font-medium transition-all duration-200 bg-white text-gray-900 border border-gray-300 shadow-sm hover:bg-gray-100 hover:shadow dark:bg-gray-800 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 disabled:opacity-40 disabled:cursor-not-allowed " >
               Next →
             </button>
 

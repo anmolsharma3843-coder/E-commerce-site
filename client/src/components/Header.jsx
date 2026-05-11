@@ -20,6 +20,8 @@ const Header = () => {
   const [darkMode, setDarkMode] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [debouncedQuery, setDebouncedQuery] = useState("");
+  const [searching, setSearching] = useState(false);
 
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme");
@@ -28,6 +30,34 @@ const Header = () => {
     setDarkMode(isDark);
     document.documentElement.classList.toggle("dark", isDark);
   }, []);
+  // DEBOUNCE SEARCH
+  useEffect(() => {
+    if (!searchQuery.trim()) {
+      setSearching(false);
+      setDebouncedQuery("");
+      return;
+    }
+
+    setSearching(true);
+
+    const timer = setTimeout(() => {
+      setDebouncedQuery(searchQuery);
+      setSearching(false);
+    }, 500);
+
+    return () => {
+      clearTimeout(timer);
+    }
+  }, [searchQuery]);
+
+  // SEARCH NAVIGATION
+  useEffect(() => {
+    const query = debouncedQuery.trim();
+
+    if (query.length > 0) {
+      navigate(`/shop?search=${encodeURIComponent(query)}`);
+    }
+  }, [debouncedQuery, navigate]);
 
   const handleLogout = async () => {
     try {
@@ -61,17 +91,6 @@ const Header = () => {
     localStorage.setItem("theme", next ? "dark" : "light");
   };
 
-  const handleSearch = (e) => {
-    e.preventDefault();
-
-    const query = searchQuery.trim();
-
-    if (!query) return;
-
-    navigate(`/shop?search=${encodeURIComponent(query)}`);
-
-    setSearchQuery("");
-  };
 
   return (
     <>
@@ -82,12 +101,12 @@ const Header = () => {
 
           {/* LOGO */}
           <Link to="/" aria-label="Go to homepage" className="flex items-center gap-2" >
-            <div className="w-10 h-10 rounded-xl bg-linear-to-r from-purple-700 to-indigo-600 text-white flex items-center justify-center font-bold shadow-md">
-              S
+            <div className="w-10 h-auto rounded-full bg-linear-to-r from-purple-700 to-indigo-600 text-white flex items-center justify-center font-bold shadow-lg">
+              <img src="/logo.png" alt="logo" className=" rounded-full object-cover " />
             </div>
 
             <span className="text-xl font-bold text-gray-900 dark:text-white">
-              ShopX
+              UrbanMela
             </span>
           </Link>
 
@@ -100,14 +119,13 @@ const Header = () => {
                   item === "Home"
                     ? "/"
                     : item === "Shop"
-                    ? "/shop"
-                    : `/category/${item}`
+                      ? "/shop"
+                      : `/category/${item}`
                 }
                 className={({ isActive }) =>
-                  `pb-1 border-b-2 transition-colors duration-200 ${
-                    isActive
-                      ? "border-purple-700 text-purple-700 dark:text-purple-400"
-                      : "border-transparent text-gray-800 dark:text-gray-200 hover:text-purple-700 dark:hover:text-purple-400"
+                  `pb-1 border-b-2 transition-colors duration-200 ${isActive
+                    ? "border-purple-700 text-purple-700 dark:text-purple-400"
+                    : "border-transparent text-gray-800 dark:text-gray-200 hover:text-purple-700 dark:hover:text-purple-400"
                   }`
                 }
               >
@@ -121,16 +139,28 @@ const Header = () => {
 
             {/* SEARCH */}
             <form
-              onSubmit={handleSearch}
               className="hidden md:flex items-center bg-gray-200 dark:bg-gray-800 px-4 py-2 rounded-full focus-within:ring-2 focus-within:ring-purple-600 transition"
             >
               <label htmlFor="search" className="sr-only">
                 Search products
               </label>
 
-              <FiSearch className="mr-2 text-gray-700 dark:text-gray-300" />
+              <div className="mr-2">
+                {searching ? (
+                  <div className="w-4 h-4 border-2 border-purple-600 border-t-transparent rounded-full animate-spin" />
+                ) : (
+                  <FiSearch className="text-gray-700 dark:text-gray-300" />
+                )}
+              </div>
 
-              <input id="search" type="text" placeholder="Search products..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="bg-transparent outline-none text-sm w-40 text-gray-900 dark:text-white placeholder:text-gray-600 dark:placeholder:text-gray-400" />
+              <input
+                id="search"
+                type="text"
+                placeholder="Search products..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="bg-transparent outline-none text-sm w-40 text-gray-900 dark:text-white placeholder:text-gray-600 dark:placeholder:text-gray-400"
+              />
             </form>
 
             {/* ❤️ Wishlist */}
@@ -204,7 +234,7 @@ const Header = () => {
           {["Home", "Women", "Men", "Shop"].map((item) => (
             <Link
               key={item}
-              to={item === "Home" ? "/" : `/category/${item}`}
+              to={item === "Home" ? "/" : item === 'Shop' ? '/shop' : `/category/${item}`}
               className="hover:text-purple-700 dark:hover:text-purple-400 transition"
             >
               {item}
