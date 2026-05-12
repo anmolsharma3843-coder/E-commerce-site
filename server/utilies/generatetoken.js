@@ -11,9 +11,9 @@ const generateToken = (res, user) => {
   });
   res.cookie("jwt", token, {
     httpOnly: false,
-    sameSite: "Lax",   // note: should be "sameSite" not "samesite"
+    sameSite: "Lax",   
     secure: false,
-    maxAge: 5 * 24 * 60 * 60 * 1000, // 5 days in ms
+    maxAge: 5 * 24 * 60 * 60 * 1000, 
   });
   return token;
 };

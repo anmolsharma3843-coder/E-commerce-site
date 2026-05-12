@@ -4,9 +4,9 @@ import { Cart } from "../Model/UserModelSchema.js";
 export const addToCart = async (req, res) => {
   const { product } = req.body;
   const userId = req.user.id;
-if (!product || !product._id || !product.price || !product.title) {
-  return res.status(400).json({ message: "Invalid product" });
-}
+  if (!product || !product._id || !product.price || !product.title) {
+    return res.status(400).json({ message: "Invalid product" });
+  }
   let cart = await Cart.findOne({ userId });
 
   if (!cart) {

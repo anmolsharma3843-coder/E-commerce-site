@@ -1,22 +1,9 @@
-import React, {
-  useEffect,
-  useState,
-  useMemo,
-  useCallback,
-} from "react";
-
+import React, { useEffect, useState, useMemo, useCallback, } from "react";
 import { useNavigate } from "react-router-dom";
-
 import { products } from "../../services/ApiService";
-
-import {
-  getWishlist,
-  toggleWishlist,
-} from "../../services/WishlistService";
-
+import {getWishlist,toggleWishlist, } from "../../services/WishlistService";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
-
-import ProductSkeleton from "../Skeleton/ProductSkeleton";
+import ProductSkeleton from "../../components/Skeleton/ProductSkeleton";
 
 const Itemspart = () => {
   const navigate = useNavigate();

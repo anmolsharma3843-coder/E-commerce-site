@@ -2,34 +2,24 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { useDispatch } from "react-redux";
-import { setUser } from "../store/authSlice";
+import { setUser } from "../../store/authSlice";
+import { LoginUser } from "../../services/AuthService";
 const SignIn = () => {
   const navigate = useNavigate();
   const [userlogin, setuserlogin] = useState({ email: "", password: "" });
   const [userdata, setuserdata] = useState({});
-const dispatch = useDispatch();
-  const handleuserlogin = async () => {
+  const dispatch = useDispatch();
+  const handleuserlogin = async (event) => {
     event.preventDefault();
 
-    try {
-      let response = await fetch("http://localhost:5100/auth/login", {
-        method: "POST",
-        credentials: "include", // ensures cookie is sent/received
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(userlogin),
-      });
+    const response = await LoginUser(userlogin);
 
-      let data = await response.json();
-      setuserdata(data); 
-      if (response.ok) {
-        dispatch(setUser(data));
-        // You don’t need to manually grab the cookie or store the token
-        // The browser will send it automatically on future requests
-        navigate("/admin");
-      }
-    } catch (error) {
-      console.error("Login failed:", error);
-      setuserdata({ message: "Something went wrong. Try again." });
+    if (response.ok) {
+      dispatch(setUser(response.data));
+
+      navigate("/admin");
+    } else {
+      setuserdata(response.data);
     }
   };
 

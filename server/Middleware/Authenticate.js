@@ -10,7 +10,7 @@ const authenicate=async(req,res,next)=>{
             next();
         } catch (error) {
             res.status(400);
-            throw new Error("User Not Authorized, Token Faild")
+            throw new Error("User Not Authorized, Token Failed")
         }
     }else{
             res.status(400).json({ message: "Invalid credentials" });

@@ -203,16 +203,7 @@ const CategoryItems = () => {
               Under ₹500
             </button>
 
-            <button
-              onClick={() => handlePrice(500, 1000)}
-              className="
-                block w-full text-left px-3 py-2 rounded-lg
-                text-gray-800 dark:text-gray-200
-                hover:bg-purple-50 dark:hover:bg-gray-700
-                hover:text-purple-700 dark:hover:text-purple-400
-                transition
-              "
-            >
+            <button onClick={() => handlePrice(500, 1000)} className=" block w-full text-left px-3 py-2 rounded-lg text-gray-800 dark:text-gray-200 hover:bg-purple-50 dark:hover:bg-gray-700 hover:text-purple-700 dark:hover:text-purple-400 transition " >
               ₹500 - ₹1000
             </button>
 
@@ -262,18 +253,7 @@ const CategoryItems = () => {
                     {/* IMAGE */}
                     <div className="relative h-52 bg-gray-100 dark:bg-gray-700 flex items-center justify-center overflow-hidden">
 
-                      <img
-                        src={item.imageUrl}
-                        alt={item.title}
-                        loading="lazy"
-                        width="300"
-                        height="300"
-                        className="
-                          max-h-full max-w-full object-contain
-                          group-hover:scale-105
-                          transition duration-300
-                        "
-                      />
+                      <img src={item.imageUrl} alt={item.title} loading="lazy" width="300" height="300" className=" max-h-full max-w-full object-contain group-hover:scale-105 transition duration-300 " />
 
                       {/* WISHLIST */}
                       <button

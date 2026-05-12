@@ -6,12 +6,11 @@ import { Provider } from 'react-redux';
 import store from './store/index.js';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import Cart from './Pages/Cart/Cart.jsx';
-import Main from './Pages/Main.jsx';
 import ItemDetails from './Pages/ItemDetails.jsx';
 import Emptycart from './Pages/Cart/Emptycart.jsx'
 import { ToastContainer } from 'react-toastify';
-import Login from './Pages/Login.jsx'
-import SignUp from './Pages/Signup.jsx';
+import Login from './Pages/Auth/Login.jsx'
+import SignUp from './Pages/Auth/Signup.jsx';
 import Protected from './context/Protect.jsx';
 import AdminRoute from './context/AdminRoute.jsx';
 import Dashboard from './Admin/Dashboard.jsx';
@@ -26,7 +25,7 @@ import Users from './Admin/Users.jsx';
 import UserRoute from './context/UserRoute.jsx';
 import UserOrder from './Pages/MyOrders.jsx'
 import CategoryItems from './Pages/CategoryItems.jsx';
-import Home from './components/Homepage/Home.jsx';
+import Home from './Pages/Homepage/Home.jsx';
 import Wishlist from './Pages/Wishlist.jsx';
 import MyOrders from './Pages/MyOrders.jsx';
 import Shop from './Pages/shop.jsx';

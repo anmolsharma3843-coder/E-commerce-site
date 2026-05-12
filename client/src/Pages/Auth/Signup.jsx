@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setUser } from "../store/authSlice"; // ✅ import your authSlice action
+import { setUser } from "../../store/authSlice"; 
 import Cookies from "js-cookie";
+import { SigninUser } from "../../services/AuthService";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -19,16 +20,10 @@ const SignUp = () => {
     event.preventDefault();
 
     try {
-      let response = await fetch("http://localhost:5100/auth/register", {
-        method: "POST",
-        credentials: "include", // ensures cookie is set
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(userdata),
-      });
 
-      let data = await response.json();
+      const data = await SigninUser(userdata);
 
-      if (response.ok) {
+      if (data.ok) {
         console.log("Signup successful");
         // store user in Redux
         dispatch(setUser(data));
