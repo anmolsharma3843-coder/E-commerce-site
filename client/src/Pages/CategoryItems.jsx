@@ -195,15 +195,15 @@ const CategoryItems = () => {
               className="
                 block w-full text-left px-3 py-2 rounded-lg
                 text-gray-800 dark:text-gray-200
-                hover:bg-purple-50 dark:hover:bg-gray-700
-                hover:text-purple-700 dark:hover:text-purple-400
+                md:hover:bg-purple-50 dark:md:hover:bg-gray-700
+                md:hover:text-purple-700 dark:md:hover:text-purple-400
                 transition
               "
             >
               Under ₹500
             </button>
 
-            <button onClick={() => handlePrice(500, 1000)} className=" block w-full text-left px-3 py-2 rounded-lg text-gray-800 dark:text-gray-200 hover:bg-purple-50 dark:hover:bg-gray-700 hover:text-purple-700 dark:hover:text-purple-400 transition " >
+            <button onClick={() => handlePrice(500, 1000)} className=" block w-full text-left px-3 py-2 rounded-lg text-gray-800 dark:text-gray-200 md:hover:bg-purple-50 dark:md:hover:bg-gray-700 md:hover:text-purple-700 dark:md:hover:text-purple-400 transition " >
               ₹500 - ₹1000
             </button>
 
@@ -212,8 +212,8 @@ const CategoryItems = () => {
               className="
                 block w-full text-left px-3 py-2 rounded-lg
                 text-gray-800 dark:text-gray-200
-                hover:bg-purple-50 dark:hover:bg-gray-700
-                hover:text-purple-700 dark:hover:text-purple-400
+                md:hover:bg-purple-50 dark:md:hover:bg-gray-700
+                md:hover:text-purple-700 dark:md:hover:text-purple-400
                 transition
               "
             >
@@ -244,7 +244,7 @@ const CategoryItems = () => {
                       bg-white dark:bg-gray-800
                       border border-gray-200 dark:border-gray-700
                       rounded-2xl overflow-hidden
-                      shadow-sm hover:shadow-xl
+                      shadow-sm md:hover:shadow-xl
                       transition-all duration-300
                       cursor-pointer flex flex-col h-full
                     "
@@ -253,7 +253,7 @@ const CategoryItems = () => {
                     {/* IMAGE */}
                     <div className="relative h-52 bg-gray-100 dark:bg-gray-700 flex items-center justify-center overflow-hidden">
 
-                      <img src={item.imageUrl} alt={item.title} loading="lazy" width="300" height="300" className=" max-h-full max-w-full object-contain group-hover:scale-105 transition duration-300 " />
+                      <img src={item.imageUrl} alt={item.title} loading="lazy" width="300" height="300" className=" max-h-full max-w-full object-contain md:group-hover:scale-105 transition duration-300 " />
 
                       {/* WISHLIST */}
                       <button
@@ -264,7 +264,7 @@ const CategoryItems = () => {
                           ${
                             isWishlisted
                               ? "bg-red-500 text-white scale-110"
-                              : "bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-red-100"
+                              : "bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 md:hover:bg-red-100"
                           }
                         `}
                       >
@@ -305,7 +305,7 @@ const CategoryItems = () => {
                           e.stopPropagation();
                           AddToCart(item);
                         }}
-                        className=" mt-4 w-full bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-2.5 rounded-lg transition focus:outline-none focus:ring-2 focus:ring-yellow-500 " >
+                        className=" mt-4 w-full bg-yellow-400 md:hover:bg-yellow-500 text-black font-semibold py-2.5 rounded-lg transition focus:outline-none focus:ring-2 focus:ring-yellow-500 " >
                         Add to Cart
                       </button>
                     </div>
@@ -327,7 +327,7 @@ const CategoryItems = () => {
                   page: prev.page - 1,
                 }))
               }
-              className=" px-5 py-2.5 rounded-xl font-medium transition-all duration-200 bg-white text-gray-900 border border-gray-300 shadow-sm hover:bg-gray-100 hover:shadow dark:bg-gray-800 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 disabled:opacity-40 disabled:cursor-not-allowed " >
+              className=" px-5 py-2.5 rounded-xl font-medium transition-all duration-200 bg-white text-gray-900 border border-gray-300 shadow-sm md:hover:bg-gray-100 md:hover:shadow dark:bg-gray-800 dark:text-white dark:border-gray-700 dark:md:hover:bg-gray-700 disabled:opacity-40 disabled:cursor-not-allowed " >
               ← Prev
             </button>
 
@@ -345,7 +345,7 @@ const CategoryItems = () => {
                   page: prev.page + 1,
                 }))
               }
-              className=" px-5 py-2.5 rounded-xl font-medium transition-all duration-200 bg-white text-gray-900 border border-gray-300 shadow-sm hover:bg-gray-100 hover:shadow dark:bg-gray-800 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 disabled:opacity-40 disabled:cursor-not-allowed " >
+              className=" px-5 py-2.5 rounded-xl font-medium transition-all duration-200 bg-white text-gray-900 border border-gray-300 shadow-sm md:hover:bg-gray-100 md:hover:shadow dark:bg-gray-800 dark:text-white dark:border-gray-700 dark:md:hover:bg-gray-700 disabled:opacity-40 disabled:cursor-not-allowed " >
               Next →
             </button>
 

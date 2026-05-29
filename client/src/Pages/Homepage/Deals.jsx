@@ -56,7 +56,7 @@ const Deals = () => {
         </div>
 
         {/* VIEW ALL */}
-        <button aria-label="View all deals" className=" hidden md:flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-sm font-semibold text-gray-800 dark:text-gray-100 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 cursor-pointer " >
+        <button aria-label="View all deals" className=" hidden md:flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-sm font-semibold text-gray-800 dark:text-gray-100 shadow-sm md:hover:shadow-md md:hover:-translate-y-0.5 transition-all duration-300 cursor-pointer " >
           View All
           <span>→</span>
         </button>
@@ -66,7 +66,7 @@ const Deals = () => {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
 
         {dealsData.map((item) => (
-          <div key={item.id} className=" group relative overflow-hidden rounded-3xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 cursor-pointer " >
+          <div key={item.id} className=" group relative overflow-hidden rounded-3xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 shadow-sm md:hover:shadow-md md:hover:-translate-y-2 transition-all duration-500 cursor-pointer " >
 
             {/* BADGE */}
             <span className=" absolute top-3 left-3 z-10 px-3 py-1 rounded-full bg-red-600 text-white text-[11px] font-semibold tracking-wide shadow-md " >
@@ -76,10 +76,10 @@ const Deals = () => {
             {/* IMAGE */}
             <div className="relative overflow-hidden bg-gray-100 dark:bg-gray-800">
 
-              <img src={item.image} alt={item.title} width="300" height="300" loading="lazy" className=" w-full h-52 object-cover group-hover:scale-110 transition-transform duration-700 " />
+              <img src={item.image} alt={item.title} width="300" height="300" loading="lazy" className=" w-full h-52 object-cover md:group-hover:scale-110 transition-transform duration-700 " />
 
               {/* OVERLAY */}
-              <div className=" absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition duration-500 " />
+              <div className=" absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-transparent opacity-0 md:group-hover:opacity-100 transition duration-500 " />
             </div>
 
             {/* CONTENT */}
@@ -109,7 +109,7 @@ const Deals = () => {
             </div>
 
             {/* HOVER RING */}
-            <div className=" absolute inset-0 rounded-3xl ring-0 group-hover:ring-2 ring-purple-400/50 transition " />
+            <div className=" absolute inset-0 rounded-3xl ring-0 md:group-hover:ring-2 ring-purple-400/50 transition " />
           </div>
         ))}
       </div>

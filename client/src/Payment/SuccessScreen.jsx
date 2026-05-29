@@ -27,7 +27,7 @@ const navigate= useNavigate()
       </p>
       <button
          onClick={()=>navigate('/')}
-          className="bg-green-600 text-white px-4 py-2 rounded hover:cursor-pointer hover:bg-green-400"
+          className="bg-green-600 text-white px-4 py-2 rounded md:hover:cursor-pointer md:hover:bg-green-400"
         >
           Back To Home
         </button>

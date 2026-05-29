@@ -57,8 +57,8 @@ const ManageProducts = () => {
           className="flex flex-col sm:flex-row items-start 
           bg-white dark:bg-gray-800 
           border border-gray-200 dark:border-gray-700 
-          rounded-lg shadow-md hover:shadow-lg 
-          transition-transform duration-300 hover:-translate-y-1 p-6"
+          rounded-lg shadow-md md:hover:shadow-lg 
+          transition-transform duration-300 md:hover:-translate-y-1 p-6"
         >
           {/* Product Image */}
           <div className="w-24 h-24 sm:w-32 sm:h-32 flex items-center justify-center
@@ -66,12 +66,12 @@ const ManageProducts = () => {
   rounded-lg overflow-hidden">
 
   <img
-    src={p.imageUrl}
-    alt={p.title}
-    className="w-full h-full object-contain 
-    transition duration-300
-    dark:brightness-90 dark:contrast-110"
-  />
+  src={`http://localhost:5100${p.imageUrl}` || p.imageUrl }
+  alt={p.title}
+  className="w-full h-full object-contain 
+  transition duration-300
+  dark:brightness-90 dark:contrast-110"
+/>
 </div>
 
           {/* Product Info */}
@@ -105,7 +105,7 @@ const ManageProducts = () => {
               <button
                 onClick={() => deleteProduct(p._id)}
                 className="w-full sm:w-auto text-sm 
-                bg-red-500 hover:bg-red-600 
+                bg-red-500 md:hover:bg-red-600 
                 text-white px-4 py-1.5 rounded-md 
                 transition-colors shadow-sm"
               >
@@ -115,9 +115,9 @@ const ManageProducts = () => {
               <button
                 onClick={() => itemnavigate(p._id)}
                 className="w-full sm:w-auto text-sm 
-                bg-yellow-400 hover:bg-yellow-500 
+                bg-yellow-400 md:hover:bg-yellow-500 
                 text-gray-900 
-                dark:bg-yellow-500 dark:hover:bg-yellow-600 dark:text-gray-900
+                dark:bg-yellow-500 dark:md:hover:bg-yellow-600 dark:text-gray-900
                 px-4 py-1.5 rounded-md 
                 transition-colors shadow-sm"
               >

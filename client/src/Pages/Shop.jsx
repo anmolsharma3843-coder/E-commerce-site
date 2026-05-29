@@ -195,7 +195,7 @@ const Shop = () => {
                 <div
                   key={item._id}
                   onClick={() => navigate(`/product/${item._id}`)}
-                  className="group relative overflow-hidden rounded-2xl bg-white dark:bg-[#1e293b] border border-gray-200 dark:border-gray-800 shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 cursor-pointer" >
+                  className="group relative overflow-hidden rounded-2xl bg-white dark:bg-[#1e293b] border border-gray-200 dark:border-gray-800 shadow-sm md:hover:shadow-2xl md:hover:-translate-y-1 transition-all duration-300 cursor-pointer" >
                   {/* IMAGE SECTION */}
                   <div className="relative overflow-hidden bg-gray-100 dark:bg-gray-800">
 
@@ -204,11 +204,11 @@ const Shop = () => {
                       src={item.imageUrl}
                       alt={item.title}
                       loading="lazy"
-                      className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500"
+                      className="w-full h-64 object-contain md:group-hover:scale-105 transition-transform duration-500"
                     />
 
                     {/* WISHLIST */}
-                    <button onClick={(e) => handleWishlist(item._id, e)} aria-label="Wishlist" className={` absolute top-3 right-3 p-2 rounded-full shadow-md transition ${isWishlisted ? "bg-red-500 text-white scale-110" : "bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-red-100"} `} >
+                    <button onClick={(e) => handleWishlist(item._id, e)} aria-label="Wishlist" className={` absolute top-3 right-3 p-2 rounded-full shadow-md transition ${isWishlisted ? "bg-red-500 text-white scale-110" : "bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 md:hover:bg-red-100"} `} >
                       {isWishlisted ? (
                         <FaHeart size={14} />
                       ) : (
@@ -270,7 +270,7 @@ const Shop = () => {
                     </div>
 
                     {/* BUTTON */}
-                    <button className="mt-5 w-full rounded-xl bg-yellow-400 hover:bg-yellow-500 text-white font-medium py-2.5 shadow-md hover:shadow-lg active:scale-[0.98] transition-all duration-200" >
+                    <button className="mt-5 w-full rounded-xl bg-yellow-400 md:hover:bg-yellow-500 text-white font-medium py-2.5 shadow-md md:hover:shadow-lg active:scale-[0.98] transition-all duration-200" >
                       Add to Cart
                     </button>
                   </div>

@@ -158,7 +158,7 @@ const Itemspart = () => {
           </p>
         </div>
 
-       <button onClick={() => navigate("/shop")} className=" hidden md:flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-sm font-semibold text-gray-800 dark:text-gray-100 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 cursor-pointer " >
+       <button onClick={() => navigate("/shop")} className=" hidden md:flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-sm font-semibold text-gray-800 dark:text-gray-100 shadow-sm md:hover:shadow-md md:hover:-translate-y-0.5 transition-all duration-300 cursor-pointer " >
           View All
           <span>→</span>
         </button>
@@ -181,17 +181,17 @@ const Itemspart = () => {
           );
 
           return (
-            <div key={item._id} onClick={() => handleClick(item._id) } role="button" tabIndex={0} className=" min-w-55 max-w-55 bg-white dark:bg-gray-900 rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-800 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer group " >
+            <div key={item._id} onClick={() => handleClick(item._id) } role="button" tabIndex={0} className=" min-w-55 max-w-55 bg-white dark:bg-gray-900 rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-800 shadow-sm md:hover:shadow-xl md:hover:-translate-y-1 transition-all duration-300 cursor-pointer group " >
               {/* IMAGE */}
               <div className="relative h-60 overflow-hidden bg-gray-100 dark:bg-gray-800">
 
-                <img loading="lazy" decoding="async" width="220" height="240" src={item.imageUrl} alt={item.title} className=" w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 " />
+                <img loading="lazy" decoding="async" width="220" height="240" src={item.imageUrl} alt={item.title} className=" w-full h-full object-cover md:group-hover:scale-110 transition-transform duration-500 " />
 
                 {/* OVERLAY */}
-                <div className=" absolute inset-0 bg-linear-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity " />
+                <div className=" absolute inset-0 bg-linear-to-t from-black/50 via-transparent to-transparent opacity-0 md:group-hover:opacity-100 transition-opacity " />
 
                 {/* ❤️ WISHLIST */}
-                <button onClick={(e) => handleWishlist(item._id, e) } aria-label={ isWishlisted ? "Remove from wishlist" : "Add to wishlist" } className={` absolute top-3 right-3 p-2 rounded-full shadow-md transition-all duration-300 border ${ isWishlisted ? "bg-red-600 text-white border-red-600 scale-110" : "bg-white/95 text-gray-800 border-gray-200 hover:bg-red-50" } `} >
+                <button onClick={(e) => handleWishlist(item._id, e) } aria-label={ isWishlisted ? "Remove from wishlist" : "Add to wishlist" } className={` absolute top-3 right-3 p-2 rounded-full shadow-md transition-all duration-300 border ${ isWishlisted ? "bg-red-600 text-white border-red-600 scale-110" : "bg-white/95 text-gray-800 border-gray-200 md:hover:bg-red-50" } `} >
                   {isWishlisted ? (
                     <FaHeart size={15} />
                   ) : (
@@ -246,4 +246,4 @@ const Itemspart = () => {
   );
 };
 
-export default Itemspart;
+export default React.memo(Itemspart);

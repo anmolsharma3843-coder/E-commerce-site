@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   FaHome,
@@ -16,7 +16,33 @@ const Sidebar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
+  const [profileImage, setProfileImage] = useState(null);
+useEffect(() => {
+  const savedImage = localStorage.getItem("profileImage");
 
+  if (savedImage) {
+    setProfileImage(savedImage);
+  }
+
+  const handleStorageChange = () => {
+    const updatedImage =
+      localStorage.getItem("profileImage");
+
+    setProfileImage(updatedImage);
+  };
+
+  window.addEventListener(
+    "storage",
+    handleStorageChange
+  );
+
+  return () => {
+    window.removeEventListener(
+      "storage",
+      handleStorageChange
+    );
+  };
+}, []);
   const handleLogout = async () => {
     try {
       const response = await fetch("http://localhost:5100/auth/logout", {
@@ -47,7 +73,7 @@ const Sidebar = () => {
   return (
     <aside
       className="shrink-0 group flex flex-col justify-between
-  h-screen w-24 hover:w-64
+  h-screen w-24 md:hover:w-64
   bg-white dark:bg-linear-to-b dark:from-[#0f172a] dark:via-[#111827] dark:to-[#020617]
   text-gray-700 dark:text-gray-300
   shadow-xl transition-all duration-300 ease-in-out"
@@ -55,10 +81,10 @@ const Sidebar = () => {
       {/* Logo */}
       <div className="flex items-center gap-4 px-4 py-6">
         <div className="w-9 h-9 bg-gray-200 dark:bg-gray-600 rounded-full overflow-clip shrink-0">
-          <img src="https://m.media-amazon.com/images/I/71XRV+IU0mL._AC_UL480_FMwebp_QL65_.jpg" alt="Admin Profile"/>
+          <img src={profileImage} alt="Admin Profile" className="w-full h-full object-cover"/>
         </div>
 
-        <span className="text-lg font-semibold opacity-0 group-hover:opacity-100 transition whitespace-nowrap">
+        <span className="text-lg font-semibold opacity-0 md:group-hover:opacity-100 transition whitespace-nowrap">
         Anmol
         </span>
       </div>
@@ -75,7 +101,7 @@ const Sidebar = () => {
               className={`flex items-center gap-4 px-3 py-3 rounded-xl transition
           ${isActive
                   ? "bg-indigo-100 text-indigo-600 dark:bg-indigo-600/20 dark:text-white"
-                  : "hover:bg-gray-100 dark:hover:bg-white/5 hover:text-gray-900 dark:hover:text-white"
+                  : "md:hover:bg-gray-100 dark:md:hover:bg-white/5 md:hover:text-gray-900 dark:md:hover:text-white"
                 }`}
             >
               {/* Icon */}
@@ -90,7 +116,7 @@ const Sidebar = () => {
               </div>
 
               {/* Text */}
-              <span className="opacity-0 group-hover:opacity-100 transition whitespace-nowrap">
+              <span className="opacity-0 md:group-hover:opacity-100 transition whitespace-nowrap">
                 {item.name}
               </span>
             </Link>
@@ -105,14 +131,14 @@ const Sidebar = () => {
           className="flex items-center gap-4 w-full px-3 py-3 rounded-xl
       bg-red-100 text-red-600 
       dark:bg-red-500/10 dark:text-red-400
-      hover:bg-red-500 hover:text-white transition hover:cursor-pointer"
+      md:hover:bg-red-500 md:hover:text-white transition md:hover:cursor-pointer"
         >
           <div className="w-10 h-10 flex items-center justify-center rounded-lg 
         bg-red-200 dark:bg-red-500/20 shrink-0">
             <FaSignOutAlt className="text-lg" />
           </div>
 
-          <span className="opacity-0 group-hover:opacity-100 transition whitespace-nowrap">
+          <span className="opacity-0 md:group-hover:opacity-100 transition whitespace-nowrap">
             Logout
           </span>
         </button>

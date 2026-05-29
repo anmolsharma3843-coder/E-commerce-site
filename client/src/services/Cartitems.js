@@ -1,8 +1,8 @@
-const BASE_URL = "http://localhost:5100/cart";
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 // 🛒 Get cart
 export const getCart = async () => {
-  const res = await fetch(BASE_URL, {
+  const res = await fetch(`${BASE_URL}/cart`, {
     credentials: "include",
   });
   return res.json();
@@ -10,7 +10,7 @@ export const getCart = async () => {
 
 // ➕ Add to cart
 export const addToCart = async (product) => {
-  const res = await fetch(BASE_URL, {
+  const res = await fetch(`${BASE_URL}/cart`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -23,7 +23,7 @@ export const addToCart = async (product) => {
 
 // 🔄 Update qty
 export const updateCartQty = async (id, action) => {
-  const res = await fetch(`${BASE_URL}/update/${id}`, {
+  const res = await fetch(`${BASE_URL}/cart/update/${id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -36,7 +36,7 @@ export const updateCartQty = async (id, action) => {
 
 // ❌ Remove
 export const removeFromCart = async (id) => {
-  const res = await fetch(`${BASE_URL}/${id}`, {
+  const res = await fetch(`${BASE_URL}/cart/${id}`, {
     method: "DELETE",
     credentials: "include",
   });

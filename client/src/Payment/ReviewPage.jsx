@@ -7,12 +7,16 @@ import { cartActions } from "../store/cartSlice";
 import Model from "../components/Model";
 import { createOrder } from "../services/orderService";
 
-const ReviewPage = ({ orderData, prevStep }) => {
+const ReviewPage = ({
+  orderData,
+  prevStep,
+  cartItems,
+  buyNow,
+}) => {
   const [confirmed, setConfirmed] = useState(false);
   const [Loading, setLoading] = useState(true);
   const [modal, setModal] = useState({ open: false, id: null, title: "" });
    const user = useSelector((store) => store.auth.user);
-  const cartitem = useSelector((store) => store.cart) || [];
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -51,22 +55,24 @@ const ReviewPage = ({ orderData, prevStep }) => {
     setModal({ open: false, id: null, title: "" });
   };
 
-  const total = cartitem.reduce(
-    (acc, item) => acc + item.price * item.qty,
-    0
-  );
+ const total = cartItems.reduce(
+  (acc, item) => acc + item.price * item.qty,
+  0
+);
    const handleConfirm = async () => {
   try {
     const userId = user._id
 
     await createOrder({
-      userId,
-      orderData,
-      cartItems: cartitem,
-    });
+  userId,
+  orderData,
+  cartItems,
+  buyNow,
+});
      console.log(orderData)
-    // ✅ clear redux cart
-    dispatch(cartActions.setCart([]));
+   if (!buyNow) {
+  dispatch(cartActions.setCart([]));
+}
 
     // ✅ show success UI
     setConfirmed(true);
@@ -127,10 +133,10 @@ const ReviewPage = ({ orderData, prevStep }) => {
             </h3>
 
             <div className="space-y-4">
-              {cartitem.map((item) => (
+              {cartItems.map((item) => (
                 <div
                   key={item.productId}
-                  className="flex gap-4 p-4 rounded-2xl border border-gray-200 dark:border-gray-700 hover:shadow-md transition bg-white dark:bg-gray-900"
+                  className="flex gap-4 p-4 rounded-2xl border border-gray-200 dark:border-gray-700 md:hover:shadow-md transition bg-white dark:bg-gray-900"
                 >
                   {/* Image */}
                   <img
@@ -154,41 +160,47 @@ const ReviewPage = ({ orderData, prevStep }) => {
                     </span>
 
                     {/* Qty */}
-                    <div className="mt-3 flex items-center bg-gray-100 dark:bg-gray-800 rounded-full px-2 py-1 w-fit">
-                      <button
-                        onClick={() => handleDecrease(item.productId)}
-                        className="px-2 text-lg hover:text-red-500"
-                      >
-                        −
-                      </button>
+                    {!buyNow && (
+  <div className="mt-3 flex items-center bg-gray-100 dark:bg-gray-800 rounded-full px-2 py-1 w-fit">
 
-                      <span className="px-3 font-medium text-gray-800 dark:text-white">
-                        {item.qty}
-                      </span>
+    <button
+      onClick={() => handleDecrease(item.productId)}
+      className="px-2 text-lg md:hover:text-red-500"
+    >
+      −
+    </button>
 
-                      <button
-                        onClick={() => handleIncrease(item.productId)}
-                        className="px-2 text-lg hover:text-green-500"
-                      >
-                        +
-                      </button>
-                    </div>
+    <span className="px-3 font-medium text-gray-800 dark:text-white">
+      {item.qty}
+    </span>
+
+    <button
+      onClick={() => handleIncrease(item.productId)}
+      className="px-2 text-lg md:hover:text-green-500"
+    >
+      +
+    </button>
+
+  </div>
+)}
                   </div>
 
                   {/* Right */}
                   <div className="flex flex-col justify-between items-end">
-                    <button
-                      onClick={() =>
-                        setModal({
-                          open: true,
-                          id: item.productId,
-                          title: item.title,
-                        })
-                      }
-                      className="p-2 rounded-full hover:bg-red-100 dark:hover:bg-red-900/30 text-red-500 transition"
-                    >
-                      <MdDeleteOutline size={20} />
-                    </button>
+                    {!buyNow && (
+  <button
+    onClick={() =>
+      setModal({
+        open: true,
+        id: item.productId,
+        title: item.title,
+      })
+    }
+    className="p-2 rounded-full md:hover:bg-red-100 dark:md:hover:bg-red-900/30 text-red-500 transition"
+  >
+    <MdDeleteOutline size={20} />
+  </button>
+)}
 
                     <div className="text-right">
                       <p className="font-bold text-gray-900 dark:text-white">
@@ -235,14 +247,14 @@ const ReviewPage = ({ orderData, prevStep }) => {
 
           <button
             onClick={handleConfirm}
-            className="w-full mt-5 bg-linear-to-r from-green-500 to-green-600 text-white py-3 rounded-xl font-semibold shadow-md hover:scale-[1.02] hover:shadow-lg transition-all"
+            className="w-full mt-5 bg-linear-to-r from-green-500 to-green-600 text-white py-3 rounded-xl font-semibold shadow-md md:hover:scale-[1.02] md:hover:shadow-lg transition-all"
           >
             Place Order
           </button>
 
           <button
             onClick={prevStep}
-            className="w-full mt-3 border border-gray-300 dark:border-gray-600 py-2 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+            className="w-full mt-3 border border-gray-300 dark:border-gray-600 py-2 rounded-xl md:hover:bg-gray-100 dark:md:hover:bg-gray-700 transition"
           >
             ← Back
           </button>

@@ -82,6 +82,24 @@ const ItemDetails = () => {
       setAdding(false);
     }
   };
+  const handleBuyNow = () => {
+  if (!token) {
+    navigate("/login");
+    return;
+  }
+
+  navigate("/payment", {
+    state: {
+      buyNowItem: {
+        productId: items._id,
+        title: items.title,
+        price: items.price,
+        imageUrl: items.imageUrl,
+        qty: 1,
+      },
+    },
+  });
+};
 
   // 🔥 LOADING SKELETON
   if (loading) {
@@ -138,7 +156,7 @@ const ItemDetails = () => {
 
         {/* IMAGE */}
         <div className=" bg-white dark:bg-gray-900 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-800 p-4 lg:sticky lg:top-24 h-fit " >
-          <img src={items.imageUrl} alt={items.title} loading="eager" fetchPriority="high" className=" w-full h-80 sm:h-105 object-contain mx-auto transition-transform duration-300 hover:scale-105 " />
+          <img src={items.imageUrl} alt={items.title} loading="eager" fetchPriority="high" className=" w-full h-80 sm:h-105 object-contain mx-auto transition-transform duration-300 md:hover:scale-105 " />
 
           <div className="flex flex-wrap gap-2 mt-5">
             <span className="text-xs bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 px-3 py-1 rounded-full border border-gray-200 dark:border-gray-700">
@@ -254,18 +272,7 @@ const ItemDetails = () => {
         </div>
 
         {/* DESKTOP BUY BOX */}
-        <div
-          className="
-            hidden xl:block
-            bg-white dark:bg-gray-900
-            p-6
-            rounded-2xl
-            border border-gray-200 dark:border-gray-800
-            shadow-sm
-            h-fit
-            sticky top-24
-          "
-        >
+        <div className=" hidden xl:block bg-white dark:bg-gray-900 p-6 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm h-fit sticky top-24 " >
           <p className="text-3xl font-bold text-gray-900 dark:text-white">
             ₹{items.price}
           </p>
@@ -276,28 +283,34 @@ const ItemDetails = () => {
 
           <div className="flex flex-col gap-3 mt-6">
 
-            <button onClick={AddToCart} disabled={adding} className=" bg-yellow-400 hover:bg-yellow-500 text-gray-900 py-3 rounded-xl font-semibold flex items-center justify-center gap-2 transition-colors disabled:opacity-60 " >
+            <button onClick={AddToCart} disabled={adding} className=" bg-yellow-400 md:hover:bg-yellow-500 text-gray-900 py-3 rounded-xl font-semibold flex items-center justify-center gap-2 transition-colors disabled:opacity-60 " >
               <BsCart2 />
               {adding ? "Adding..." : "Add to Cart"}
             </button>
 
-            <button className=" bg-orange-600 hover:bg-orange-700 text-white py-3 rounded-xl font-semibold transition-colors " >
-              Buy Now
-            </button>
+          <button
+  onClick={handleBuyNow}
+  className=" bg-orange-600 md:hover:bg-orange-700 text-white py-3 rounded-xl font-semibold transition-colors "
+>
+  Buy Now
+</button>
           </div>
         </div>
       </div>
 
       {/* MOBILE STICKY BAR */}
       <div className=" fixed bottom-0 left-0 w-full bg-white/95 dark:bg-gray-900/95 backdrop-blur border-t border-gray-200 dark:border-gray-800 p-3 flex gap-3 xl:hidden z-50 " >
-        <button onClick={AddToCart} disabled={adding} className=" flex-1 bg-yellow-400 hover:bg-yellow-500 text-gray-900 py-3 rounded-xl font-semibold flex items-center justify-center gap-2 transition-colors disabled:opacity-60 " >
+        <button onClick={AddToCart} disabled={adding} className=" flex-1 bg-yellow-400 md:hover:bg-yellow-500 text-gray-900 py-3 rounded-xl font-semibold flex items-center justify-center gap-2 transition-colors disabled:opacity-60 " >
           <BsCart2 />
           {adding ? "Adding..." : "Add to Cart"}
         </button>
 
-        <button className=" flex-1 bg-orange-600 hover:bg-orange-700 text-white py-3 rounded-xl font-semibold transition-colors " >
-          Buy Now
-        </button>
+       <button
+  onClick={handleBuyNow}
+  className=" flex-1 bg-orange-600 md:hover:bg-orange-700 text-white py-3 rounded-xl font-semibold transition-colors "
+>
+  Buy Now
+</button>
       </div>
     </div>
   );

@@ -26,14 +26,15 @@ const SignIn = () => {
   return (
     <>
       <div className="flex flex-col justify-start p-5 border-b-2 border-gray-500 bg-white sticky top-0 z-10 dark:bg-gray-800">
-        <Link to="/" className="flex items-center gap-2">
-          <div className="w-10 h-10 bg-linear-to-r from-purple-600 to-indigo-500 text-white flex items-center justify-center rounded-xl font-bold shadow">
-            A
-          </div>
-          <span className="text-xl font-bold tracking-wide text-gray-800 dark:text-white">
-            ShopX
-          </span>
-        </Link>
+         <Link to="/" aria-label="Go to homepage" className="flex items-center gap-2" >
+            <div className="w-10 h-auto rounded-full bg-linear-to-r from-purple-700 to-indigo-600 text-white flex items-center justify-center font-bold shadow-lg">
+              <img src="/logo.svg" alt="logo" className=" rounded-full object-cover " />
+            </div>
+
+            <span className="text-xl font-bold text-gray-900 dark:text-white">
+              UrbanMela
+            </span>
+          </Link>
       </div>
       <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-800">
         <div className="w-full max-w-md bg-white rounded-lg shadow-md p-8 dark:bg-gray-600">
@@ -88,7 +89,7 @@ const SignIn = () => {
             {/* Submit button */}
             <button
               type="submit"
-              className="w-full bg-blue-800 text-white py-2 rounded-lg hover:bg-blue-500 transition duration-200"
+              className="w-full bg-blue-800 text-white py-2 rounded-lg md:hover:bg-blue-500 transition duration-200"
             >
               Log In
             </button>
@@ -97,7 +98,7 @@ const SignIn = () => {
           {/* Sign up link */}
           <p className="mt-6 text-center text-sm text-gray-600 dark:text-gray-100">
             Don’t have an account?{" "}
-            <Link to="/Signin" className="text-blue-600 hover:underline dark:font-bold dark:text-gray-50">
+            <Link to="/Signin" className="text-blue-600 md:hover:underline dark:font-bold dark:text-gray-50">
               Sign Up
             </Link>
           </p>

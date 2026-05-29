@@ -54,7 +54,7 @@ const MyOrders = () => {
       return (
         <div
           key={order._id}
-          className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-2xl p-5 mb-6 shadow-sm hover:shadow-md transition"
+          className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-2xl p-5 mb-6 shadow-sm md:hover:shadow-md transition"
         >
           {/* HEADER */}
           <div className="flex justify-between items-center mb-4">

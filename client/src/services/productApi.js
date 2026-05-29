@@ -1,8 +1,8 @@
 // src/services/productApi.js
-
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 export const addProductApi = async (product) => {
   try {
-    const response = await fetch("http://localhost:5100/products", {
+    const response = await fetch(`${BASE_URL}/products`, {
       method: "POST",
       body: JSON.stringify({
         ...product,

@@ -1,28 +1,33 @@
 import mongoose from "mongoose";
 const usersSchema = mongoose.Schema({
-    username: {
-        type: String,
-        required: true
-    },
-    email: {
-        type: String,
-        required: true,
-        unique: true
-    },
-    password: {
-        type: String,
-        required: true
-    },
-    isAdmin:{
-        type: Boolean,
-        required:true,
-        default:false
-    },
+  username: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  password: {
+    type: String,
+    required: true
+  },
+  profileImage: {
+    type: String,
+    default: "",
+  },
+  isAdmin: {
+    type: Boolean,
+    required: true,
+    default: false
+  },
 }, { timestamps: true })
 const user = mongoose.model('users', usersSchema);
 //items Schema
 const itemsSchema = mongoose.Schema({
-    title: {
+  title: {
     type: String,
     required: true,
     trim: true
@@ -57,25 +62,25 @@ const itemsSchema = mongoose.Schema({
   },
   fitType: {
     type: String,
-    enum: ["Regular Fit", "Slim Fit", "Loose Fit", "Skinny Fit","Fitted"],
+    enum: ["Regular Fit", "Slim Fit", "Loose Fit", "Skinny Fit", "Fitted"],
     required: true
   },
   imageUrl: {
     type: String,
     required: true,
   },
-   category:{
-    type:String,
-    enum:["Men","Women"]
-   }
+  category: {
+    type: String,
+    enum: ["Men", "Women"]
+  }
 }, { timestamps: true });
 const items = mongoose.model('items', itemsSchema);
 const CartItemsSchema = mongoose.Schema({
-    productId: String,
-    title: String,
-    price: Number,
-    imageUrl: String,
-    qty: {
+  productId: String,
+  title: String,
+  price: Number,
+  imageUrl: String,
+  qty: {
     type: Number,
     default: 1,
   },

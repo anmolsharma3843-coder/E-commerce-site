@@ -1,12 +1,12 @@
-const BASE_URL = "http://localhost:5100/orders";
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 // ✅ Create Order
 export const createOrder = async (data) => {
-  const res = await fetch(`${BASE_URL}/create`, {
+  const res = await fetch(`${BASE_URL}/orders/create`, {
     method: "POST",
+    credentials:'include',
     headers: {
       "Content-Type": "application/json",
-      // "Authorization": `Bearer ${token}` // add later if using auth
     },
     body: JSON.stringify(data),
   });
@@ -21,7 +21,7 @@ export const createOrder = async (data) => {
 
 // ✅ Get All Orders (Admin)
 export const getAllOrders = async () => {
-  const res = await fetch(`${BASE_URL}`);
+  const res = await fetch(`${BASE_URL}/orders`);
 
   if (!res.ok) {
     throw new Error("Failed to fetch orders");
@@ -32,7 +32,7 @@ export const getAllOrders = async () => {
 
 // ✅ Get Single Order
 export const getOrderById = async (id) => {
-  const res = await fetch(`${BASE_URL}/${id}`);
+  const res = await fetch(`${BASE_URL}/orders/${id}`);
 
   if (!res.ok) {
     throw new Error("Failed to fetch order");
@@ -42,7 +42,7 @@ export const getOrderById = async (id) => {
 };
 export const getMyOrders = async () => {
   try {
-    const res = await fetch(`${BASE_URL}/myorders`, {
+    const res = await fetch(`${BASE_URL}/orders/myorders`, {
       method: "GET",
       credentials: "include"
     });
@@ -57,4 +57,20 @@ export const getMyOrders = async () => {
   } catch (err) {
     throw err;
   }
+};
+//update status of the order
+export const updateOrderStatus = async (id, status) => {
+  const res = await fetch(`${BASE_URL}/orders/update-status/${id}`,
+    {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ status }),
+        }
+  );
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch orders");
+  }
+
+  return await res.json();
 };

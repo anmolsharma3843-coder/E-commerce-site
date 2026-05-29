@@ -51,7 +51,7 @@ const Wishlist = () => {
   // ✅ Empty State
  if (wishlist.length === 0) {
   return (
-    <div className="min-h-[70vh] flex flex-col items-center justify-center text-gray-700 text-xl dark:bg-gray-950 dark:text-gray-300">
+    <div className="min-h-screen flex flex-col items-center justify-center text-gray-700 text-xl dark:bg-gray-950 dark:text-gray-300">
       <div className="text-5xl mb-4">💔</div>
       <p>Your wishlist is empty</p>
     </div>
@@ -73,7 +73,7 @@ const Wishlist = () => {
           <div
             key={item._id}
             onClick={() => navigate(`/product/${item._id}`)}
-            className="bg-white dark:bg-gray-800 rounded-2xl shadow-md hover:shadow-xl transition cursor-pointer overflow-hidden group"
+            className="bg-white dark:bg-gray-800 rounded-2xl shadow-md md:hover:shadow-xl transition cursor-pointer overflow-hidden group"
           >
 
             {/* IMAGE */}
@@ -81,7 +81,7 @@ const Wishlist = () => {
               <img
                 src={item.imageUrl}
                 alt={item.title}
-                className="w-full h-full object-contain group-hover:scale-110 transition duration-500"
+                className="w-full h-full object-contain md:group-hover:scale-110 transition duration-500"
               />
 
               {/* REMOVE BUTTON */}

@@ -1,9 +1,9 @@
-const BASE_URL = "http://localhost:5100/wishlist";
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 // ✅ Get Wishlist
 export const getWishlist = async () => {
   try {
-    const res = await fetch(BASE_URL, {
+    const res = await fetch(`${BASE_URL}/wishlist`, {
       method: "GET",
       credentials: "include",
       headers: {
@@ -24,7 +24,7 @@ export const getWishlist = async () => {
 // ✅ Toggle Wishlist
 export const toggleWishlist = async (productId) => {
   try {
-    const res = await fetch(BASE_URL, {
+    const res = await fetch(`${BASE_URL}/wishlist`, {
       method: "POST",
       credentials: "include",
       headers: {

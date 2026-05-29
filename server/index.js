@@ -4,7 +4,7 @@ import cors from 'cors';
 import 'dotenv/config';
 import { connectDB } from './Config/db.js';
 import compression from "compression";
-
+import path from "path";
 
 // Import routes
 import authRoutes from './Routes/authRoutes.js' 
@@ -43,6 +43,7 @@ app.use('/users', userRoutes);
 // app.use('/category', categoryRoutes);
 app.use("/orders", ordersRoutes);
 app.use('/wishlist',WishlistRoutes)
+app.use("/uploads", e.static("uploads"));
 
 app.listen(5100, () => {
   console.log('Server is running on http://localhost:5100/');

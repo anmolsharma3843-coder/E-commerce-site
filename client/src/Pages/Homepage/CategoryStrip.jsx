@@ -124,8 +124,8 @@ const CategoryStrip = () => {
     overflow-hidden
     border-2 border-gray-300
     dark:border-gray-600
-    group-hover:border-purple-500
-    group-hover:shadow-lg
+    md:group-hover:border-purple-500
+    md:group-hover:shadow-lg
     transition-transform duration-300
   "
 >
@@ -139,13 +139,13 @@ const CategoryStrip = () => {
     className="
       w-full h-full
       object-cover
-      group-hover:scale-110
+      md:group-hover:scale-110
       transition-transform duration-300
     "
   />
 </div>
             {/* CATEGORY NAME */}
-            <p className=" text-sm mt-2 text-center font-medium text-gray-800 dark:text-gray-200 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors duration-300 line-clamp-1 "
+            <p className=" text-sm mt-2 text-center font-medium text-gray-800 dark:text-gray-200 md:group-hover:text-purple-600 dark:md:group-hover:text-purple-400 transition-colors duration-300 line-clamp-1 "
             >
               {cat.name}
             </p>

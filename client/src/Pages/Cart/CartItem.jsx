@@ -44,7 +44,7 @@ const CartItem = ({ item, onRemove }) => {
         bg-white dark:bg-gray-800
         border border-gray-200 dark:border-gray-700
         rounded-2xl p-4
-        shadow-sm hover:shadow-md
+        shadow-sm md:hover:shadow-md
         transition-all duration-300
         flex flex-col sm:flex-row gap-4
       "
@@ -70,7 +70,7 @@ const CartItem = ({ item, onRemove }) => {
             w-full h-full
             object-contain
             p-2
-            hover:scale-105
+            md:hover:scale-105
             transition-transform duration-300
           "
         />
@@ -117,7 +117,7 @@ const CartItem = ({ item, onRemove }) => {
               className="
                 px-4 py-2
                 text-gray-800 dark:text-white
-                hover:bg-gray-200 dark:hover:bg-gray-600
+                md:hover:bg-gray-200 dark:md:hover:bg-gray-600
                 transition
                 disabled:opacity-50
               "
@@ -143,7 +143,7 @@ const CartItem = ({ item, onRemove }) => {
               className="
                 px-4 py-2
                 text-gray-800 dark:text-white
-                hover:bg-gray-200 dark:hover:bg-gray-600
+                md:hover:bg-gray-200 dark:md:hover:bg-gray-600
                 transition
               "
             >
@@ -158,7 +158,7 @@ const CartItem = ({ item, onRemove }) => {
             className="
               flex items-center gap-1
               text-red-600 dark:text-red-400
-              hover:text-red-700 dark:hover:text-red-300
+              md:hover:text-red-700 dark:md:hover:text-red-300
               font-medium text-sm
               transition
             "

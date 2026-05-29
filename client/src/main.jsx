@@ -1,113 +1,266 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.jsx'
-import { Provider } from 'react-redux';
-import store from './store/index.js';
-import { RouterProvider, createBrowserRouter } from 'react-router-dom'
-import Cart from './Pages/Cart/Cart.jsx';
-import ItemDetails from './Pages/ItemDetails.jsx';
-import Emptycart from './Pages/Cart/Emptycart.jsx'
-import { ToastContainer } from 'react-toastify';
-import Login from './Pages/Auth/Login.jsx'
-import SignUp from './Pages/Auth/Signup.jsx';
-import Protected from './context/Protect.jsx';
-import AdminRoute from './context/AdminRoute.jsx';
-import Dashboard from './Admin/Dashboard.jsx';
-import AddProduct from './Admin/AddProduct.jsx';
-import ManageProducts from './Admin/ManageProducts.jsx';
-import Orders from './Admin/Orders.jsx';
-import PaymentPage from './Payment/PaymentPage.jsx';
-import CheckoutFlow from './Payment/CheckoutFlow.jsx';
-import Adminpanel from './Admin/Adminpanel.jsx';
-import EditProduct from './Admin/EditProduct.jsx';
-import Users from './Admin/Users.jsx';
-import UserRoute from './context/UserRoute.jsx';
-import UserOrder from './Pages/MyOrders.jsx'
-import CategoryItems from './Pages/CategoryItems.jsx';
-import Home from './Pages/Homepage/Home.jsx';
-import Wishlist from './Pages/Wishlist.jsx';
-import MyOrders from './Pages/MyOrders.jsx';
-import Shop from './Pages/shop.jsx';
-const router = createBrowserRouter(
-  [
-    {
-      path: "/", element: <UserRoute><App /></UserRoute>, children: [
-        {
-          path: "/", element: <Home/>
-        },
-        {
-          path: "/product/:id",
-          element: <ItemDetails />
-        },
-        {
-      path:"/category/:category", element:<CategoryItems/>
-    },
-     {
-      path:"/wishlist", element:<Wishlist/>
-    },
-     {
-      path:"/orders", element:<MyOrders/>
-    },
-    {path:"/shop" ,element:<Shop />}
+import { StrictMode, lazy, Suspense } from "react";
+import { createRoot } from "react-dom/client";
+import "./index.css";
 
-      ]
-    },
-    {
-  path: "/cart",
-  element: <UserRoute><Cart /></UserRoute>
-},
-{
-  path: "/Emptycart",
-  element: <UserRoute><Emptycart /></UserRoute>
-},
-{
-  path: "/payment",
-  element: <UserRoute><CheckoutFlow /></UserRoute>
-},
+import { Provider } from "react-redux";
+import store from "./store/index.js";
 
-    {
-      path: "/Login",
-      element: <Login />
-    },
-    {
-      path: "/Signin",
-      element: <SignUp />
-    },
-    {
-  path: "/admin",
-  element: <AdminRoute><Dashboard /></AdminRoute>,
-  children: [
-    { index: true, element: <Adminpanel /> },
+import {
+  RouterProvider,
+  createBrowserRouter,
+} from "react-router-dom";
 
-    { path: "add-product", element: <AddProduct /> },
-    { path: "products", element: <ManageProducts /> },
-    { path: "orders", element: <Orders /> },
-    { path: "editproducts/:id", element: <EditProduct /> },
-    { path: "users", element: <Users /> }
-  ]
-}
-  
-  ]
-)
+const ToastContainer = lazy(() =>
+  import("react-toastify").then((module) => ({
+    default: module.ToastContainer,
+  }))
+);
 
-createRoot(document.getElementById('root')).render(
+import AdminRoute from "./context/AdminRoute.jsx";
+import UserRoute from "./context/UserRoute.jsx";
+import LoadingSpinner from "./components/LoadingSpinner.jsx";
+
+/* =========================
+   LAZY LOAD ALL PAGES
+========================= */
+
+const App = lazy(() => import("./App.jsx"));
+
+const Home = lazy(() =>
+  import("./Pages/Homepage/Home.jsx")
+);
+
+const Cart = lazy(() =>
+  import("./Pages/Cart/Cart.jsx")
+);
+
+const Emptycart = lazy(() =>
+  import("./Pages/Cart/Emptycart.jsx")
+);
+
+const ItemDetails = lazy(() =>
+  import("./Pages/ItemDetails.jsx")
+);
+
+const Login = lazy(() =>
+  import("./Pages/Auth/Login.jsx")
+);
+
+const SignUp = lazy(() =>
+  import("./Pages/Auth/Signup.jsx")
+);
+
+const Wishlist = lazy(() =>
+  import("./Pages/Wishlist.jsx")
+);
+
+const MyOrders = lazy(() =>
+  import("./Pages/MyOrders.jsx")
+);
+
+const CategoryItems = lazy(() =>
+  import("./Pages/CategoryItems.jsx")
+);
+
+const Shop = lazy(() =>
+  import("./Pages/shop.jsx")
+);
+
+const CheckoutFlow = lazy(() =>
+  import("./Payment/CheckoutFlow.jsx")
+);
+
+/* =========================
+   ADMIN PAGES
+========================= */
+
+const Dashboard = lazy(() =>
+  import("./Admin/Dashboard.jsx")
+);
+
+const Adminpanel = lazy(() =>
+  import("./Admin/Adminpanel.jsx")
+);
+
+const AddProduct = lazy(() =>
+  import("./Admin/AddProduct.jsx")
+);
+
+const ManageProducts = lazy(() =>
+  import("./Admin/ManageProducts.jsx")
+);
+
+const Orders = lazy(() =>
+  import("./Admin/Orders.jsx")
+);
+
+const EditProduct = lazy(() =>
+  import("./Admin/EditProduct.jsx")
+);
+
+const Users = lazy(() =>
+  import("./Admin/Users.jsx")
+);
+
+/* =========================
+   ROUTER
+========================= */
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: (
+      <UserRoute>
+        <App />
+      </UserRoute>
+    ),
+
+    children: [
+      {
+        path: "/",
+        element: <Home />,
+      },
+
+      {
+        path: "/product/:id",
+        element: <ItemDetails />,
+      },
+
+      {
+        path: "/category/:category",
+        element: <CategoryItems />,
+      },
+
+      {
+        path: "/wishlist",
+        element: <Wishlist />,
+      },
+
+      {
+        path: "/orders",
+        element: <MyOrders />,
+      },
+
+      {
+        path: "/shop",
+        element: <Shop />,
+      },
+    ],
+  },
+
+  {
+    path: "/cart",
+
+    element: (
+      <UserRoute>
+        <Cart />
+      </UserRoute>
+    ),
+  },
+
+  {
+    path: "/Emptycart",
+
+    element: (
+      <UserRoute>
+        <Emptycart />
+      </UserRoute>
+    ),
+  },
+
+  {
+    path: "/payment",
+
+    element: (
+      <UserRoute>
+        <CheckoutFlow />
+      </UserRoute>
+    ),
+  },
+
+  {
+    path: "/Login",
+    element: <Login />,
+  },
+
+  {
+    path: "/Signin",
+    element: <SignUp />,
+  },
+
+  {
+    path: "/admin",
+
+    element: (
+      <AdminRoute>
+        <Dashboard />
+      </AdminRoute>
+    ),
+
+    children: [
+      {
+        index: true,
+        element: <Adminpanel />,
+      },
+
+      {
+        path: "add-product",
+        element: <AddProduct />,
+      },
+
+      {
+        path: "products",
+        element: <ManageProducts />,
+      },
+
+      {
+        path: "orders",
+        element: <Orders />,
+      },
+
+      {
+        path: "editproducts/:id",
+        element: <EditProduct />,
+      },
+
+      {
+        path: "users",
+        element: <Users />,
+      },
+    ],
+  },
+]);
+
+/* =========================
+   APP RENDER
+========================= */
+
+createRoot(document.getElementById("root")).render(
   <StrictMode>
     <Provider store={store}>
-      <RouterProvider router={router} />
+      <Suspense
+        fallback={
+          <div className="flex items-center justify-center h-screen text-xl font-semibold">
+           <LoadingSpinner/>
+          </div>
+        }
+      >
+        <RouterProvider router={router} />
+      </Suspense>
+
       <ToastContainer
-  position="top-right"
-  autoClose={800}
-  hideProgressBar={false}
-  newestOnTop
-  closeOnClick
-  pauseOnHover
-  draggable
-  limit={2}
-  theme="colored"
-  toastClassName="rounded-xl shadow-lg text-sm font-medium"
-  bodyClassName="px-3 py-2"
-/>
+        position="top-right"
+        autoClose={800}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        pauseOnHover
+        draggable
+        limit={2}
+        theme="colored"
+        toastClassName="rounded-xl shadow-lg text-sm font-medium"
+        bodyClassName="px-3 py-2"
+      />
     </Provider>
-  </StrictMode>,
-)
+  </StrictMode>
+);

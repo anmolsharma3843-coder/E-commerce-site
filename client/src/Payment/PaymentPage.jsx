@@ -135,14 +135,14 @@ const PaymentPage = ({ nextStep, prevStep }) => {
             <button
               type="button"
               onClick={prevStep}
-              className="w-1/2 bg-gray-400 text-white py-3 rounded-lg hover:bg-gray-500 transition"
+              className="w-1/2 bg-gray-400 text-white py-3 rounded-lg md:hover:bg-gray-500 transition"
             >
               ← Back
             </button>
 
             <button
               type="submit"
-              className="w-1/2 bg-blue-600 text-white py-3 rounded-lg text-lg font-semibold hover:bg-blue-700 transition"
+              className="w-1/2 bg-blue-600 text-white py-3 rounded-lg text-lg font-semibold md:hover:bg-blue-700 transition"
             >
               Review Order →
             </button>

@@ -1,38 +1,54 @@
 import { Router } from "express";
 
 import {
-  getProducts,
-  getProductDetails,
-  addProduct,
-  deleteProduct,
-  updateProduct,
   getProductslist,
   getAllProducts,
-} from "../controller/productController.js";
+  getProductDetails,
+  getProducts,
+  deleteProduct,
+  updateProduct,
+  createProduct,
+} from "../controller/ProductController.js";
 
 import {
   authenicate,
   authorizeAdmin,
 } from "../Middleware/Authenticate.js";
 
+import { uploadProduct } from "../Middleware/upload.js";
+
 const router = Router();
 
-// ✅ PUBLIC ROUTES
-
+// GET
 router.get("/", getProducts);
-
-router.get("/all", getAllProducts);
-
 router.get("/list", getProductslist);
-
+router.get("/all", getAllProducts);
 router.get("/:id", getProductDetails);
 
-// ✅ ADMIN ROUTES
+// CREATE PRODUCT
+router.post(
+  "/",
+  authenicate,
+  authorizeAdmin,
+  uploadProduct.single("image"),
+  createProduct
+);
 
-router.post("/", authenicate, authorizeAdmin, addProduct);
+// UPDATE PRODUCT
+router.put(
+  "/:id",
+  authenicate,
+  authorizeAdmin,
+  uploadProduct.single("image"),
+  updateProduct
+);
 
-router.put("/:id", authenicate, authorizeAdmin, updateProduct);
-
-router.delete("/:id", authenicate, authorizeAdmin, deleteProduct);
+// DELETE
+router.delete(
+  "/:id",
+  authenicate,
+  authorizeAdmin,
+  deleteProduct
+);
 
 export default router;

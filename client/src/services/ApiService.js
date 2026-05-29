@@ -1,8 +1,8 @@
-const Base_url= 'http://localhost:5100'
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
  export const fetchdata=async(endpoint)=>{
     try{
-        const response=await fetch(`${Base_url}/${endpoint}`,{
+        const response=await fetch(`${BASE_URL}/${endpoint}`,{
             method:'GET',
             headers:{
                 'Content-Type':'application/json'
@@ -20,7 +20,7 @@ const Base_url= 'http://localhost:5100'
 }
  export const fetchAllproduct=async()=>{
     try{
-        const response=await fetch(`${Base_url}/products/all`,{
+        const response=await fetch(`${BASE_URL}/products/all`,{
             method:'GET',
             headers:{
                 'Content-Type':'application/json'
@@ -38,7 +38,7 @@ const Base_url= 'http://localhost:5100'
 }
 export const fetchCategory=async(endpoint)=>{
     try{
-        const response=await fetch(`${Base_url}/${endpoint}`,{
+        const response=await fetch(`${BASE_URL}/${endpoint}`,{
            method: 'POST',
         body: JSON.stringify({ _id: id }),
         headers: { 'Content-Type': 'application/json' }
@@ -56,7 +56,7 @@ export const fetchCategory=async(endpoint)=>{
 
  const DelteCartItem=async(endpoint)=>{
     try{
-        const response=await fetch(`${Base_url}/${endpoint}`,{
+        const response=await fetch(`${BASE_URL}/${endpoint}`,{
             method: 'DELETE',
         })
         if(!response.ok){
@@ -86,7 +86,7 @@ export const FetchUsers=async(endpoint)=>{
 }
 export const getProductDetails=async(id)=>{
           try{
-        const response=await fetch(`${Base_url}/products/${id}`,{
+        const response=await fetch(`${BASE_URL}/products/${id}`,{
             method:'GET',
             headers:{
                 'Content-Type':'application/json'
@@ -104,7 +104,7 @@ export const getProductDetails=async(id)=>{
 }
 export const getrelatedProduct=async(id)=>{
           try{
-        const response=await fetch(`${Base_url}/products/category/${id}`,{
+        const response=await fetch(`${BASE_URL}/products/category/${id}`,{
             method:'GET',
             headers:{
                 'Content-Type':'application/json'

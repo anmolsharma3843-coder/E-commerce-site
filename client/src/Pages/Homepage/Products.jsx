@@ -6,25 +6,25 @@ const categories = [
     id: 1,
     title: "Women's Dresses",
     slug: "Women",
-    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDxdogOWUXPCtU-x5mXLL2pNmOy-xZCGEsgg&s",
+    img: "https://m.media-amazon.com/images/I/51JtGs04X7L._SY741_.jpg",
   },
   {
     id: 2,
     title: "Men's Jackets",
     slug: "Men",
-    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8bKK4sWcK_qeBoNOGCTr6rMm4GgKGgvqD0Q&s",
+    img: "https://m.media-amazon.com/images/I/51+txLNg3VL._SY879_.jpg",
   },
   {
     id: 3,
-    title: "Tops & Blouses",
+    title: "Shirts & Jeans",
     slug: "Women",
-    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMnlETyAHOtAVc6iwUyG_LNXy_qTW0_695ZQ&s",
+    img: "https://m.media-amazon.com/images/I/71XX0OTaPbL._SX569_.jpg",
   },
   {
     id: 4,
-    title: "Denim Collection",
+    title: "Women Kurti",
     slug: "Shop",
-    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7W4Oa_-PdiyvkdxqQY0OWCXJA0yyszrsCIw&s",
+    img: "https://m.media-amazon.com/images/I/71SZuoo5Q2L._AC_UL480_FMwebp_QL65_.jpg",
   },
 ];
 
@@ -57,7 +57,7 @@ const Products = () => {
           </p>
         </div>
 
-        <button onClick={() => navigate("/shop")} className=" hidden md:flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-sm font-semibold text-gray-800 dark:text-gray-100 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 cursor-pointer " >
+        <button onClick={() => navigate("/shop")} className=" hidden md:flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-sm font-semibold text-gray-800 dark:text-gray-100 shadow-sm md:hover:shadow-md md:hover:-translate-y-0.5 transition-all duration-300 cursor-pointer " >
           View All
           <span>→</span>
         </button>
@@ -65,12 +65,12 @@ const Products = () => {
 
       {/* GRID */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-6 lg:gap-8">
-{categories.map((cat) => ( <div key={cat.id} role="button" tabIndex={0} onClick={() => handleCategory(cat.slug)} className=" group relative overflow-hidden rounded-3xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 cursor-pointer " >
+{categories.map((cat) => ( <div key={cat.id} role="button" tabIndex={0} onClick={() => handleCategory(cat.slug)} className=" group relative overflow-hidden rounded-3xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 shadow-sm md:hover:shadow-2xl md:hover:-translate-y-2 transition-all duration-500 cursor-pointer " >
 
             {/* IMAGE */}
             <div className="aspect-3/4 overflow-hidden bg-gray-200 dark:bg-gray-800">
 
-              <img src={cat.img} alt={cat.title} loading="lazy" decoding="async" width="400" height="533" className=" w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 " />
+              <img src={cat.img} alt={cat.title} loading="lazy" decoding="async" width="400" height="533" className=" w-full h-full object-cover md:group-hover:scale-110 transition-transform duration-700 " />
             </div>
 
             {/* OVERLAY */}
@@ -88,20 +88,20 @@ const Products = () => {
               </h3>
 
               {/* HOVER TEXT */}
-              <div className=" mt-3 flex items-center gap-2 text-xs md:text-sm text-gray-100 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 " >
+              <div className=" mt-3 flex items-center gap-2 text-xs md:text-sm text-gray-100 opacity-0 translate-y-2 md:group-hover:opacity-100 md:group-hover:translate-y-0 transition-all duration-300 " >
                 <span>Explore Collection</span>
                 <span>→</span>
               </div>
             </div>
 
             {/* HOVER BORDER */}
-            <div className=" absolute inset-0 rounded-3xl ring-0 group-hover:ring-2 ring-purple-400/60 transition " /> </div>
+            <div className=" absolute inset-0 rounded-3xl ring-0 md:group-hover:ring-2 ring-purple-400/60 transition " /> </div>
         ))}
       </div>
 
       {/* MOBILE BUTTON */}
       <div className="mt-8 flex justify-center md:hidden">
-        <button onClick={() => navigate("/shop")} className=" px-6 py-3 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-semibold shadow-lg transition-all duration-300 " >
+        <button onClick={() => navigate("/shop")} className=" px-6 py-3 rounded-xl bg-purple-600 md:hover:bg-purple-500 text-white font-semibold shadow-lg transition-all duration-300 " >
           View All Categories
         </button>
       </div>

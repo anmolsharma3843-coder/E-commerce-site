@@ -37,8 +37,10 @@ const Users = () => {
 
     if (!response.ok) throw new Error();
 
+   const data=await response.json();
+
     setUsers(users.filter((user) => user._id !== id));
-    toast.success("User deleted successfully!");
+    toast.success(data.message);
   } catch (err) {
     toast.error("Failed to delete user.");
   }
@@ -100,7 +102,7 @@ const Users = () => {
                 <tr
                   key={user._id}
                   className="border-b border-gray-200 dark:border-gray-700
-                  hover:bg-gray-100 dark:hover:bg-gray-800 transition"
+                  md:hover:bg-gray-100 dark:md:hover:bg-gray-800 transition"
                 >
                   <td className="py-3 px-4 text-sm">{user._id}</td>
 
@@ -132,14 +134,14 @@ const Users = () => {
 
                   <td className="py-3 px-4 flex gap-2">
                     <button
-                      className="flex items-center gap-1 bg-indigo-500 hover:bg-indigo-600 text-white px-3 py-1 rounded-lg shadow-sm transition"
+                      className="flex items-center gap-1 bg-indigo-500 md:hover:bg-indigo-600 text-white px-3 py-1 rounded-lg shadow-sm transition"
                       onClick={() => toast.info("Edit user feature coming soon")}
                     >
                       <FaEdit /> Edit
                     </button>
 
                     <button
-                      className="flex items-center gap-1 bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-lg shadow-sm transition"
+                      className="flex items-center gap-1 bg-red-500 md:hover:bg-red-600 text-white px-3 py-1 rounded-lg shadow-sm transition"
                       onClick={() => handleDelete(user._id)}
                     >
                       <FaTrash /> Delete
@@ -188,13 +190,13 @@ const Users = () => {
 
               <div className="flex gap-2 mt-2">
                 <button
-                  className="flex items-center gap-1 bg-indigo-500 hover:bg-indigo-600 text-white px-3 py-1 rounded-lg shadow-sm transition w-full justify-center"
+                  className="flex items-center gap-1 bg-indigo-500 md:hover:bg-indigo-600 text-white px-3 py-1 rounded-lg shadow-sm transition w-full justify-center"
                 >
                   <FaEdit /> Edit
                 </button>
 
                 <button
-                  className="flex items-center gap-1 bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-lg shadow-sm transition w-full justify-center"
+                  className="flex items-center gap-1 bg-red-500 md:hover:bg-red-600 text-white px-3 py-1 rounded-lg shadow-sm transition w-full justify-center"
                   onClick={() => handleDelete(user._id)}
                 >
                   <FaTrash /> Delete

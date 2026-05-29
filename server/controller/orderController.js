@@ -26,7 +26,13 @@ export const getMyOrders = async (req, res) => {
 //  CREATE ORDER
 export const createOrder = async (req, res) => {
   try {
-    const { userId, orderData, cartItems } = req.body;
+    const userId = req.user.id;
+
+const {
+  orderData,
+  cartItems,
+  buyNow,
+} = req.body;
 
     if (!userId || !cartItems) {
       return res.status(400).json({
@@ -53,8 +59,9 @@ export const createOrder = async (req, res) => {
 
     console.log(newOrder);
 
-    //  CLEAR CART
-    await Cart.deleteMany({ userId });
+    if (!buyNow) {
+  await Cart.deleteMany({ userId });
+}
 
     res.json({
       success: true,

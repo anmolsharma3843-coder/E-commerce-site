@@ -15,7 +15,7 @@ const router = express.Router();
 router.get("/myorders", authenicate, getMyOrders);
 
 //  CREATE ORDER
-router.post("/create", createOrder);
+router.post("/create",authenicate, createOrder);
 
 //  GET ALL ORDERS
 router.get("/", getAllOrders);

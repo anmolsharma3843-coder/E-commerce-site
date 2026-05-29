@@ -66,8 +66,8 @@ const CartSummary = ({ cartItems, totalPrice }) => {
         onClick={() => navigate("/payment")}
         className="
           w-full mt-6
-          bg-purple-700 hover:bg-purple-800
-          dark:bg-purple-600 dark:hover:bg-purple-500
+          bg-purple-700 md:hover:bg-purple-800
+          dark:bg-purple-600 dark:md:hover:bg-purple-500
           text-white
           py-3 rounded-xl
           font-semibold
@@ -75,7 +75,7 @@ const CartSummary = ({ cartItems, totalPrice }) => {
           focus:outline-none
           focus:ring-2 focus:ring-purple-500 focus:ring-offset-2
           dark:focus:ring-offset-gray-900
-          hover:cursor-pointer
+          md:hover:cursor-pointer
         "
         aria-label="Proceed to checkout"
       >

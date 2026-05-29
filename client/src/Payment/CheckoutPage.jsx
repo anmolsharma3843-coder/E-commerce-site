@@ -76,7 +76,7 @@ const CheckoutPage = ({ nextStep }) => {
           </div>
 
           {/* CTA */}
-          <button className="w-full bg-blue-600 text-white py-3 rounded-lg text-lg font-semibold hover:bg-blue-700 transition">
+          <button className="w-full bg-blue-600 text-white py-3 rounded-lg text-lg font-semibold md:hover:bg-blue-700 transition">
             Continue to Payment →
           </button>
         </form>

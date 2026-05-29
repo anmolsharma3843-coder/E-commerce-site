@@ -13,7 +13,7 @@ import { cartActions } from "../store/cartSlice";
 const Header = () => {
   const cartitem = useSelector((state) => state.cart);
   const user = useSelector((store) => store.auth.user);
-
+  console.log(user)
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -102,7 +102,7 @@ const Header = () => {
           {/* LOGO */}
           <Link to="/" aria-label="Go to homepage" className="flex items-center gap-2" >
             <div className="w-10 h-auto rounded-full bg-linear-to-r from-purple-700 to-indigo-600 text-white flex items-center justify-center font-bold shadow-lg">
-              <img src="/logo.png" alt="logo" className=" rounded-full object-cover " />
+              <img src="/logo.svg" alt="logo" className=" rounded-full object-cover " />
             </div>
 
             <span className="text-xl font-bold text-gray-900 dark:text-white">
@@ -125,7 +125,7 @@ const Header = () => {
                 className={({ isActive }) =>
                   `pb-1 border-b-2 transition-colors duration-200 ${isActive
                     ? "border-purple-700 text-purple-700 dark:text-purple-400"
-                    : "border-transparent text-gray-800 dark:text-gray-200 hover:text-purple-700 dark:hover:text-purple-400"
+                    : "border-transparent text-gray-800 dark:text-gray-200 md:hover:text-purple-700 dark:md:hover:text-purple-400"
                   }`
                 }
               >
@@ -171,7 +171,7 @@ const Header = () => {
             >
               <FaHeart
                 size={20}
-                className="text-gray-800 dark:text-gray-200 hover:text-red-500 transition"
+                className="text-gray-800 dark:text-gray-200 md:hover:text-red-500 transition"
               />
             </button>
 
@@ -194,7 +194,7 @@ const Header = () => {
             <button
               onClick={toggleTheme}
               aria-label="Toggle theme"
-              className="text-gray-800 dark:text-gray-200 hover:text-purple-700 dark:hover:text-purple-400 transition"
+              className="text-gray-800 dark:text-gray-200 md:hover:text-purple-700 dark:md:hover:text-purple-400 transition"
             >
               {darkMode ? (
                 <MdLightMode size={22} />
@@ -208,7 +208,7 @@ const Header = () => {
               <button
                 onClick={() => setMobileMenuOpen(true)}
                 aria-label="Open profile menu"
-                className="flex items-center gap-2 sm:px-2 sm:py-1 rounded-full bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700 transition" >
+                className="flex items-center gap-2 sm:px-2 sm:py-1 rounded-full bg-gray-200 dark:bg-gray-800 md:hover:bg-gray-300 dark:md:hover:bg-gray-700 transition" >
                 <div className="w-8 h-8 rounded-full bg-purple-700 text-white flex items-center justify-center font-semibold">
                   {user.username?.charAt(0).toUpperCase()}
                 </div>
@@ -221,7 +221,7 @@ const Header = () => {
               <Link
                 to="/signin"
                 aria-label="Login"
-                className="text-gray-800 dark:text-gray-200 hover:text-purple-700 dark:hover:text-purple-400 transition"
+                className="text-gray-800 dark:text-gray-200 md:hover:text-purple-700 dark:md:hover:text-purple-400 transition"
               >
                 <CiUser size={22} />
               </Link>
@@ -235,7 +235,7 @@ const Header = () => {
             <Link
               key={item}
               to={item === "Home" ? "/" : item === 'Shop' ? '/shop' : `/category/${item}`}
-              className="hover:text-purple-700 dark:hover:text-purple-400 transition"
+              className="md:hover:text-purple-700 dark:md:hover:text-purple-400 transition"
             >
               {item}
             </Link>
@@ -257,22 +257,22 @@ const Header = () => {
           <button
             onClick={() => setMobileMenuOpen(false)}
             aria-label="Close menu"
-            className="text-lg hover:text-red-500 transition"
+            className="text-lg md:hover:text-red-500 transition"
           >
             ✕
           </button>
         </div>
 
         <button
-          onClick={() => navigate("/orders")}
-          className="block w-full text-left px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-800 transition"
+          onClick={() => {navigate("/orders"),setMobileMenuOpen(false)}}
+          className="block w-full text-left px-4 py-3 md:hover:bg-gray-100 dark:md:hover:bg-gray-800 transition"
         >
           Orders
         </button>
 
         <button
-          onClick={() => navigate("/wishlist")}
-          className="block w-full text-left px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-800 transition"
+        onClick={() => {navigate("/wishlist"),setMobileMenuOpen(false)}}
+          className="block w-full text-left px-4 py-3 md:hover:bg-gray-100 dark:md:hover:bg-gray-800 transition"
         >
           Wishlist
         </button>
@@ -281,7 +281,7 @@ const Header = () => {
 
         <button
           onClick={handleLogout}
-          className="block w-full text-left px-4 py-3 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 transition"
+          className="block w-full text-left px-4 py-3 text-red-600 md:hover:bg-red-50 dark:md:hover:bg-red-900/20 transition"
         >
           Logout
         </button>

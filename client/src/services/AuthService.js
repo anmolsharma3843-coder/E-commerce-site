@@ -1,8 +1,8 @@
-const BASE_URL = "http://localhost:5100/auth";
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export const LoginUser = async (userlogin) => {
   try {
-    const response = await fetch(`${BASE_URL}/login`, {
+    const response = await fetch(`${BASE_URL}/auth/login`, {
       method: "POST",
       credentials: "include",
       headers: {
@@ -31,7 +31,7 @@ export const LoginUser = async (userlogin) => {
 
 export const SigninUser = async (userlogin) => {
     try{
-  const res = await fetch(`${BASE_URL}/register`, {
+  const res = await fetch(`${BASE_URL}/auth/register`, {
     method: "POST",
     credentials: "include",
     headers: {
@@ -40,10 +40,10 @@ export const SigninUser = async (userlogin) => {
     body: JSON.stringify(userlogin),
   });
 
-  const data = await response.json();
+  const data = await res.json();
 
     return {
-      ok: response.ok,
+      ok: res.ok,
       data,
     };
   } catch (error) {

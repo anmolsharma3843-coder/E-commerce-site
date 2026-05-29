@@ -107,3 +107,41 @@ export const updateProduct = async (req, res) => {
   });
   res.json(updated);
 };
+
+export const createProduct = async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({
+        success: false,
+        message: "No image uploaded",
+      });
+    }
+
+    const imagePath = `/uploads/products/${req.file.filename}`;
+
+    const product = await items.create({
+      title: req.body.title,
+      description: req.body.description,
+      price: req.body.price,
+      rating: req.body.rating,
+      sizes: req.body.sizes.split(","),
+      materialComposition: req.body.materialComposition,
+      countryOfOrigin: req.body.countryOfOrigin,
+      fitType: req.body.fitType,
+      category: req.body.category,
+      imageUrl: imagePath,
+    });
+
+    res.json({
+      success: true,
+      product,
+    });
+  } catch (error) {
+    console.log(error);
+
+    res.status(500).json({
+      success: false,
+      message: "Product upload failed",
+    });
+  }
+};
