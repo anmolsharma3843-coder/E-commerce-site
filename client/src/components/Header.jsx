@@ -5,15 +5,15 @@ import { FaHeart } from "react-icons/fa";
 import { MdDarkMode, MdLightMode } from "react-icons/md";
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { logout } from "../store/authSlice";
+import { logout, setProfileImage } from "../store/authSlice";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { cartActions } from "../store/cartSlice";
+import { useRef } from "react";
 
 const Header = () => {
   const cartitem = useSelector((state) => state.cart);
   const user = useSelector((store) => store.auth.user);
-  console.log(user)
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -22,6 +22,7 @@ const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [debouncedQuery, setDebouncedQuery] = useState("");
   const [searching, setSearching] = useState(false);
+  const fileInputRef = useRef(null);
 
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme");
@@ -80,6 +81,17 @@ const Header = () => {
       console.error(err);
     }
   };
+  const handleProfileImageUpload = (e) => {
+  const file = e.target.files[0];
+
+  if (!file) return;
+  
+
+  const imageUrl = URL.createObjectURL(file);
+  dispatch(setProfileImage(imageUrl))
+
+  toast.success("Profile image selected");
+};
 
   const toggleTheme = () => {
     const next = !darkMode;
@@ -204,28 +216,37 @@ const Header = () => {
             </button>
 
             {/* USER */}
-            {user ? (
-              <button
-                onClick={() => setMobileMenuOpen(true)}
-                aria-label="Open profile menu"
-                className="flex items-center gap-2 sm:px-2 sm:py-1 rounded-full bg-gray-200 dark:bg-gray-800 md:hover:bg-gray-300 dark:md:hover:bg-gray-700 transition" >
-                <div className="w-8 h-8 rounded-full bg-purple-700 text-white flex items-center justify-center font-semibold">
-                  {user.username?.charAt(0).toUpperCase()}
-                </div>
+           {user ? (
+  <button
+    onClick={() => setMobileMenuOpen(true)}
+    aria-label="Open profile menu"
+    className="flex items-center gap-2 sm:px-0.5 sm:py-0.5 rounded-full bg-gray-200 dark:bg-gray-800 md:hover:bg-purple-700  md:transition"
+  >
+    <div className="w-8 h-8 rounded-full overflow-hidden bg-purple-700 text-white flex items-center justify-center font-semibold">
+     {user?.profileImage ? (
+  <img
+    src={user.profileImage}
+    alt={user.username}
+    className="w-full h-full object-cover"
+  />
+) : (
+  user.username?.charAt(0).toUpperCase()
+)}
+    </div>
 
-                <span className="hidden sm:block text-sm text-gray-800 dark:text-gray-200">
-                  {user.username}
-                </span>
-              </button>
-            ) : (
-              <Link
-                to="/signin"
-                aria-label="Login"
-                className="text-gray-800 dark:text-gray-200 md:hover:text-purple-700 dark:md:hover:text-purple-400 transition"
-              >
-                <CiUser size={22} />
-              </Link>
-            )}
+    {/* <span className="hidden sm:block text-sm text-gray-800 dark:text-gray-200">
+      {user.username.charAt(0).toUpperCase()+user.username.slice(1)}
+    </span> */}
+  </button>
+) : (
+  <Link
+    to="/signin"
+    aria-label="Login"
+    className="text-gray-800 dark:text-gray-200 md:hover:text-purple-700 dark:md:hover:text-purple-400 transition"
+  >
+    <CiUser size={22} />
+  </Link>
+)}
           </div>
         </div>
 
@@ -245,13 +266,13 @@ const Header = () => {
 
       {/* 📱 DRAWER */}
       <div
-        className={`fixed top-0 right-0 h-full w-64 bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 z-60 shadow-xl transform transition-transform duration-300
+        className={`fixed top-0 right-0 h-full w-64 bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 z-60 shadow-xl transform transition-transform duration-300 font-semibold dark:font-medium
         ${mobileMenuOpen ? "translate-x-0" : "translate-x-full"}`}
       >
 
         <div className="flex justify-between items-center p-4 border-b border-gray-300 dark:border-gray-800">
-          <span className="font-semibold">
-            {user?.username}
+          <span className="font-bold text-lg">
+            {user?.username.charAt(0).toUpperCase()+user?.username.slice(1)}
           </span>
 
           <button
@@ -278,6 +299,20 @@ const Header = () => {
         </button>
 
         <div className="border-t border-gray-300 dark:border-gray-800 my-2" />
+        <button
+  onClick={() => fileInputRef.current?.click()}
+  className="block w-full text-left px-4 py-3 md:hover:bg-gray-100 dark:md:hover:bg-gray-800 transition"
+>
+  Upload Profile Image
+</button>
+
+<input
+  type="file"
+  accept="image/*"
+  ref={fileInputRef}
+  onChange={handleProfileImageUpload}
+  className="hidden"
+/>
 
         <button
           onClick={handleLogout}
