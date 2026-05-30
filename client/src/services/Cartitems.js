@@ -3,6 +3,7 @@ const BASE_URL = import.meta.env.VITE_BASE_URL;
 // 🛒 Get cart
 export const getCart = async () => {
   const res = await fetch(`${BASE_URL}/cart`, {
+    method:"GET",
     credentials: "include",
   });
   return res.json();

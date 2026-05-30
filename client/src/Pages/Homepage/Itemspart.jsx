@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useMemo, useCallback, } from "react";
 import { useNavigate } from "react-router-dom";
-import { products } from "../../services/ApiService";
 import {getWishlist,toggleWishlist, } from "../../services/WishlistService";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
 import ProductSkeleton from "../../components/Skeleton/ProductSkeleton";
+import { fetchProductList } from "../../services/productApi";
 
 const Itemspart = () => {
   const navigate = useNavigate();
@@ -19,7 +19,7 @@ const Itemspart = () => {
       try {
         setLoading(true);
 
-        const data = await products();
+        const data = await fetchProductList();
 
         setItems(data);
       } catch (err) {
@@ -33,7 +33,7 @@ const Itemspart = () => {
     fetchProducts();
   }, []);
 
-  // ✅ Fetch Wishlist
+  //  Fetch Wishlist
   useEffect(() => {
     const fetchWishlist = async () => {
       try {
@@ -47,7 +47,7 @@ const Itemspart = () => {
     fetchWishlist();
   }, []);
 
-  // ✅ Fast Lookup
+  //  Fast Lookup
   const wishlistIds = useMemo(() => {
     return new Set(wishlist.map((i) => i._id));
   }, [wishlist]);
@@ -60,7 +60,7 @@ const Itemspart = () => {
     [navigate]
   );
 
-  // ✅ Optimistic Wishlist
+  //  Optimistic Wishlist
   const handleWishlist = useCallback(
     async (id, e) => {
       e.stopPropagation();
@@ -95,7 +95,7 @@ const Itemspart = () => {
     [wishlist]
   );
 
-  // ✅ LOADING UI
+  //  LOADING UI
   if (loading) {
     return (
       <section className="bg-gray-50 dark:bg-gray-950 py-10 px-4 md:px-10">

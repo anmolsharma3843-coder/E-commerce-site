@@ -24,19 +24,19 @@ const Footer = () => {
 
             {/* SOCIALS */}
             <div className="flex items-center gap-3 mt-6">
-              <a href="/" className=" w-10 h-10 rounded-full bg-gray-100 dark:bg-[#1e293b] flex items-center justify-center hover:bg-black hover:text-white dark:hover:bg-indigo-500 transition-all duration-300 " >
+              <Link to="/" className=" w-10 h-10 rounded-full bg-gray-100 dark:bg-[#1e293b] flex items-center justify-center hover:bg-black hover:text-white dark:hover:bg-indigo-500 transition-all duration-300 " >
                 <FaFacebookF />
-              </a>
-              <a href="/" className=" w-10 h-10 rounded-full bg-gray-100 dark:bg-[#1e293b] flex items-center justify-center hover:bg-pink-500 hover:text-white transition-all duration-300 " >
+              </Link>
+              <Link to="/" className=" w-10 h-10 rounded-full bg-gray-100 dark:bg-[#1e293b] flex items-center justify-center hover:bg-pink-500 hover:text-white transition-all duration-300 " >
                 <FaInstagram />
-              </a>
-              <a href="/" className=" w-10 h-10 rounded-full bg-gray-100 dark:bg-[#1e293b] flex items-center justify-center hover:bg-sky-500 hover:text-white transition-all duration-300 " >
+              </Link>
+              <Link to="/" className=" w-10 h-10 rounded-full bg-gray-100 dark:bg-[#1e293b] flex items-center justify-center hover:bg-sky-500 hover:text-white transition-all duration-300 " >
                 <FaTwitter />
-              </a>
+              </Link>
 
-              <a href="/" className=" w-10 h-10 rounded-full bg-gray-100 dark:bg-[#1e293b] flex items-center justify-center hover:bg-red-500 hover:text-white transition-all duration-300 " >
+              <Link to="/" className=" w-10 h-10 rounded-full bg-gray-100 dark:bg-[#1e293b] flex items-center justify-center hover:bg-red-500 hover:text-white transition-all duration-300 " >
                 <FaYoutube />
-              </a>
+              </Link>
             </div>
           </div>
 

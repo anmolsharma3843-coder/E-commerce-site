@@ -51,7 +51,7 @@ const CartSummary = ({ cartItems, totalPrice }) => {
           Total Amount
         </span>
 
-        <span className="text-xl font-bold text-purple-700 dark:text-purple-400">
+        <span className="text-xl font-bold dark:text-gray-200">
           ₹{totalPrice - 200}
         </span>
       </div>

@@ -42,6 +42,8 @@ export const loginUser = async (req, res) => {
     _id: existing._id,
     username: existing.username,
     email: existing.email,
+  profileImage:existing.profileImage
+    
   });
 };
 

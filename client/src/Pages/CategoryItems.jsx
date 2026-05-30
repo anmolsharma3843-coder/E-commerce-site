@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { getProducts } from "../services/ApiService";
+import { getProducts } from "../services/productApi";
 import { addToCart } from "../services/Cartitems";
 import { toast } from "react-toastify";
 import Cookies from "js-cookie";
@@ -78,7 +78,7 @@ const CategoryItems = () => {
     }
   };
 
-  // ✅ UPDATE CATEGORY
+  //  UPDATE CATEGORY
   useEffect(() => {
     setFilters((prev) => ({
       ...prev,
@@ -87,7 +87,7 @@ const CategoryItems = () => {
     }));
   }, [category]);
 
-  // ✅ FETCH WHEN FILTER CHANGES
+  //  FETCH WHEN FILTER CHANGES
   useEffect(() => {
     fetchItems(filters);
   }, [

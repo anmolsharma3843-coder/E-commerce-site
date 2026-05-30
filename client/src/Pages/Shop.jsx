@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { FiSearch } from "react-icons/fi";
 import { FaStar, FaHeart, FaRegHeart } from "react-icons/fa";
-import { fetchAllproduct } from "../services/ApiService";
+import { fetchAllproduct } from "../services/productApi";
 import ShopSkeleton from "../components/Skeleton/ShopSkeleton";
 import { getWishlist, toggleWishlist } from "../services/WishlistService";
 import Cookies from "js-cookie";
@@ -197,7 +197,7 @@ const Shop = () => {
                   onClick={() => navigate(`/product/${item._id}`)}
                   className="group relative overflow-hidden rounded-2xl bg-white dark:bg-[#1e293b] border border-gray-200 dark:border-gray-800 shadow-sm md:hover:shadow-2xl md:hover:-translate-y-1 transition-all duration-300 cursor-pointer" >
                   {/* IMAGE SECTION */}
-                  <div className="relative overflow-hidden bg-gray-100 dark:bg-gray-800">
+                  <div className="relative overflow-hidden bg-white dark:bg-gray-800">
 
                     {/* IMAGE */}
                     <img

@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { fetchAllproduct, GetUsers } from "../services/ApiService";
 import { getAllOrders } from "../services/orderService";
 import OrderDetailsModal from "./OrderDetailsModal";
 import { FaSearch } from "react-icons/fa";
+import { fetchAllproduct } from "../services/productApi";
+import { FetchUsers } from "../services/UsersApi";
 
 const Adminpanel = () => {
   const [Products, setProducts] = useState([]);
@@ -12,7 +13,7 @@ const Adminpanel = () => {
   const [orders, setOrders] = useState([]);
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [search, setSearch] = useState("");
-  const [profileImage, setProfileImage] = useState("");
+  const [profileImage, setProfileImage] = useState(localStorage.getItem("profileImage") || '');
 
   useEffect(() => {
     const productslist = async () => {
@@ -22,7 +23,7 @@ const Adminpanel = () => {
         const [productsData, usersData, ordersData] =
           await Promise.all([
             fetchAllproduct(),
-            GetUsers(),
+            FetchUsers(),
             getAllOrders(),
           ]);
 
