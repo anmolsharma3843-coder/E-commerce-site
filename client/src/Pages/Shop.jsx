@@ -201,7 +201,7 @@ const Shop = () => {
 
                     {/* IMAGE */}
                     <img
-                      src={item.imageUrl}
+                      src={`${import.meta.env.VITE_BASE_URL}${item.imageUrl}`}
                       alt={item.title}
                       loading="lazy"
                       className="w-full h-64 object-contain md:group-hover:scale-105 transition-transform duration-500"

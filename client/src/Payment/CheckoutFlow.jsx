@@ -3,10 +3,10 @@ import CheckoutPage from "../Payment/CheckoutPage";
 import PaymentPage from "../Payment/PaymentPage";
 import ReviewPage from "../Payment/ReviewPage";
 import StepIndicator from "../Payment/StepIndicator";
-import AnimatedStep from "./AnimatedStep";
 import { getCart } from "../services/Cartitems";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
+import { AnimatePresence } from "framer-motion";
 
 const CheckoutFlow = () => {
   const [step, setStep] = useState(1);
@@ -55,7 +55,7 @@ const CheckoutFlow = () => {
       <div className="max-w-5xl mx-auto px-4">
 
         {/* 🔥 STEP INDICATOR */}
-        <StepIndicator currentStep={step} />
+        <StepIndicator step={step} />
 
         <div className="flex justify-center mt-6">
 
@@ -79,13 +79,15 @@ const CheckoutFlow = () => {
                 )}
               </div>
 
-              {step === 1 ? (
-                <CheckoutPage nextStep={nextStep} />
-              ) : (
-                <p className="text-sm dark:text-gray-300">
-                  {orderData.address || "Saved Address"}
-                </p>
-              )}
+              <AnimatePresence mode="wait">
+  {step === 1 ? (
+      <CheckoutPage nextStep={nextStep} />
+  ) : (
+      <p className="text-sm dark:text-gray-300">
+        {orderData.address || "Saved Address"}
+      </p>
+  )}
+</AnimatePresence>
             </div>
 
             {/* 💳 PAYMENT */}
@@ -105,17 +107,22 @@ const CheckoutFlow = () => {
                 )}
               </div>
 
-              {step === 2 ? (
-                <PaymentPage nextStep={nextStep} prevStep={prevStep} />
-              ) : step > 2 ? (
-                <p className="text-sm dark:text-gray-300">
-                  {orderData.payment || "UPI / Card Selected"}
-                </p>
-              ) : (
-                <p className="text-sm text-gray-400">
-                  Complete address step first
-                </p>
-              )}
+              <AnimatePresence mode="wait">
+  {step === 2 ? (
+      <PaymentPage
+        nextStep={nextStep}
+        prevStep={prevStep}
+      />  ) : step > 2 ? (
+      <p className="text-sm dark:text-gray-300">
+        {orderData.payment || "UPI / Card Selected"}
+      </p>
+  ) : (
+    
+      <p className="text-sm text-gray-400">
+        Complete address step first
+      </p>
+  )}
+</AnimatePresence>
             </div>
 
             {/* 🧾 REVIEW */}
@@ -124,18 +131,22 @@ const CheckoutFlow = () => {
                 3. Review Order
               </h2>
 
-              {step === 3 ? (
-                <ReviewPage
-                  orderData={orderData}
-                  prevStep={prevStep}
-                  cartItems={finalItems}
-                  buyNow={!!buyNowItem}
-                />
-              ) : (
-                <p className="text-sm text-gray-400">
-                  Complete payment step first
-                </p>
-              )}
+             <AnimatePresence mode="wait">
+  {step === 3 ? (
+    
+      <ReviewPage
+        orderData={orderData}
+        prevStep={prevStep}
+        cartItems={finalItems}
+        buyNow={!!buyNowItem}
+      />
+
+  ) : (
+      <p className="text-sm text-gray-400">
+        Complete payment step first
+      </p>
+  )}
+</AnimatePresence>
             </div>
 
           </div>

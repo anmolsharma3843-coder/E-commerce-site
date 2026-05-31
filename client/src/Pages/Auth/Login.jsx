@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../store/authSlice";
-import { LoginUser } from "../../services/AuthService";
+import { LoginUser } from "../../services/AuthApiService";
 const SignIn = () => {
   const navigate = useNavigate();
   const [userlogin, setuserlogin] = useState({ email: "", password: "" });
@@ -13,7 +13,6 @@ const SignIn = () => {
     event.preventDefault();
 
     const response = await LoginUser(userlogin);
-
     if (response.ok) {
       dispatch(setUser(response.data));
 

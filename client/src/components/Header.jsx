@@ -10,6 +10,8 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { cartActions } from "../store/cartSlice";
 import { useRef } from "react";
+import { logoutUser } from "../services/AuthApiService";
+import { uploadImageApi } from "../services/UsersApi";
 
 const Header = () => {
   const cartitem = useSelector((state) => state.cart);
@@ -62,18 +64,12 @@ const Header = () => {
 
   const handleLogout = async () => {
     try {
-      const res = await fetch("http://localhost:5100/auth/logout", {
-        method: "POST",
-        credentials: "include",
-      });
-
-      const data = await res.json();
-
+      const res = await logoutUser();
       if (res.ok) {
         dispatch(cartActions.clearCart());
         dispatch(logout());
 
-        toast.success(data.message);
+        toast.success(res.data.message);
 
         navigate("/login");
       }
@@ -81,17 +77,23 @@ const Header = () => {
       console.error(err);
     }
   };
-  const handleProfileImageUpload = (e) => {
-  const file = e.target.files[0];
+  const handleProfileImageUpload = async (e) => {
+    const file = e.target.files[0];
 
-  if (!file) return;
-  
+    if (!file) return;
 
-  const imageUrl = URL.createObjectURL(file);
-  dispatch(setProfileImage(imageUrl))
+    const formData = new FormData();
+    formData.append("image", file);
 
-  toast.success("Profile image selected");
-};
+    try {
+      const data = await uploadImageApi(formData)
+      dispatch(setProfileImage(data.profileImage));
+      toast.success("Profile image updated");
+    } catch (err) {
+      console.log(err);
+      toast.error("Upload failed");
+    }
+  };
 
   const toggleTheme = () => {
     const next = !darkMode;
@@ -216,37 +218,35 @@ const Header = () => {
             </button>
 
             {/* USER */}
-           {user ? (
-  <button
-    onClick={() => setMobileMenuOpen(true)}
-    aria-label="Open profile menu"
-    className="flex items-center gap-2 sm:px-0.5 sm:py-0.5 rounded-full bg-gray-200 dark:bg-gray-800 md:hover:bg-purple-700  md:transition"
-  >
-    <div className="w-8 h-8 rounded-full overflow-hidden bg-purple-700 text-white flex items-center justify-center font-semibold">
-     {user?.profileImage ? (
-  <img
-    src={user.profileImage}
-    alt={user.username}
-    className="w-full h-full object-cover"
-  />
-) : (
-  user.username?.charAt(0).toUpperCase()
-)}
-    </div>
-
-    {/* <span className="hidden sm:block text-sm text-gray-800 dark:text-gray-200">
-      {user.username.charAt(0).toUpperCase()+user.username.slice(1)}
-    </span> */}
-  </button>
-) : (
-  <Link
-    to="/signin"
-    aria-label="Login"
-    className="text-gray-800 dark:text-gray-200 md:hover:text-purple-700 dark:md:hover:text-purple-400 transition"
-  >
-    <CiUser size={22} />
-  </Link>
-)}
+            {user ? (
+              <button
+                onClick={() => setMobileMenuOpen(true)}
+                aria-label="Open profile menu"
+                className="flex items-center gap-2 sm:px-0.5 sm:py-0.5 rounded-full bg-gray-200 dark:bg-gray-800 md:hover:bg-purple-700  md:transition"
+              >
+                <div className="w-8 h-8 rounded-full overflow-hidden bg-purple-700 text-white flex items-center justify-center font-semibold">
+                  {user?.profileImage ? (
+                    <img
+                      src={`${import.meta.env.VITE_BASE_URL}${user.profileImage}`}
+                      alt={user.username}
+                      width={32}
+                      height={32}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    user.username?.charAt(0).toUpperCase()
+                  )}
+                </div>
+              </button>
+            ) : (
+              <Link
+                to="/signin"
+                aria-label="Login"
+                className="text-gray-800 dark:text-gray-200 md:hover:text-purple-700 dark:md:hover:text-purple-400 transition"
+              >
+                <CiUser size={22} />
+              </Link>
+            )}
           </div>
         </div>
 
@@ -272,7 +272,7 @@ const Header = () => {
 
         <div className="flex justify-between items-center p-4 border-b border-gray-300 dark:border-gray-800">
           <span className="font-bold text-lg">
-            {user?.username.charAt(0).toUpperCase()+user?.username.slice(1)}
+            {String(user?.username.charAt(0).toUpperCase() + user?.username.slice(1))}
           </span>
 
           <button
@@ -285,14 +285,14 @@ const Header = () => {
         </div>
 
         <button
-          onClick={() => {navigate("/orders"),setMobileMenuOpen(false)}}
+          onClick={() => { navigate("/orders"), setMobileMenuOpen(false) }}
           className="block w-full text-left px-4 py-3 md:hover:bg-gray-100 dark:md:hover:bg-gray-800 transition"
         >
           Orders
         </button>
 
         <button
-        onClick={() => {navigate("/wishlist"),setMobileMenuOpen(false)}}
+          onClick={() => { navigate("/wishlist"), setMobileMenuOpen(false) }}
           className="block w-full text-left px-4 py-3 md:hover:bg-gray-100 dark:md:hover:bg-gray-800 transition"
         >
           Wishlist
@@ -300,19 +300,19 @@ const Header = () => {
 
         <div className="border-t border-gray-300 dark:border-gray-800 my-2" />
         <button
-  onClick={() => fileInputRef.current?.click()}
-  className="block w-full text-left px-4 py-3 md:hover:bg-gray-100 dark:md:hover:bg-gray-800 transition"
->
-  Upload Profile Image
-</button>
+          onClick={() => fileInputRef.current?.click()}
+          className="block w-full text-left px-4 py-3 md:hover:bg-gray-100 dark:md:hover:bg-gray-800 transition"
+        >
+          Upload Profile Image
+        </button>
 
-<input
-  type="file"
-  accept="image/*"
-  ref={fileInputRef}
-  onChange={handleProfileImageUpload}
-  className="hidden"
-/>
+        <input
+          type="file"
+          accept="image/*"
+          ref={fileInputRef}
+          onChange={handleProfileImageUpload}
+          className="hidden"
+        />
 
         <button
           onClick={handleLogout}

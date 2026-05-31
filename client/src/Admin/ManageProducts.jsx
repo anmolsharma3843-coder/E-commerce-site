@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LoadingSpinner from "../components/LoadingSpinner";
 import { deleteProductApi, fetchAllproduct } from "../services/productApi";
+import { toast } from "react-toastify";
 
 
 const ManageProducts = () => {
@@ -21,6 +22,7 @@ const ManageProducts = () => {
 
   const deleteProduct = async (id) => {
     await deleteProductApi(id)
+    toast.success('successfully deleted 👍')
     fetchProducts();
   };
 

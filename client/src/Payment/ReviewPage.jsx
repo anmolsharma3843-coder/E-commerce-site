@@ -140,7 +140,7 @@ const ReviewPage = ({
                 >
                   {/* Image */}
                   <img
-                    src={item.imageUrl}
+                    src={`${import.meta.env.VITE_BASE_URL}${item.imageUrl}`}
                     alt={item.title}
                     className="w-24 h-24 object-contain rounded-xl bg-gray-100 p-2"
                   />
@@ -165,7 +165,7 @@ const ReviewPage = ({
 
     <button
       onClick={() => handleDecrease(item.productId)}
-      className="px-2 text-lg md:hover:text-red-500"
+      className="px-2 text-lg md:hover:text-red-500 dark:text-white"
     >
       −
     </button>
@@ -176,7 +176,7 @@ const ReviewPage = ({
 
     <button
       onClick={() => handleIncrease(item.productId)}
-      className="px-2 text-lg md:hover:text-green-500"
+      className="px-2 text-lg md:hover:text-green-500 dark:text-white"
     >
       +
     </button>
@@ -254,7 +254,7 @@ const ReviewPage = ({
 
           <button
             onClick={prevStep}
-            className="w-full mt-3 border border-gray-300 dark:border-gray-600 py-2 rounded-xl md:hover:bg-gray-100 dark:md:hover:bg-gray-700 transition"
+            className="w-full mt-3 border border-gray-300 dark:border-gray-600 py-2 rounded-xl md:hover:bg-gray-100 dark:md:hover:bg-gray-700 transition dark:text-gray-100"
           >
             ← Back
           </button>

@@ -1,18 +1,12 @@
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
-export const addProductApi = async (product) => {
+export const addProductApi = async (formData) => {
   try {
     const response = await fetch(`${BASE_URL}/products`, {
-      method: "POST",
-      body: JSON.stringify({
-        ...product,
-        price: Number(product.price),
-        rating: Number(product.rating),
-        sizes: product.sizes.split(",").map(s => s.trim())
-      }),
-      headers: { "Content-Type": "application/json" },
-      credentials: "include"
-    });
+        method: "POST",
+        credentials: "include",
+        body: formData,
+      });
 
     const data = await response.json();
 
@@ -65,7 +59,7 @@ export const addProductApi = async (product) => {
 }
 // DELETE PRODUCT
 export const deleteProductApi = async (id) => {
-  const response = await fetch(`${BASE_URL}/${id}`, {
+  const response = await fetch(`${BASE_URL}/products/${id}`, {
     method: "DELETE",
     credentials: "include",
   });
@@ -78,8 +72,35 @@ export const deleteProductApi = async (id) => {
 };
 //category part
 export const getProducts = async (filters) => {
-  const query = new URLSearchParams(filters).toString();
+  try {
+    const query = new URLSearchParams(filters).toString();
 
-  const res = await fetch(`http://localhost:5100/products?${query}`);
+  const res = await fetch(`${BASE_URL}/products?${query}`);
   return res.json();
+  } catch (error) {
+     console.log("API call Failed",error)
+        throw error;
+  }
 };
+//update product
+export const updateProduct=async(id,formData)=>{
+  try {
+    const response = await fetch(
+        `${BASE_URL}/products/${id}`,
+        {
+          method: "PUT",
+          body: formData,
+          credentials: "include"
+        }
+      );
+
+      return await response.json();
+
+      if (!response.ok)
+        throw new Error(data.message);
+
+  } catch(error){
+        console.log("API call Failed",error)
+        throw error;
+    }
+}

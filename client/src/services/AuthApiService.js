@@ -57,3 +57,28 @@ export const SigninUser = async (userlogin) => {
     };
   }
 };
+//logout
+export const logoutUser = async (userlogin) => {
+    try{
+  const res = await fetch(`${BASE_URL}/auth/logout`,{
+        method: "POST",
+        credentials: "include",
+      });
+
+  const data = await res.json();
+
+    return {
+      ok: res.ok,
+      data,
+    };
+  } catch (error) {
+    console.log("Login API Error", error);
+
+    return {
+      ok: false,
+      data: {
+        message: "Server Error",
+      },
+    };
+  }
+};

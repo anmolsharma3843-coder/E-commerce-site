@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-
+import {updateProduct} from '../services/productApi'
 const EditProduct = () => {
   const { id } = useParams();
 
@@ -117,20 +117,7 @@ const EditProduct = () => {
         formData.append("image", imageFile);
       }
 
-      const response = await fetch(
-        `http://localhost:5100/products/${id}`,
-        {
-          method: "PUT",
-          body: JSON.stringify(formData),
-          credentials: "include"
-        }
-      );
-
-      const data = await response.json();
-
-      if (!response.ok)
-        throw new Error(data.message);
-
+      const response = await updateProduct(id,formData)
       toast.success(
         "Product Updated Successfully!"
       );

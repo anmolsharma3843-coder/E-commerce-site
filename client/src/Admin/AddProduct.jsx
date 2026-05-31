@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
+import { addProductApi } from "../services/productApi";
 
 const AddProduct = () => {
   const [product, setProduct] = useState({
@@ -63,19 +64,7 @@ const AddProduct = () => {
     formData.append("fitType", product.fitType);
     formData.append("category", product.category);
 
-    const response = await fetch(
-      "http://localhost:5100/products",
-      {
-        method: "POST",
-        credentials: "include",
-        body: formData,
-      }
-    );
-
-    const data = await response.json();
-
-    console.log(data);
-
+    const data = await addProductApi(formData)
     if (data.success) {
       toast.success("Product Added Successfully!");
 

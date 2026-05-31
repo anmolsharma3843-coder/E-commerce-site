@@ -14,7 +14,7 @@ router.get("/", authenicate, authorizeAdmin, getUsers);
 
 // DELETE USER
 router.delete("/:id", authenicate, authorizeAdmin, deleteUser);
-router.post(
+router.patch(
   "/upload-profile",
   authenicate,
   uploadProfile.single("image"),

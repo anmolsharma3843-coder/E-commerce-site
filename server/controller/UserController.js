@@ -38,15 +38,16 @@ export const uploadProfileImage = async (req, res) => {
     // UPDATE USER IN DATABASE
     const updatedUser = await user.findByIdAndUpdate(
       req.user.id,
-      {
-        profileImage: imagePath,
+      { $set: {
+          profileImage: imagePath,
+        },
       },
       { new: true }
     );
-
+   
     res.json({
       success: true,
-      imageUrl: imagePath,
+      profileImage: imagePath,
       user: updatedUser,
     });
   } catch (error) {

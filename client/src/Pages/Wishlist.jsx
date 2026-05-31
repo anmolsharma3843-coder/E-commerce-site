@@ -79,7 +79,7 @@ const Wishlist = () => {
             {/* IMAGE */}
             <div className="relative h-48 overflow-hidden">
               <img
-                src={item.imageUrl}
+                src={`${import.meta.env.VITE_BASE_URL}${item.imageUrl}`}
                 alt={item.title}
                 className="w-full h-full object-contain md:group-hover:scale-110 transition duration-500"
               />

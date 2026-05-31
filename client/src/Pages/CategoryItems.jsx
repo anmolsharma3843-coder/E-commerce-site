@@ -251,9 +251,9 @@ const CategoryItems = () => {
                   >
 
                     {/* IMAGE */}
-                    <div className="relative h-52 bg-gray-100 dark:bg-gray-700 flex items-center justify-center overflow-hidden">
+                    <div className="relative h-52 bg-white dark:bg-gray-700 flex items-center justify-center overflow-hidden">
 
-                      <img src={item.imageUrl} alt={item.title} loading="lazy" width="300" height="300" className=" max-h-full max-w-full object-contain md:group-hover:scale-105 transition duration-300 " />
+                      <img src={`${import.meta.env.VITE_BASE_URL}${item.imageUrl}`} alt={item.title} loading="lazy" width="300" height="300" className=" max-h-full max-w-full object-contain md:group-hover:scale-105 transition duration-300 " />
 
                       {/* WISHLIST */}
                       <button

@@ -185,7 +185,9 @@ const Itemspart = () => {
               {/* IMAGE */}
               <div className="relative h-60 overflow-hidden bg-gray-100 dark:bg-gray-800">
 
-                <img loading="lazy" decoding="async" width="220" height="240" src={item.imageUrl} alt={item.title} className=" w-full h-full object-cover md:group-hover:scale-110 transition-transform duration-500 " />
+                <img loading="lazy" decoding="async" width="220" height="240" 
+                src={`${import.meta.env.VITE_BASE_URL}${item.imageUrl}`} 
+                alt={item.title} className=" w-full h-full object-cover md:group-hover:scale-110 transition-transform duration-500" />
 
                 {/* OVERLAY */}
                 <div className=" absolute inset-0 bg-linear-to-t from-black/50 via-transparent to-transparent opacity-0 md:group-hover:opacity-100 transition-opacity " />

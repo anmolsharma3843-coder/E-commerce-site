@@ -33,7 +33,7 @@ const categories = [
   {
     id: 4,
     name: "Jackets",
-    img: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?q=80&w=500&auto=format&fit=crop",
+    img: shorts,
     link: "/category/Men",
   },
   {

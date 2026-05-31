@@ -32,3 +32,27 @@ export const deleteUserApi = async (id) => {
 
   return data;
 };
+//upload user profile image
+export const uploadImageApi = async (formData) => {
+  try {
+    const response = await fetch(
+    `${BASE_URL}/users/upload-profile`,
+    {
+          method: "PATCH",
+          credentials: "include",
+          body: formData,
+        }
+  );
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || "Failed to upload user image");
+  }
+
+  return data;
+  } catch (error) {
+    console.log('Api error',error)
+    throw error;
+  }
+};

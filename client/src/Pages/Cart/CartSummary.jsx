@@ -6,11 +6,12 @@ const CartSummary = ({ cartItems, totalPrice }) => {
 
   return (
     <div
-      className="
-        bg-white dark:bg-gray-900
-        p-5 rounded-2xl
+  className="
+    bg-white dark:bg-gray-900
+    p-4 sm:p-5
+    rounded-2xl
         shadow-sm dark:shadow-none
-        h-fit sticky top-20
+        h-fit lg:sticky lg:top-20
         border border-gray-200 dark:border-gray-700
         transition-colors
       "
@@ -51,7 +52,10 @@ const CartSummary = ({ cartItems, totalPrice }) => {
           Total Amount
         </span>
 
-        <span className="text-xl font-bold dark:text-gray-200">
+        <span className="
+  text-lg sm:text-xl
+  font-bold dark:text-white
+">
           ₹{totalPrice - 200}
         </span>
       </div>
@@ -69,7 +73,7 @@ const CartSummary = ({ cartItems, totalPrice }) => {
           bg-purple-700 md:hover:bg-purple-800
           dark:bg-purple-600 dark:md:hover:bg-purple-500
           text-white
-          py-3 rounded-xl
+         py-3.5 rounded-xl
           font-semibold
           transition-colors
           focus:outline-none

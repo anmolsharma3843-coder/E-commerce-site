@@ -68,6 +68,7 @@ const itemsSchema = mongoose.Schema({
   imageUrl: {
     type: String,
     required: true,
+    default:""
   },
   category: {
     type: String,

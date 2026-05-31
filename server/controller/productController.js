@@ -102,10 +102,30 @@ export const deleteProduct = async (req, res) => {
 
 // UPDATE
 export const updateProduct = async (req, res) => {
-  const updated = await items.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-  });
-  res.json(updated);
+  try {
+    const updateData = {
+      ...req.body,
+    };
+
+    if (req.file) {
+      updateData.imageUrl =
+        `/uploads/products/${req.file.filename}`;
+    }
+
+    const updated = await items.findByIdAndUpdate(
+      req.params.id,
+      updateData,
+      { new: true }
+    );
+
+    res.json(updated);
+  } catch (error) {
+    console.log(error);
+
+    res.status(500).json({
+      message: "Failed to update product",
+    });
+  }
 };
 
 export const createProduct = async (req, res) => {

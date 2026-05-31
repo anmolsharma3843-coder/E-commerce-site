@@ -43,7 +43,9 @@ app.use('/users', userRoutes);
 // app.use('/category', categoryRoutes);
 app.use("/orders", ordersRoutes);
 app.use('/wishlist',WishlistRoutes)
-app.use("/uploads", e.static("uploads"));
+app.use("/uploads", e.static("uploads",{
+  maxAge:"30d"
+}));
 
 app.listen(5100, () => {
   console.log('Server is running on http://localhost:5100/');

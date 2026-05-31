@@ -4,7 +4,7 @@ import { getAllOrders } from "../services/orderService";
 import OrderDetailsModal from "./OrderDetailsModal";
 import { FaSearch } from "react-icons/fa";
 import { fetchAllproduct } from "../services/productApi";
-import { FetchUsers } from "../services/UsersApi";
+import { FetchUsers, uploadImageApi } from "../services/UsersApi";
 
 const Adminpanel = () => {
   const [Products, setProducts] = useState([]);
@@ -48,24 +48,15 @@ const Adminpanel = () => {
       const formData = new FormData();
       formData.append("image", file);
 
-      const response = await fetch(
-        "http://localhost:5100/users/upload-profile",
-        {
-          method: "POST",
-          credentials: "include",
-          body: formData,
-        }
-      );
-      const data = await response.json();
-  
+      const data = await uploadImageApi(formData)
       if (data.success) {
         setProfileImage(
-          `http://localhost:5100${data.imageUrl}`
+          `${import.meta.env.VITE_BASE_URL}${data.imageUrl}`
         );
 
         localStorage.setItem(
           "profileImage",
-          `http://localhost:5100${data.imageUrl}`
+          `${import.meta.env.VITE_BASE_URL}${data.imageUrl}`
         );
         window.dispatchEvent(new Event("storage"));
       }
