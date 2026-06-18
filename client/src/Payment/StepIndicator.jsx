@@ -17,7 +17,7 @@ const StepIndicator = ({ step }) => {
           >
             {/* Progress Line */}
             {index < steps.length - 1 && (
-              <div className="absolute top-5 left-1/2 w-full h-[3px] bg-gray-300 dark:bg-gray-700">
+              <div className="absolute top-5 left-1/2 w-full h-0.75 bg-gray-300 dark:bg-gray-700">
                 <motion.div
                   className="h-full bg-green-600 rounded-full"
                   initial={false}
