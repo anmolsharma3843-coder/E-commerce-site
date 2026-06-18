@@ -41,32 +41,32 @@ const Footer = () => {
           </div>
 
           {/* QUICK LINKS */}
-          <div>
-            <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-5">
-              Quick Links
-            </h3>
+          <div className="grid grid-cols-2 gap-8 w-full max-w-4xl mx-auto">
+  <div>
+    <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-5">
+      Quick Links
+    </h3>
+    <div className="flex flex-col gap-3 text-sm">
+      <Link to="/" className="hover:text-indigo-500 transition">Home</Link>
+      <Link to="/shop" className="hover:text-indigo-500 transition">Shop</Link>
+      <Link to="/sale" className="hover:text-indigo-500 transition">Sale</Link>
+      <Link to="/contact" className="hover:text-indigo-500 transition">Contact</Link>
+    </div>
+  </div>
 
-            <div className="flex flex-col gap-3 text-sm">
-              <Link to="/" className="hover:text-indigo-500 transition" > Home </Link>
-              <Link to="/shop" className="hover:text-indigo-500 transition" > Shop </Link>
-              <Link to="/sale" className="hover:text-indigo-500 transition" > Sale </Link>
-              <Link to="/contact" className="hover:text-indigo-500 transition" > Contact </Link>
-            </div>
-          </div>
+  <div>
+    <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-5">
+      Categories
+    </h3>
+    <div className="flex flex-col gap-3 text-sm">
+      <Link to="/category/Women" className="hover:text-pink-500 transition">Women Fashion</Link>
+      <Link to="/category/Men" className="hover:text-indigo-500 transition">Men Fashion</Link>
+      <Link to="/shop" className="hover:text-indigo-500 transition">New Arrivals</Link>
+      <Link to="/shop" className="hover:text-indigo-500 transition">Trending Products</Link>
+    </div>
+  </div>
+</div>
 
-          {/* CATEGORIES */}
-          <div>
-            <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-5">
-              Categories
-            </h3>
-
-            <div className="flex flex-col gap-3 text-sm">
-              <Link to="/category/Women" className="hover:text-pink-500 transition" > Women Fashion </Link>
-              <Link to="/category/Men" className="hover:text-indigo-500 transition" > Men Fashion </Link>
-              <Link to="/shop" className="hover:text-indigo-500 transition" > New Arrivals </Link>
-              <Link to="/shop" className="hover:text-indigo-500 transition" > Trending Products </Link>
-            </div>
-          </div>
 
           {/* NEWSLETTER */}
           <div>

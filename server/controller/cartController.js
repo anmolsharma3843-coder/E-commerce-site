@@ -1,5 +1,5 @@
 // controllers/cartController.js
-import { Cart } from "../Model/UserModelSchema.js";
+import { Cart } from "../Model/cartModelSchema.js";
 
 export const addToCart = async (req, res) => {
   const { product } = req.body;

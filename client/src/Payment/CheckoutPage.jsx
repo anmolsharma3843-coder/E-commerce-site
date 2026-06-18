@@ -34,6 +34,7 @@ const CheckoutPage = ({ nextStep }) => {
           <div className="grid md:grid-cols-2 gap-4">
             <input
               name="name"
+              type="text"
               placeholder="Full Name"
               onChange={handleChange}
               className="w-full border rounded-lg p-3 focus:ring-2 focus:ring-blue-500 outline-none dark:bg-gray-700 dark:text-white"
@@ -56,7 +57,6 @@ const CheckoutPage = ({ nextStep }) => {
             className="w-full border rounded-lg p-3 focus:ring-2 focus:ring-blue-500 outline-none dark:bg-gray-700 dark:text-white"
             required
           />
-
           <div className="grid md:grid-cols-2 gap-4">
             <input
               name="city"

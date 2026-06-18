@@ -6,8 +6,13 @@ import { fetchAllproduct } from "../services/productApi";
 import ShopSkeleton from "../components/Skeleton/ShopSkeleton";
 import { getWishlist, toggleWishlist } from "../services/WishlistService";
 import Cookies from "js-cookie";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../services/Cartitems";
+import { toast } from "react-toastify";
+import { cartActions } from "../store/cartSlice";
 
 const Shop = () => {
+  const dispatch= useDispatch();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
@@ -108,6 +113,27 @@ const Shop = () => {
 
     return filtered;
   }, [allProducts, search, sort, category]);
+   const AddToCart = async (item) => {
+      if (!token) {
+        navigate("/login");
+        return;
+      }
+  
+      try {
+        dispatch(cartActions.addItem(item));
+        const response = await addToCart(item);
+  
+        if (response.message === "Item already in cart") {
+          toast.success("Already in cart");
+        } else {
+          toast.success("Added to cart");
+        }
+        
+      } catch (error) {
+        console.log("fetching error", error);
+        toast.error("Failed to add to cart");
+      }
+    };
 
 
   return (
@@ -270,7 +296,12 @@ const Shop = () => {
                     </div>
 
                     {/* BUTTON */}
-                    <button className="mt-5 w-full rounded-xl bg-yellow-400 md:hover:bg-yellow-500 text-white font-medium py-2.5 shadow-md md:hover:shadow-lg active:scale-[0.98] transition-all duration-200" >
+                    <button 
+                     onClick={(e) => {
+                          e.stopPropagation();
+                          AddToCart(item);
+                        }} 
+                    className="mt-5 w-full rounded-xl bg-yellow-400 md:hover:bg-yellow-500 text-white font-medium py-2.5 shadow-md md:hover:shadow-lg active:scale-[0.98] transition-all duration-200" >
                       Add to Cart
                     </button>
                   </div>

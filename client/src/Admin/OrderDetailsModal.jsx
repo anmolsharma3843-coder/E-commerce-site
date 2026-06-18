@@ -57,7 +57,7 @@ const OrderDetailsModal = ({ order, users, onClose }) => {
                 className="flex gap-3 border p-3 rounded-xl dark:border-gray-700"
               >
                 <img
-                  src={item.imageUrl}
+                  src={`${import.meta.env.VITE_BASE_URL}${item.imageUrl}`}
                   alt={item.title}
                   className="w-16 h-16 object-contain bg-gray-100 rounded"
                 />

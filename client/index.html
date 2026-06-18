@@ -1,25 +1,19 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>e-commerce-site</title>
-    <meta name="description" content="E-commerce site for men and women clothes">
-    <meta name="keywords" content="E-commerce, men cloth, women cloth, sales">
-    <link rel="preload" as="image" href="/banner.webp" />
-    <link rel="preconnect" href="http://localhost:5100" />
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-    <script>
-  const theme = localStorage.getItem("theme");
-  if (theme === "dark") {
-    document.documentElement.classList.add("dark");
-  } else {
-    document.documentElement.classList.remove("dark");
-  }
-</script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UrbanMela</title>
+  <meta name="description" content="E-commerce site for men and women clothes">
+  <meta name="keywords" content="E-commerce, men cloth, women cloth, sales">
+</head>
+
+<body>
+  <div id="root"></div>
+  <script>document.documentElement.classList.add("dark");</script>
+  <script type="module" src="/src/main.jsx"></script>
+</body>
+
 </html>

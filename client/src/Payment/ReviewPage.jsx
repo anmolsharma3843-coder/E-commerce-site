@@ -10,7 +10,6 @@ import { createOrder } from "../services/orderService";
 const ReviewPage = ({
   orderData,
   prevStep,
-  cartItems,
   buyNow,
 }) => {
   const [confirmed, setConfirmed] = useState(false);
@@ -18,6 +17,7 @@ const ReviewPage = ({
   const [modal, setModal] = useState({ open: false, id: null, title: "" });
    const user = useSelector((store) => store.auth.user);
   const dispatch = useDispatch();
+  const cartItems = useSelector((state) => state.cart);
 
   useEffect(() => {
     const fetchCart = async () => {
@@ -45,9 +45,9 @@ const ReviewPage = ({
     dispatch(cartActions.setCart(data));
   };
 
-  const handleRemove = async () => {
+  const handleRemove = async (id) => {
     try {
-      const data = await removeFromCart(modal.id);
+      const data = await removeFromCart(id);
       dispatch(cartActions.setCart(data));
     } catch (err) {
       console.log(err);
@@ -269,7 +269,7 @@ const ReviewPage = ({
       {modal.open && (
         <Model
           title={modal.title}
-          remove={handleRemove}
+          remove={()=>handleRemove(modal.id)}
           Cancel={() => setModal({ open: false, id: null, title: "" })}
         />
       )}

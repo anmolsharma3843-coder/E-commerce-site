@@ -1,5 +1,5 @@
 import { Order } from "../Model/Order.js";
-import { Cart } from "../Model/UserModelSchema.js";
+import { Cart } from "../Model/cartModelSchema.js";
 
 // GET USER ORDERS
 export const getMyOrders = async (req, res) => {
@@ -9,8 +9,6 @@ export const getMyOrders = async (req, res) => {
     const orders = await Order.find({ userId }).sort({
       createdAt: -1,
     });
-
-    console.log(orders);
 
     res.json({
       success: true,
@@ -28,12 +26,7 @@ export const createOrder = async (req, res) => {
   try {
     const userId = req.user.id;
 
-const {
-  orderData,
-  cartItems,
-  buyNow,
-} = req.body;
-
+    const { orderData, cartItems, buyNow, } = req.body;
     if (!userId || !cartItems) {
       return res.status(400).json({
         error: "Missing data",
@@ -56,12 +49,10 @@ const {
     });
 
     await newOrder.save();
-
-    console.log(newOrder);
-
+    
     if (!buyNow) {
-  await Cart.deleteMany({ userId });
-}
+      await Cart.deleteMany({ userId });
+    }
 
     res.json({
       success: true,
@@ -107,14 +98,7 @@ export const updateOrderStatus = async (req, res) => {
   try {
     const { status } = req.body;
 
-    const validStatuses = [
-      "Pending",
-      "Confirmed",
-      "Shipped",
-      "Out for Delivery",
-      "Delivered",
-      "Cancelled",
-    ];
+    const validStatuses = [ "Pending", "Confirmed", "Shipped", "Out for Delivery", "Delivered", "Cancelled", ];
 
     if (!validStatuses.includes(status)) {
       return res.status(400).json({
@@ -144,3 +128,30 @@ export const updateOrderStatus = async (req, res) => {
     });
   }
 };
+export const getTotalSales = async (req, res) => {
+  try {
+    const result = await Order.aggregate([
+      {
+        $match: {
+          status: "Delivered",
+        },
+      },
+      {
+        $group: {
+          _id: null,
+          totalSales: {
+            $sum: "$totalAmount",
+          },
+        },
+      },
+    ]);
+
+    res.json({
+      totalSales: result[0]?.totalSales || 0,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+}

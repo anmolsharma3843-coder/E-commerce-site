@@ -144,6 +144,10 @@ const Orders = () => {
 
                           <select
                             value={order.status}
+                            disabled={
+                              order.status === "Delivered" ||
+                              order.status === "Cancelled"
+                            }
                             onChange={(e) =>
                               updateStatus(
                                 order._id,

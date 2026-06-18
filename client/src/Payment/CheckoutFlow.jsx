@@ -137,7 +137,6 @@ const CheckoutFlow = () => {
       <ReviewPage
         orderData={orderData}
         prevStep={prevStep}
-        cartItems={finalItems}
         buyNow={!!buyNowItem}
       />
 

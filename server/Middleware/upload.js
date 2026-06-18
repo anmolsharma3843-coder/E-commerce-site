@@ -1,9 +1,7 @@
 import multer from "multer";
 import path from "path";
 
-/* =========================
-   PROFILE IMAGE STORAGE
-========================= */
+//Profile image storage
 
 const profileStorage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -11,12 +9,7 @@ const profileStorage = multer.diskStorage({
   },
 
   filename: (req, file, cb) => {
-    cb(
-      null,
-      "profile-" +
-        Date.now() +
-        path.extname(file.originalname)
-    );
+    cb(null, "profile-" + Date.now() + path.extname(file.originalname));
   },
 });
 
@@ -24,9 +17,7 @@ export const uploadProfile = multer({
   storage: profileStorage,
 });
 
-/* =========================
-   PRODUCT IMAGE STORAGE
-========================= */
+//product images storage
 
 const productStorage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -34,12 +25,7 @@ const productStorage = multer.diskStorage({
   },
 
   filename: (req, file, cb) => {
-    cb(
-      null,
-      "product-" +
-        Date.now() +
-        path.extname(file.originalname)
-    );
+    cb( null, "product-" + Date.now() + path.extname(file.originalname) );
   },
 });
 

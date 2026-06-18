@@ -26,29 +26,12 @@ router.get("/all", getAllProducts);
 router.get("/:id", getProductDetails);
 
 // CREATE PRODUCT
-router.post(
-  "/",
-  authenicate,
-  authorizeAdmin,
-  uploadProduct.single("image"),
-  createProduct
-);
+router.post( "/", authenicate, authorizeAdmin, uploadProduct.single("image"), createProduct );
 
 // UPDATE PRODUCT
-router.put(
-  "/:id",
-  authenicate,
-  authorizeAdmin,
-  uploadProduct.single("image"),
-  updateProduct
-);
+router.put( "/:id", authenicate, authorizeAdmin, uploadProduct.single("image"), updateProduct );
 
 // DELETE
-router.delete(
-  "/:id",
-  authenicate,
-  authorizeAdmin,
-  deleteProduct
-);
+router.delete( "/:id", authenicate, authorizeAdmin, deleteProduct );
 
 export default router;

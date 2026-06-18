@@ -108,46 +108,49 @@ const Users = lazy(() =>
 
 const router = createBrowserRouter([
   {
-    path: "/",
-    element: (
-      <UserRoute>
-        <App />
-      </UserRoute>
-    ),
+  path: "/",
+  element: <App />,
+  children: [
+    {
+      index: true,
+      element: <Home />,
+    },
 
-    children: [
-      {
-        path: "/",
-        element: <Home />,
-      },
+    {
+      path: "product/:id",
+      element: <ItemDetails />,
+    },
 
-      {
-        path: "/product/:id",
-        element: <ItemDetails />,
-      },
+    {
+      path: "category/:category",
+      element: <CategoryItems />,
+    },
 
-      {
-        path: "/category/:category",
-        element: <CategoryItems />,
-      },
+    {
+      path: "shop",
+      element: <Shop />,
+    },
 
-      {
-        path: "/wishlist",
-        element: <Wishlist />,
-      },
+    // Protected routes
+    {
+      path: "wishlist",
+      element: (
+        <UserRoute>
+          <Wishlist />
+        </UserRoute>
+      ),
+    },
 
-      {
-        path: "/orders",
-        element: <MyOrders />,
-      },
-
-      {
-        path: "/shop",
-        element: <Shop />,
-      },
-    ],
-  },
-
+    {
+      path: "orders",
+      element: (
+        <UserRoute>
+          <MyOrders />
+        </UserRoute>
+      ),
+    },
+  ],
+},
   {
     path: "/cart",
 
@@ -234,7 +237,7 @@ const router = createBrowserRouter([
 /* =========================
    APP RENDER
 ========================= */
-
+document.documentElement.classList.add("dark");
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <Provider store={store}>

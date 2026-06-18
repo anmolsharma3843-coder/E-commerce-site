@@ -87,10 +87,10 @@ const Wishlist = () => {
               {/* REMOVE BUTTON */}
               <button
                 onClick={(e) => removeItem(item._id, e)}
-                className="absolute top-2 right-2  text-xs px-3 py-1 rounded-full shadow  text-red-500 "
+                className="absolute top-1 right-1  px-3 py-1  shadow  text-red-500 font-bold text-sm border border-red-500 rounded-full bg-slate-200"
                  aria-label="Remove item"
               >
-              <ImCancelCircle size={25}/>
+              X
               </button>
             </div>
 

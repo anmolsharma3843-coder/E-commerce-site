@@ -218,9 +218,6 @@ const Itemspart = () => {
                 {/* RATING */}
                 <div className="flex items-center gap-2 text-xs">
                   <span className=" bg-green-700 text-white px-2 py-1 rounded-md font-medium " > {item.rating || 4.2} ★ </span>
-                  <span className="text-gray-500 dark:text-gray-400">
-                    (1.2k Reviews)
-                  </span>
                 </div>
 
                 {/* PRICE */}

@@ -17,10 +17,10 @@ const StepIndicator = ({ step }) => {
           >
             {/* Progress Line */}
             {index < steps.length - 1 && (
-              <div className="absolute top-4 left-1/2 w-full h-[2px] bg-gray-300">
+              <div className="absolute top-5 left-1/2 w-full h-[3px] bg-gray-300 dark:bg-gray-700">
                 <motion.div
-                  className="h-full bg-green-600"
-                  initial={{ width: "0%" }}
+                  className="h-full bg-green-600 rounded-full"
+                  initial={false}
                   animate={{
                     width: isCompleted ? "100%" : "0%",
                   }}
@@ -32,30 +32,48 @@ const StepIndicator = ({ step }) => {
               </div>
             )}
 
-            {/* Circle */}
+            {/* Step Circle */}
             <motion.div
-              className={`w-10 h-10 flex items-center justify-center rounded-full border-2 z-10 font-semibold
+              className={`relative w-10 h-10 flex items-center justify-center rounded-full border-2 z-10 font-semibold
                 ${
                   isCompleted
                     ? "bg-green-600 border-green-600 text-white"
                     : isActive
                     ? "bg-blue-600 border-blue-600 text-white"
-                    : "bg-gray-200 border-gray-400 text-gray-600"
+                    : "bg-gray-200 border-gray-400 text-gray-600 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300"
                 }`}
               animate={{
-                scale: isActive ? 1.15 : 1,
+                scale: isActive ? 1.08 : 1,
               }}
               transition={{
                 type: "spring",
-                stiffness: 300,
-                damping: 15,
+                stiffness: 250,
+                damping: 20,
               }}
             >
+              {/* Smooth Active Ring */}
+              <motion.div
+                className="absolute inset-0 rounded-full"
+                animate={{
+                  boxShadow: isActive
+                    ? "0 0 0 8px rgba(59,130,246,0.20)"
+                    : "0 0 0 0px rgba(59,130,246,0)",
+                }}
+                transition={{
+                  duration: 0.35,
+                  ease: "easeOut",
+                }}
+              />
+
               {isCompleted ? (
                 <motion.span
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
-                  transition={{ type: "spring" }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 300,
+                    damping: 15,
+                  }}
                 >
                   ✓
                 </motion.span>
@@ -64,33 +82,21 @@ const StepIndicator = ({ step }) => {
               )}
             </motion.div>
 
-            {/* Active Pulse Ring */}
-            {isActive && (
-              <motion.div
-                className="absolute w-10 h-10 rounded-full border-2 border-blue-500"
-                initial={{ scale: 1, opacity: 0.7 }}
-                animate={{
-                  scale: 1.5,
-                  opacity: 0,
-                }}
-                transition={{
-                  repeat: Infinity,
-                  duration: 1.5,
-                }}
-              />
-            )}
-
             {/* Label */}
             <motion.span
-              className={`mt-2 text-sm font-medium ${
+              className={`mt-3 text-sm font-medium ${
                 isActive
-                  ? "text-blue-600"
-                  : "text-gray-600 dark:text-gray-100"
+                  ? "text-blue-600 dark:text-blue-400"
+                  : "text-gray-600 dark:text-gray-300"
               }`}
               animate={{
-                y: isActive ? -2 : 0,
+                y: isActive ? -3 : 0,
+                opacity: isActive ? 1 : 0.8,
               }}
-              transition={{ duration: 0.2 }}
+              transition={{
+                duration: 0.3,
+                ease: "easeOut",
+              }}
             >
               {label}
             </motion.span>

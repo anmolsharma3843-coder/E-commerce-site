@@ -193,7 +193,7 @@ const Header = () => {
             <Link
               to="/cart"
               aria-label="Cart"
-              className="relative text-gray-800 dark:text-gray-200"
+              className="relative text-gray-800 dark:text-gray-200 md:hover:text-purple-700"
             >
               {cartitem.length > 0 && (
                 <span className="absolute -top-2 -right-2 bg-purple-700 text-white text-xs h-5 w-5 flex items-center justify-center rounded-full shadow">
@@ -249,7 +249,26 @@ const Header = () => {
             )}
           </div>
         </div>
+  {/* MOBILE SEARCH */}
+<div className="md:hidden px-4 pb-3 bg-white dark:bg-gray-950">
+  <form className="flex items-center bg-gray-200 dark:bg-gray-800 px-4 py-3 rounded-full focus-within:ring-2 focus-within:ring-purple-600 transition">
+    <div className="mr-2">
+      {searching ? (
+        <div className="w-4 h-4 border-2 border-purple-600 border-t-transparent rounded-full animate-spin" />
+      ) : (
+        <FiSearch className="text-gray-700 dark:text-gray-300" />
+      )}
+    </div>
 
+    <input
+      type="text"
+      placeholder="Search products..."
+      value={searchQuery}
+      onChange={(e) => setSearchQuery(e.target.value)}
+      className="flex-1 bg-transparent outline-none text-sm text-gray-900 dark:text-white placeholder:text-gray-600 dark:placeholder:text-gray-400"
+    />
+  </form>
+</div>
         {/* MOBILE NAV */}
         <div className="md:hidden flex justify-around py-3 border-t border-gray-300 dark:border-gray-800 text-sm text-gray-800 dark:text-gray-200 bg-white dark:bg-gray-950">
           {["Home", "Women", "Men", "Shop"].map((item) => (

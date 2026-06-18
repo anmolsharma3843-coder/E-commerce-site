@@ -104,3 +104,40 @@ export const updateProduct=async(id,formData)=>{
         throw error;
     }
 }
+
+export const getProductDetails=async(id)=>{
+          try{
+        const response=await fetch(`${BASE_URL}/products/${id}`,{
+            method:'GET',
+            headers:{
+                'Content-Type':'application/json'
+            }
+        })
+        if(!response.ok){
+            throw new Error(`Error:${response.status}`)
+        }
+        return await response.json();
+        
+    }catch(error){
+        console.log("API call Failed",error)
+        throw error;
+    }
+}
+export const getrelatedProduct=async(id)=>{
+          try{
+        const response=await fetch(`${BASE_URL}/products/category/${id}`,{
+            method:'GET',
+            headers:{
+                'Content-Type':'application/json'
+            }
+        })
+        if(!response.ok){
+            throw new Error(`Error:${response.status}`)
+        }
+        return await response.json();
+        
+    }catch(error){
+        console.log("API call Failed",error)
+        throw error;
+    }
+}

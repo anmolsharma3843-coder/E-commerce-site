@@ -1,11 +1,11 @@
 import jwt from 'jsonwebtoken'
 import { user } from "../Model/UserModelSchema.js";
 const authenicate=async(req,res,next)=>{
-    let token;
-    token=req.cookies?.jwt;
+    const token=req.cookies?.jwt;
     if(token){
         try {
             const decoded=jwt.verify(token,process.env.SECRET_KEY)
+            console.log("DECODED:", decoded);
             req.user= decoded;
             next();
         } catch (error) {

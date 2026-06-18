@@ -74,3 +74,22 @@ export const updateOrderStatus = async (id, status) => {
 
   return await res.json();
 };
+//total revenue
+export const getTotalRevenue = async () => {
+  try {
+    const res = await fetch(`${BASE_URL}/orders/sales`, {
+      method: "GET",
+      credentials: "include"
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      throw new Error(data.error || "Failed to fetch orders");
+    }
+
+    return data;
+  } catch (err) {
+    throw err;
+  }
+};

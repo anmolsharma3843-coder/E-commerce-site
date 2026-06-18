@@ -1,27 +1,34 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { getAllOrders } from "../services/orderService";
+import { getAllOrders, getTotalRevenue } from "../services/orderService";
 import OrderDetailsModal from "./OrderDetailsModal";
 import { FaSearch } from "react-icons/fa";
 import { fetchAllproduct } from "../services/productApi";
 import { FetchUsers, uploadImageApi } from "../services/UsersApi";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { setProfileImage } from "../store/authSlice";
+
 
 const Adminpanel = () => {
+  const dispatch = useDispatch();
   const [Products, setProducts] = useState([]);
   const [users, setusers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [orders, setOrders] = useState([]);
+  const [Total, setTotal] = useState(0)
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [search, setSearch] = useState("");
-  const [profileImage, setProfileImage] = useState(localStorage.getItem("profileImage") || '');
+  const user = useSelector((store) => store.auth.user);
 
   useEffect(() => {
     const productslist = async () => {
       try {
         setLoading(true);
 
-        const [productsData, usersData, ordersData] =
+        const [TotalData,productsData, usersData, ordersData] =
           await Promise.all([
+            getTotalRevenue(),
             fetchAllproduct(),
             FetchUsers(),
             getAllOrders(),
@@ -30,6 +37,7 @@ const Adminpanel = () => {
         setProducts(productsData);
         setusers(usersData);
         setOrders(ordersData);
+        setTotal(TotalData)
       } catch (error) {
         console.log("fetching error", error);
       } finally {
@@ -49,17 +57,8 @@ const Adminpanel = () => {
       formData.append("image", file);
 
       const data = await uploadImageApi(formData)
-      if (data.success) {
-        setProfileImage(
-          `${import.meta.env.VITE_BASE_URL}${data.imageUrl}`
-        );
-
-        localStorage.setItem(
-          "profileImage",
-          `${import.meta.env.VITE_BASE_URL}${data.imageUrl}`
-        );
-        window.dispatchEvent(new Event("storage"));
-      }
+      dispatch(setProfileImage(data.profileImage));
+      toast.success("Image successffully upload 👌")
     } catch (error) {
       console.log("Upload error:", error);
     }
@@ -86,7 +85,8 @@ const Adminpanel = () => {
   });
 
   const stats = [
-    { title: "Revenue", value: "₹45,000", icon: "💰", link: '/admin' },
+    { title: "Revenue", value:Total.totalSales
+      , icon: "💰", link: '/admin' },
     {
       title: "Orders",
       value: orders.length,
@@ -163,14 +163,15 @@ const Adminpanel = () => {
             />
 
             <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full overflow-hidden border-2 border-indigo-500">
-              <img
+              {user?.profileImage ? (<img
                 src={
-                  profileImage ||
-                  "https://ui-avatars.com/api/?name=Admin"
+                  `${import.meta.env.VITE_BASE_URL}${user.profileImage}`
                 }
                 alt="Admin"
                 className="w-full h-full object-cover"
-              />
+              />):
+              user.username?.charAt(0).toUpperCase()
+}
             </div>
           </label>
         </div>
@@ -321,7 +322,7 @@ const Adminpanel = () => {
                           setSelectedOrder(order)
                         }
                         className="p-4 border rounded-xl cursor-pointer 
-                        dark:border-gray-700 bg-gray-50 dark:bg-gray-900"
+                        dark:border-gray-700 bg-gray-50 dark:bg-gray-900 dark:text-white"
                       >
                         <div className="flex justify-between items-center">
                           <p className="font-semibold text-sm">

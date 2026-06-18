@@ -1,4 +1,4 @@
-import { items } from "../Model/UserModelSchema.js";
+import { items } from "../Model/ProductsModelSchema.js";
 
 // GET list
 export const getProductslist = async (req, res) => {
@@ -29,15 +29,7 @@ export const getProductDetails = async (req, res) => {
 // 🔥 ADVANCED GET PRODUCTS
 export const getProducts = async (req, res) => {
   try {
-    const {
-      category,
-      minPrice,
-      maxPrice,
-      sort,
-      search,
-      page = 1,
-      limit = 8,
-    } = req.query;
+    const { category, minPrice, maxPrice, sort, search, page = 1, limit = 8, } = req.query;
 
     let query = {};
 

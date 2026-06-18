@@ -5,12 +5,10 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Cookies from "js-cookie";
 
-import {
-  getProductDetails,
-} from "../services/ApiService";
 
 import { addToCart } from "../services/Cartitems";
 import { cartActions } from "../store/cartSlice";
+import { getProductDetails } from "../services/productApi";
 
 const ItemDetails = () => {
   const dispatch = useDispatch();
@@ -156,7 +154,7 @@ const ItemDetails = () => {
 
         {/* IMAGE */}
         <div className=" bg-white dark:bg-gray-900 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-800 p-4 lg:sticky lg:top-24 h-fit " >
-          <img src={items.imageUrl} alt={items.title} loading="eager" fetchPriority="high" className=" w-full h-80 sm:h-105 object-contain mx-auto transition-transform duration-300 md:hover:scale-105 " />
+          <img src={`${import.meta.env.VITE_BASE_URL}${items.imageUrl}`} alt={items.title} loading="eager" fetchPriority="high" className=" w-full h-80 sm:h-105 object-contain mx-auto transition-transform duration-300 md:hover:scale-105 " />
 
           <div className="flex flex-wrap gap-2 mt-5">
             <span className="text-xs bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 px-3 py-1 rounded-full border border-gray-200 dark:border-gray-700">

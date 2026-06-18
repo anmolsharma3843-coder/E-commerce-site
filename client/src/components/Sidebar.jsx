@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   FaHome,
@@ -9,52 +9,24 @@ import {
   FaSignOutAlt,
 } from "react-icons/fa";
 import { logout } from "../store/authSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import { logoutUser } from "../services/AuthApiService";
 
 const Sidebar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const [profileImage, setProfileImage] = useState(null);
-useEffect(() => {
-  const savedImage = localStorage.getItem("profileImage");
-
-  if (savedImage) {
-    setProfileImage(savedImage);
-  }
-
-  const handleStorageChange = () => {
-    const updatedImage =
-      localStorage.getItem("profileImage");
-
-    setProfileImage(updatedImage);
-  };
-
-  window.addEventListener(
-    "storage",
-    handleStorageChange
-  );
-
-  return () => {
-    window.removeEventListener(
-      "storage",
-      handleStorageChange
-    );
-  };
-}, []);
+  const user = useSelector((store) => store.auth.user);
   const handleLogout = async () => {
     try {
-      const response = await fetch("http://localhost:5100/auth/logout", {
-        method: "POST",
-        credentials: "include",
-      });
-      const data = await response.json();
+      const response = await logoutUser();
       localStorage.removeItem("theme");
 
       if (response.ok) {
         dispatch(logout());
-        toast.success(data.message);
+        toast.success(response.data.message);
         navigate("/login");
       }
     } catch (error) {
@@ -81,11 +53,17 @@ useEffect(() => {
       {/* Logo */}
       <div className="flex items-center gap-4 px-4 py-6">
         <div className="w-9 h-9 bg-gray-200 dark:bg-gray-600 rounded-full overflow-clip shrink-0">
-          <img src={profileImage} alt="Admin Profile" className="w-full h-full object-cover"/>
+          {user?.profileImage ? (<img
+            src={`${import.meta.env.VITE_BASE_URL}${user.profileImage}`}
+            alt="Admin"
+            className="w-full h-full object-cover"
+          />) :
+            user.username?.charAt(0).toUpperCase()
+          }
         </div>
 
         <span className="text-lg font-semibold opacity-0 md:group-hover:opacity-100 transition whitespace-nowrap">
-        Anmol
+          Anmol
         </span>
       </div>
 

@@ -4,7 +4,7 @@ const generateToken = (res, user) => {
   const token = jwt.sign( {
       id: user._id,
       email: user.email,
-      isAdmin: user.isAdmin,   // ✅ include admin flag
+      isAdmin: user.isAdmin,   
     },
  process.env.SECRET_KEY, {
     expiresIn: '5d',
