@@ -1,59 +1,74 @@
 import { items } from "../Model/ProductsModelSchema.js";
+import cloudinary from "../config/cloudinary.js";
+import fs from "fs";
 
-// GET list
+/**
+ * GET PRODUCTS (LIST)
+ */
 export const getProductslist = async (req, res) => {
-  const data = await items.find({}).limit(6);
-  res.json(data);
+  try {
+    const data = await items.find({}).limit(6);
+    res.json(data);
+  } catch (err) {
+    res.status(500).json({ message: "Error fetching list" });
+  }
 };
-//GET ALL PRODUCTS
+
+/**
+ * GET ALL PRODUCTS
+ */
 export const getAllProducts = async (req, res) => {
   try {
     const products = await items.find({});
-
     res.status(200).json(products);
   } catch (error) {
-    console.log(error);
-
-    res.status(500).json({
-      message: "Failed to fetch products",
-    });
+    res.status(500).json({ message: "Failed to fetch products" });
   }
 };
-// GET BY ID
+
+/**
+ * GET PRODUCT BY ID
+ */
 export const getProductDetails = async (req, res) => {
-  const product = await items.findById(req.params.id);
-  res.json(product);
+  try {
+    const product = await items.findById(req.params.id);
+    res.json(product);
+  } catch (err) {
+    res.status(500).json({ message: "Product not found" });
+  }
 };
 
-
-// 🔥 ADVANCED GET PRODUCTS
+/**
+ * ADVANCED PRODUCT FILTERING
+ */
 export const getProducts = async (req, res) => {
   try {
-    const { category, minPrice, maxPrice, sort, search, page = 1, limit = 8, } = req.query;
+    const {
+      category,
+      minPrice,
+      maxPrice,
+      sort,
+      search,
+      page = 1,
+      limit = 8,
+    } = req.query;
 
     let query = {};
 
-    // ✅ CATEGORY FILTER
-    if (category) {
-      query.category = category;
-    }
+    if (category) query.category = category;
 
-    // ✅ PRICE FILTER
     if (minPrice || maxPrice) {
       query.price = {};
       if (minPrice) query.price.$gte = Number(minPrice);
       if (maxPrice) query.price.$lte = Number(maxPrice);
     }
 
-    // ✅ SEARCH (title)
     if (search) {
       query.title = { $regex: search, $options: "i" };
     }
 
-    // ✅ PAGINATION
-    const skip = (page - 1) * limit;
+    const skip = (page - 1) * Number(limit);
 
-    // ✅ SORTING
     let sortOption = {};
     if (sort === "low") sortOption.price = 1;
     if (sort === "high") sortOption.price = -1;
@@ -73,35 +88,87 @@ export const getProducts = async (req, res) => {
       page: Number(page),
       pages: Math.ceil(total / limit),
     });
-
   } catch (error) {
-    console.log(error);
     res.status(500).json({ message: "Server Error" });
   }
 };
 
-// ADD
-export const addProduct = async (req, res) => {
-  const product = await items.create(req.body);
-  res.json(product);
+/**
+ * CREATE PRODUCT
+ */
+export const createProduct = async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({
+        success: false,
+        message: "No image uploaded",
+      });
+    }
+
+    const result = await cloudinary.uploader.upload(req.file.path, {
+      folder: "products",
+    });
+
+    fs.unlinkSync(req.file.path);
+
+    const {
+      title,
+      description,
+      price,
+      rating,
+      sizes,
+      materialComposition,
+      countryOfOrigin,
+      fitType,
+      category,
+    } = req.body;
+
+    const product = await items.create({
+      title,
+      description,
+      price: Number(price),
+      rating: Number(rating || 0),
+      sizes: sizes ? sizes.split(",") : [],
+      materialComposition,
+      countryOfOrigin,
+      fitType,
+      category,
+      imageUrl: result.secure_url,
+    });
+
+    res.status(201).json({
+      success: true,
+      product,
+    });
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      success: false,
+      message: "Product upload failed",
+    });
+  }
 };
 
-// DELETE
-export const deleteProduct = async (req, res) => {
-  await items.findByIdAndDelete(req.params.id);
-  res.json({ message: "Deleted" });
-};
-
-// UPDATE
+/**
+ * UPDATE PRODUCT
+ */
 export const updateProduct = async (req, res) => {
   try {
-    const updateData = {
-      ...req.body,
-    };
+    const updateData = { ...req.body };
 
     if (req.file) {
-      updateData.imageUrl =
-        `/uploads/products/${req.file.filename}`;
+      const result = await cloudinary.uploader.upload(req.file.path, {
+        folder: "products",
+      });
+
+      fs.unlinkSync(req.file.path);
+
+      updateData.imageUrl = result.secure_url;
+    }
+
+    if (updateData.sizes) {
+      updateData.sizes = updateData.sizes.split(",");
     }
 
     const updated = await items.findByIdAndUpdate(
@@ -112,7 +179,7 @@ export const updateProduct = async (req, res) => {
 
     res.json(updated);
   } catch (error) {
-    console.log(error);
+    console.error(error);
 
     res.status(500).json({
       message: "Failed to update product",
@@ -120,40 +187,19 @@ export const updateProduct = async (req, res) => {
   }
 };
 
-export const createProduct = async (req, res) => {
+/**
+ * DELETE PRODUCT
+ */
+export const deleteProduct = async (req, res) => {
   try {
-    if (!req.file) {
-      return res.status(400).json({
-        success: false,
-        message: "No image uploaded",
-      });
-    }
-
-    const imagePath = `/uploads/products/${req.file.filename}`;
-
-    const product = await items.create({
-      title: req.body.title,
-      description: req.body.description,
-      price: req.body.price,
-      rating: req.body.rating,
-      sizes: req.body.sizes.split(","),
-      materialComposition: req.body.materialComposition,
-      countryOfOrigin: req.body.countryOfOrigin,
-      fitType: req.body.fitType,
-      category: req.body.category,
-      imageUrl: imagePath,
-    });
+    await items.findByIdAndDelete(req.params.id);
 
     res.json({
-      success: true,
-      product,
+      message: "Deleted",
     });
-  } catch (error) {
-    console.log(error);
-
+  } catch (err) {
     res.status(500).json({
-      success: false,
-      message: "Product upload failed",
+      message: "Delete failed",
     });
   }
 };

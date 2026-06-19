@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken'
 import { user } from "../Model/UserModelSchema.js";
-const authenicate = async (req, res, next) => {
+const authenticate = async (req, res, next) => {
     const token = req.cookies?.jwt;
     if (token) {
         try {
@@ -23,4 +23,4 @@ const authorizeAdmin = (req, res, next) => {
 
     }
 }
-export { authenicate, authorizeAdmin };
+export { authenticate, authorizeAdmin };

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { authenicate } from "../Middleware/Authenticate.js"; // adjust path
+import { authenticate } from "../Middleware/Authenticate.js"; // adjust path
 
 import {
   addToCart,
@@ -11,15 +11,15 @@ import {
 const router = Router();
 
 // Get full cart
-router.get("/", authenicate, getCart);
+router.get("/", authenticate, getCart);
 
 // Add item to cart
-router.post("/", authenicate, addToCart);
+router.post("/", authenticate, addToCart);
 
 // Update quantity
-router.put("/update/:id", authenicate, updateQty);
+router.put("/update/:id", authenticate, updateQty);
 
 // Remove item
-router.delete("/:id", authenicate, removeItem);
+router.delete("/:id", authenticate, removeItem);
 
 export default router;

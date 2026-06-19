@@ -1,5 +1,5 @@
 import express from "express";
-import { authenicate } from "../Middleware/Authenticate.js";
+import { authenticate } from "../Middleware/Authenticate.js";
 
 import {
   getMyOrders,
@@ -13,10 +13,10 @@ import {
 const router = express.Router();
 
 //  USER ORDERS
-router.get("/myorders", authenicate, getMyOrders);
+router.get("/myorders", authenticate, getMyOrders);
 
 //  CREATE ORDER
-router.post("/create",authenicate, createOrder);
+router.post("/create",authenticate, createOrder);
 
 //  GET ALL ORDERS
 router.get("/", getAllOrders);

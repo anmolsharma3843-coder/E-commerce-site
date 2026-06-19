@@ -11,7 +11,7 @@ import {
 } from "../controller/ProductController.js";
 
 import {
-  authenicate,
+  authenticate,
   authorizeAdmin,
 } from "../Middleware/Authenticate.js";
 
@@ -19,19 +19,39 @@ import { uploadProduct } from "../Middleware/upload.js";
 
 const router = Router();
 
-// GET
+/**
+ * PUBLIC ROUTES
+ */
 router.get("/", getProducts);
 router.get("/list", getProductslist);
 router.get("/all", getAllProducts);
 router.get("/:id", getProductDetails);
 
-// CREATE PRODUCT
-router.post( "/", authenicate, authorizeAdmin, uploadProduct.single("image"), createProduct );
+/**
+ * CREATE PRODUCT (ADMIN ONLY)
+ */
+router.post(
+  "/",
+  authenticate,
+  authorizeAdmin,
+  uploadProduct.single("image"),
+  createProduct
+);
 
-// UPDATE PRODUCT
-router.put( "/:id", authenicate, authorizeAdmin, uploadProduct.single("image"), updateProduct );
+/**
+ * UPDATE PRODUCT (ADMIN ONLY)
+ */
+router.put(
+  "/:id",
+  authenticate,
+  authorizeAdmin,
+  uploadProduct.single("image"),
+  updateProduct
+);
 
-// DELETE
-router.delete( "/:id", authenicate, authorizeAdmin, deleteProduct );
+/**
+ * DELETE PRODUCT (ADMIN ONLY)
+ */
+router.delete("/:id", authenticate, authorizeAdmin, deleteProduct);
 
 export default router;

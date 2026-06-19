@@ -52,6 +52,7 @@ const itemsSchema = mongoose.Schema({
 itemsSchema.index({
   title: 1,
   description: 1,
-  price: 1
+  price: 1,
+  category:1
 })
 export const items = mongoose.model('items', itemsSchema);

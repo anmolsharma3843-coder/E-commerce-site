@@ -1,34 +1,42 @@
 import multer from "multer";
 import path from "path";
 
-//Profile image storage
+const fileFilter = (req, file, cb) => {
+  const allowedTypes = /jpeg|jpg|png|webp/;
+
+  const ext = path.extname(file.originalname).toLowerCase();
+
+  if (allowedTypes.test(ext)) {
+    cb(null, true);
+  } else {
+    cb(new Error("Only image files are allowed"));
+  }
+};
 
 const profileStorage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "uploads/profiles");
   },
-
   filename: (req, file, cb) => {
-    cb(null, "profile-" + Date.now() + path.extname(file.originalname));
+    cb(null, `profile-${Date.now()}${path.extname(file.originalname)}`);
   },
 });
-
-export const uploadProfile = multer({
-  storage: profileStorage,
-});
-
-//product images storage
 
 const productStorage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "uploads/products");
   },
-
   filename: (req, file, cb) => {
-    cb( null, "product-" + Date.now() + path.extname(file.originalname) );
+    cb(null, `product-${Date.now()}${path.extname(file.originalname)}`);
   },
+});
+
+export const uploadProfile = multer({
+  storage: profileStorage,
+  fileFilter,
 });
 
 export const uploadProduct = multer({
   storage: productStorage,
+  fileFilter,
 });
