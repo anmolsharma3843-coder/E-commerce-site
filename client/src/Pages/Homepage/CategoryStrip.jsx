@@ -5,7 +5,7 @@ import women from "../../assets/Images/women.webp";
 import men from "../../assets/Images/men.webp";
 import dresses from "../../assets/Images/dresses.webp";
 import kurti from "../../assets/Images/kurti.webp";
-import saree from "../../assets/Images/saree.webp";
+import saree from "../../assets/Images/Saree.webp";
 import shirts from "../../assets/Images/shirts.webp";
 import shorts from "../../assets/Images/Shorts.webp";
 import NightDress from "../../assets/Images/NightDress.webp";
