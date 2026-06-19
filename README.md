@@ -119,15 +119,25 @@ Backend: Coming Soon
 
 Add screenshots of:
 
-* Home Page (./screenshots/home.png)
+### Home Page
 
-* Product Page (./screenshots/products.png)
+![Home Page](./screenshots/Home.png)
 
-* Cart Page (./screenshots/cart2.png)
+### Product Page
 
-* Wishlist Page (./screenshots/wishlist.png)
+![Product Page](./screenshots/products.png)
 
-* Admin Dashboard(./screenshots/Admin.png)
+### Cart Page
+
+![Cart Page](./screenshots/cart2.png)
+
+### Wishlist Page
+
+![Wishlist Page](./screenshots/wishlist.png)
+
+### Admin Page
+
+![Wishlist Page](./screenshots/Admin.png)
 
 ## 🔮 Future Improvements
 
