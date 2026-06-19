@@ -37,7 +37,7 @@ const SignUp = lazy(() => import("./Pages/Auth/Signup.jsx") );
 const Wishlist = lazy(() => import("./Pages/Wishlist.jsx") );
 const MyOrders = lazy(() => import("./Pages/MyOrders.jsx") );
 const CategoryItems = lazy(() => import("./Pages/CategoryItems.jsx") );
-const Shop = lazy(() => import("./Pages/shop.jsx") );
+const Shop = lazy(() => import("./Pages/Shop.jsx") );
 
 const CheckoutFlow = lazy(() => import("./Payment/CheckoutFlow.jsx") );
 
