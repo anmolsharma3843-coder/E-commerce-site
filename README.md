@@ -125,7 +125,7 @@ Add screenshots of:
 
 ### Product Page
 
-![Product Page](./screenshots/products.png)
+![Product Page](./screenshots/Products.png)
 
 ### Cart Page
 
