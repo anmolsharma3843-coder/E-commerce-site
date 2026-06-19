@@ -20,91 +20,41 @@ import AdminRoute from "./context/AdminRoute.jsx";
 import UserRoute from "./context/UserRoute.jsx";
 import LoadingSpinner from "./components/LoadingSpinner.jsx";
 
-/* =========================
-   LAZY LOAD ALL PAGES
-========================= */
+//lazy loading pages
 
 const App = lazy(() => import("./App.jsx"));
 
-const Home = lazy(() =>
-  import("./Pages/Homepage/Home.jsx")
-);
+const Home = lazy(() => import("./Pages/Homepage/Home.jsx") );
 
-const Cart = lazy(() =>
-  import("./Pages/Cart/Cart.jsx")
-);
+const Cart = lazy(() => import("./Pages/Cart/Cart.jsx") );
 
-const Emptycart = lazy(() =>
-  import("./Pages/Cart/Emptycart.jsx")
-);
+const Emptycart = lazy(() => import("./Pages/Cart/Emptycart.jsx") );
 
-const ItemDetails = lazy(() =>
-  import("./Pages/ItemDetails.jsx")
-);
+const ItemDetails = lazy(() => import("./Pages/ItemDetails.jsx") );
+const Login = lazy(() => import("./Pages/Auth/Login.jsx") );
+const SignUp = lazy(() => import("./Pages/Auth/Signup.jsx") );
 
-const Login = lazy(() =>
-  import("./Pages/Auth/Login.jsx")
-);
+const Wishlist = lazy(() => import("./Pages/Wishlist.jsx") );
+const MyOrders = lazy(() => import("./Pages/MyOrders.jsx") );
+const CategoryItems = lazy(() => import("./Pages/CategoryItems.jsx") );
+const Shop = lazy(() => import("./Pages/shop.jsx") );
 
-const SignUp = lazy(() =>
-  import("./Pages/Auth/Signup.jsx")
-);
+const CheckoutFlow = lazy(() => import("./Payment/CheckoutFlow.jsx") );
 
-const Wishlist = lazy(() =>
-  import("./Pages/Wishlist.jsx")
-);
+//Admin pages
 
-const MyOrders = lazy(() =>
-  import("./Pages/MyOrders.jsx")
-);
+const Dashboard = lazy(() => import("./Admin/Dashboard.jsx") );
 
-const CategoryItems = lazy(() =>
-  import("./Pages/CategoryItems.jsx")
-);
+const Adminpanel = lazy(() => import("./Admin/Adminpanel.jsx") );
+const AddProduct = lazy(() => import("./Admin/AddProduct.jsx") );
 
-const Shop = lazy(() =>
-  import("./Pages/shop.jsx")
-);
+const ManageProducts = lazy(() => import("./Admin/ManageProducts.jsx") );
 
-const CheckoutFlow = lazy(() =>
-  import("./Payment/CheckoutFlow.jsx")
-);
+const Orders = lazy(() => import("./Admin/Orders.jsx") );
+const EditProduct = lazy(() => import("./Admin/EditProduct.jsx") );
+const Users = lazy(() => import("./Admin/Users.jsx") );
 
-/* =========================
-   ADMIN PAGES
-========================= */
-
-const Dashboard = lazy(() =>
-  import("./Admin/Dashboard.jsx")
-);
-
-const Adminpanel = lazy(() =>
-  import("./Admin/Adminpanel.jsx")
-);
-
-const AddProduct = lazy(() =>
-  import("./Admin/AddProduct.jsx")
-);
-
-const ManageProducts = lazy(() =>
-  import("./Admin/ManageProducts.jsx")
-);
-
-const Orders = lazy(() =>
-  import("./Admin/Orders.jsx")
-);
-
-const EditProduct = lazy(() =>
-  import("./Admin/EditProduct.jsx")
-);
-
-const Users = lazy(() =>
-  import("./Admin/Users.jsx")
-);
-
-/* =========================
-   ROUTER
-========================= */
+//Routers
 
 const router = createBrowserRouter([
   {
@@ -233,11 +183,6 @@ const router = createBrowserRouter([
     ],
   },
 ]);
-
-/* =========================
-   APP RENDER
-========================= */
-document.documentElement.classList.add("dark");
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <Provider store={store}>

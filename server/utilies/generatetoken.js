@@ -1,19 +1,19 @@
 import jwt from 'jsonwebtoken';
 
 const generateToken = (res, user) => {
-  const token = jwt.sign( {
-      id: user._id,
-      email: user.email,
-      isAdmin: user.isAdmin,   
-    },
- process.env.SECRET_KEY, {
+  const token = jwt.sign({
+    id: user._id,
+    email: user.email,
+    isAdmin: user.isAdmin,
+  },
+    process.env.SECRET_KEY, {
     expiresIn: '5d',
   });
   res.cookie("jwt", token, {
     httpOnly: false,
-    sameSite: "Lax",   
+    sameSite: "Lax",
     secure: false,
-    maxAge: 5 * 24 * 60 * 60 * 1000, 
+    maxAge: 5 * 24 * 60 * 60 * 1000,
   });
   return token;
 };

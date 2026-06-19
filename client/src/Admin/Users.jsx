@@ -31,6 +31,7 @@ const Users = () => {
     try {
       const data = await deleteUserApi(id)
       setUsers(users.filter((user) => user._id !== id));
+      console.log(data.message)
       toast.success(data.message);
     } catch (err) {
       toast.error("Failed to delete user.");

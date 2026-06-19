@@ -9,21 +9,18 @@ function App() {
   return (
     <>
       <ScrollToTop />
-
       <Header />
-
       <main className="min-h-screen">
         <Suspense
           fallback={
             <div className="min-h-screen flex items-center justify-center">
-              <LoadingSpinner/>
+              <LoadingSpinner />
             </div>
           }
         >
           <Outlet />
         </Suspense>
       </main>
-
       <Footer />
     </>
   );

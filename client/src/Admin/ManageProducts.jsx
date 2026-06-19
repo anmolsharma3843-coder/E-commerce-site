@@ -63,7 +63,7 @@ const ManageProducts = () => {
   rounded-lg overflow-hidden">
 
                 <img
-                  src={`http://localhost:5100${p.imageUrl}`}
+                  src={`${import.meta.env.VITE_BASE_URL}${p.imageUrl}`}
                   alt={p.title}
                   className="w-full h-full object-contain 
   transition duration-300

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import {updateProduct} from '../services/productApi'
+import { getProductDetails, updateProduct } from '../services/productApi'
 const EditProduct = () => {
   const { id } = useParams();
 
@@ -23,14 +23,8 @@ const EditProduct = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await fetch(
-          `http://localhost:5100/products/${id}`
-        );
 
-        const data = await response.json();
-        if (!response.ok)
-          throw new Error(`Error:${response.status}`);
-
+        const data = await getProductDetails(id)
         setProduct({
           title: data.title || "",
           description: data.description || "",
@@ -84,40 +78,21 @@ const EditProduct = () => {
       const formData = new FormData();
 
       formData.append("title", product.title);
-      formData.append(
-        "description",
-        product.description
-      );
+      formData.append( "description", product.description );
       formData.append("price", product.price);
       formData.append("rating", product.rating);
       formData.append("sizes", product.sizes);
-
-      formData.append(
-        "materialComposition",
-        product.materialComposition
-      );
-
-      formData.append(
-        "countryOfOrigin",
-        product.countryOfOrigin
-      );
-
-      formData.append(
-        "fitType",
-        product.fitType
-      );
-
-      formData.append(
-        "category",
-        product.category
-      );
+      formData.append( "materialComposition", product.materialComposition );
+      formData.append( "countryOfOrigin", product.countryOfOrigin );
+      formData.append( "fitType", product.fitType );
+      formData.append( "category", product.category );
 
       // IMAGE
       if (imageFile) {
         formData.append("image", imageFile);
       }
 
-      const response = await updateProduct(id,formData)
+      const response = await updateProduct(id, formData)
       toast.success(
         "Product Updated Successfully!"
       );
@@ -336,7 +311,7 @@ const EditProduct = () => {
                       "blob:"
                     )
                       ? product.imageUrl
-                      : `http://localhost:5100${product.imageUrl}`
+                      : `${import.meta.env.VITE_BASE_URL}${product.imageUrl}`
                   }
                   alt="preview"
                   className="w-50 h-56 object-cover rounded-xl shadow-lg border"

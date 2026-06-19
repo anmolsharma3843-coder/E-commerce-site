@@ -12,7 +12,6 @@ export const deleteUser = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
        if (deletedUser.isAdmin) {
-        console.log("admin")
       return res.status(403).json({ message: "Admin cannot be deleted" });
     }
        await user.findByIdAndDelete(req.params.id);

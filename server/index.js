@@ -5,7 +5,7 @@ import 'dotenv/config';
 import { connectDB } from './Config/db.js';
 import compression from "compression";
 import path from "path";
-
+import rateLimit from 'express-rate-limit'
 // Import routes
 import authRoutes from './Routes/authRoutes.js'
 import productRoutes from './Routes/productRoutes.js'
@@ -15,7 +15,11 @@ import ordersRoutes from './Routes/ordersRoutes.js'
 import WishlistRoutes from './Routes/WishlistRoutes.js'
 
 const app = e();
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 5000;
+const Limiter=rateLimit({
+    windowMs:15*50*1000,
+    max:60,
+})
 app.use(cors({
   origin: [
     "http://localhost:5173",
@@ -27,6 +31,7 @@ app.use(e.json());
 app.use(e.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(compression());
+app.use(Limiter)
 
 // Connect DB
 connectDB();
@@ -42,5 +47,5 @@ app.use('/wishlist', WishlistRoutes)
 app.use("/uploads", e.static("uploads", { maxAge: "30d" }));
 
 app.listen(PORT, () => {
-  console.log('Server is running on http://localhost:5100/');
+  console.log(`Server is running on port ${PORT}`);
 });
