@@ -8,7 +8,7 @@ import {
   deleteProduct,
   updateProduct,
   createProduct,
-} from "../controller/ProductController.js";
+} from "../controller/productController.js";
 
 import {
   authenticate,
