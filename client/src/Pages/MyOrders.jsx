@@ -44,7 +44,7 @@ const MyOrders = () => {
     );
 
   return (
-    <div className="w-full max-w-7xl mx-auto p-3 sm:p-4 md:p-6 text-gray-900 dark:text-gray-100 dark:bg-gray-700 min-h-screen">
+    <div className="w-screen max-w-7xl mx-auto p-3 sm:p-4 md:p-6 text-gray-900 min-h-screen dark:bg-gray-950 dark:text-gray-300">
       <h1 className="text-2xl font-bold mb-6">
         My Orders
       </h1>

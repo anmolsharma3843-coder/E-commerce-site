@@ -38,10 +38,10 @@ const CategoryItems = () => {
       }
     };
 
-    if (token) {
+    if (user) {
       fetchWishlist();
     }
-  }, [token]);
+  }, [user]);
 
   // ✅ ACCESSIBLE + BETTER CONTRAST
   useEffect(() => {

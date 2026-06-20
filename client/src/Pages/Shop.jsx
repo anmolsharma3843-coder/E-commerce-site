@@ -53,10 +53,10 @@ const Shop = () => {
       }
     };
 
-    if (token) {
+    if (user) {
       fetchWishlist();
     }
-  }, [token]);
+  }, [user]);
   //handle wishlist
   const handleWishlist = async (id, e) => {
     e.stopPropagation();
