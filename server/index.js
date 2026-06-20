@@ -19,7 +19,9 @@ const app = e();
 const PORT = process.env.PORT || 5000;
 
 /* Security */
-app.use(helmet());
+app.use(helmet({
+    crossOriginResourcePolicy: false,
+  }));
 
 /**
  * Trust proxy (Render/Railway)
