@@ -1,9 +1,8 @@
 import { BsCart2 } from "react-icons/bs";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import Cookies from "js-cookie";
 
 
 import { addToCart } from "../services/Cartitems";
@@ -17,10 +16,8 @@ const ItemDetails = () => {
   const [items, setItems] = useState({});
   const [loading, setLoading] = useState(true);
   const [adding, setAdding] = useState(false);
-
-  const token = Cookies.get("jwt");
   const { id } = useParams();
-
+   const user = useSelector((state) => state.auth.user);
   useEffect(() => {
     const productslist = async () => {
       try {
@@ -39,7 +36,7 @@ const ItemDetails = () => {
   }, [id]);
 
   const AddToCart = async () => {
-    if (!token) {
+    if (!user) {
       navigate("/login");
       return;
     }
@@ -81,7 +78,7 @@ const ItemDetails = () => {
     }
   };
   const handleBuyNow = () => {
-  if (!token) {
+  if (!user) {
     navigate("/login");
     return;
   }

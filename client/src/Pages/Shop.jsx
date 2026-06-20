@@ -5,8 +5,7 @@ import { FaStar, FaHeart, FaRegHeart } from "react-icons/fa";
 import { fetchAllproduct } from "../services/productApi";
 import ShopSkeleton from "../components/Skeleton/ShopSkeleton";
 import { getWishlist, toggleWishlist } from "../services/WishlistService";
-import Cookies from "js-cookie";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../services/Cartitems";
 import { toast } from "react-toastify";
 import { cartActions } from "../store/cartSlice";
@@ -26,7 +25,7 @@ const Shop = () => {
 
   const search = searchParams.get("search") || "";
 
-    const token = Cookies.get("jwt");
+  const user = useSelector((state) => state.auth.user);
 
   // FETCH PRODUCTS
   useEffect(() => {
@@ -114,7 +113,7 @@ const Shop = () => {
     return filtered;
   }, [allProducts, search, sort, category]);
    const AddToCart = async (item) => {
-      if (!token) {
+      if (!user) {
         navigate("/login");
         return;
       }

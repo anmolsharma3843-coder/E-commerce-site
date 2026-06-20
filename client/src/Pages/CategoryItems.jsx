@@ -3,20 +3,18 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getProducts } from "../services/productApi";
 import { addToCart } from "../services/Cartitems";
 import { toast } from "react-toastify";
-import Cookies from "js-cookie";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
 import { getWishlist, toggleWishlist } from "../services/WishlistService";
 import CategorySkeleton from "../components/Skeleton/CategorySkeleton";
 import { cartActions } from "../store/cartSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const CategoryItems = () => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
   const [wishlist, setWishlist] = useState([]);
   const [totalPages, setTotalPages] = useState(1);
-
-  const token = Cookies.get("jwt");
+  const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
 
   const { category } = useParams();
@@ -119,7 +117,7 @@ const CategoryItems = () => {
 
   // ✅ ADD TO CART
   const AddToCart = async (item) => {
-    if (!token) {
+    if (!user) {
       navigate("/login");
       return;
     }
