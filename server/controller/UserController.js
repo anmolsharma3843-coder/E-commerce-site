@@ -1,5 +1,5 @@
 import { user } from "../Model/UserModelSchema.js";
-import cloudinary from "../config/cloudinary.js";
+import cloudinary from "../Config/cloudinary.js";
 import fs from "fs";
 
 export const getUsers = async (req, res) => {

@@ -1,5 +1,5 @@
 import { items } from "../Model/ProductsModelSchema.js";
-import cloudinary from "../config/cloudinary.js";
+import cloudinary from "../Config/cloudinary.js";
 import fs from "fs";
 
 /**
