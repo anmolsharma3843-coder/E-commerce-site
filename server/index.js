@@ -30,7 +30,12 @@ app.set("trust proxy", 1);
 
 /* CORS */
 app.use(
-  cors()
+  cors({
+    origin:process.env.CLIENT_URL,
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
 );
 /*Parsers */
 app.use(e.json());
