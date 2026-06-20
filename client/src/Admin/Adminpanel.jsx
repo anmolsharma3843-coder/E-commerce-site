@@ -164,9 +164,7 @@ const Adminpanel = () => {
 
             <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full overflow-hidden border-2 border-indigo-500">
               {user?.profileImage ? (<img
-                src={
-                  `${import.meta.env.VITE_BASE_URL}${user.profileImage}`
-                }
+                src={user.profileImage }
                 alt="Admin"
                 className="w-full h-full object-cover"
               />):
