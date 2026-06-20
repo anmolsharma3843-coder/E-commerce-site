@@ -308,10 +308,10 @@ const EditProduct = () => {
                 <img
                   src={
                     product.imageUrl.startsWith(
-                      "blob:"
+                      "http"
                     )
                       ? product.imageUrl
-                      : `${import.meta.env.VITE_BASE_URL}${product.imageUrl}`
+                      : null
                   }
                   alt="preview"
                   className="w-50 h-56 object-cover rounded-xl shadow-lg border"

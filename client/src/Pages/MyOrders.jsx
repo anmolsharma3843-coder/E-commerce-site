@@ -95,7 +95,7 @@ const MyOrders = () => {
                     className="flex flex-col sm:flex-row items-start sm:items-center gap-3 py-3"
                   >
                     <img
-                      src={`${import.meta.env.VITE_BASE_URL}${item.imageUrl}`}
+                      src={item.imageUrl}
                       alt={item.title}
                       className="w-14 h-14 sm:w-16 sm:h-16 object-cover rounded-md border border-gray-200 dark:border-gray-700 shrink-0"
                     />

@@ -140,7 +140,7 @@ const ReviewPage = ({
                 >
                   {/* Image */}
                   <img
-                    src={`${import.meta.env.VITE_BASE_URL}${item.imageUrl}`}
+                    src={product.imageUrl}
                     alt={item.title}
                     className="w-24 h-24 object-contain rounded-xl bg-gray-100 p-2"
                   />

@@ -186,7 +186,7 @@ const Itemspart = () => {
               <div className="relative h-60 overflow-hidden bg-gray-100 dark:bg-gray-800">
 
                 <img loading="lazy" decoding="async" width="220" height="240" 
-                src={`${import.meta.env.VITE_BASE_URL}${item.imageUrl}`} 
+                src={item.imageUrl} 
                 alt={item.title} className=" w-full h-full object-cover md:group-hover:scale-110 transition-transform duration-500" />
 
                 {/* OVERLAY */}

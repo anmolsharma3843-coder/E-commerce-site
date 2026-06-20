@@ -227,7 +227,7 @@ const Header = () => {
                 <div className="w-8 h-8 rounded-full overflow-hidden bg-purple-700 text-white flex items-center justify-center font-semibold">
                   {user?.profileImage ? (
                     <img
-                      src={`${import.meta.env.VITE_BASE_URL}${user.profileImage}`}
+                      src={user.profileImage}
                       alt={user.username}
                       width={32}
                       height={32}

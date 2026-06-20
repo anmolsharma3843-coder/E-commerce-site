@@ -65,7 +65,7 @@ const CartItem = ({ item, onRemove }) => {
   "
 >
         <img
-          src={`${import.meta.env.VITE_BASE_URL}${item.imageUrl}`}
+          src={product.imageUrl}
           alt={item.title}
           loading="lazy"
           width="128"

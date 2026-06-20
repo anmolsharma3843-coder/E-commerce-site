@@ -54,7 +54,7 @@ const Sidebar = () => {
       <div className="flex items-center gap-4 px-4 py-6">
         <div className="w-9 h-9 bg-gray-200 dark:bg-gray-600 rounded-full overflow-clip shrink-0">
           {user?.profileImage ? (<img
-            src={`${import.meta.env.VITE_BASE_URL}${user.profileImage}`}
+            src={user.profileImage}
             alt="Admin"
             className="w-full h-full object-cover"
           />) :
