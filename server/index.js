@@ -30,16 +30,7 @@ app.set("trust proxy", 1);
 
 /* CORS */
 app.use(
-  cors({
-    origin: [
-      "http://localhost:5173",
-      "http://localhost:4173",
-      process.env.CLIENT_URL,
-    ],
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-  })
+  cors()
 );
 /*Parsers */
 app.use(e.json());
