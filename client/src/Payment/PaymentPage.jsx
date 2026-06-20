@@ -111,6 +111,7 @@ const PaymentPage = ({ nextStep, prevStep }) => {
                   name="cvv"
                   placeholder="CVV"
                   type="password"
+                  maxLength={4}
                   onChange={handleChange}
                   className="w-full border rounded-lg p-3 focus:ring-2 focus:ring-blue-500 outline-none dark:bg-gray-700 dark:text-white"
                   required

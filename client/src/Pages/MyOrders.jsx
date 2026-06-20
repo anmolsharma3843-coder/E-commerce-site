@@ -50,10 +50,10 @@ const MyOrders = () => {
       </h1>
 
       {orders.length === 0 ? (
-        <div className="flex justify-center items-center h-[60vh] text-center text-gray-500 dark:text-gray-400 text-xl sm:text-2xl">
-          No orders yet 🛒
-        </div>
-      ) : (
+  <div className="w-full h-[60vh] flex justify-center items-center text-center text-gray-500 text-xl sm:text-2xl dark:bg-gray-950 dark:text-gray-300">
+    No orders yet 🛒
+  </div>
+): (
         orders.map((order) => {
           const currentIndex = statusSteps.indexOf(
             order.status

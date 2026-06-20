@@ -140,7 +140,7 @@ const ReviewPage = ({
                 >
                   {/* Image */}
                   <img
-                    src={product.imageUrl}
+                    src={item.imageUrl}
                     alt={item.title}
                     className="w-24 h-24 object-contain rounded-xl bg-gray-100 p-2"
                   />
