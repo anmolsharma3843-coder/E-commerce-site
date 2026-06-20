@@ -8,8 +8,8 @@ const AdminRoute = ({ children }) => {
     return <Navigate to="/login" />;
   }
 
-  if (user.isAdmin) {
-    return <Navigate to="/admin" />;
+  if (!user.isAdmin) {
+    return <Navigate to="/" />;
   }
 
   return children;
