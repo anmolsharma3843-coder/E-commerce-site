@@ -10,7 +10,7 @@ function App() {
     <>
       <ScrollToTop />
       <Header />
-      <main className="min-h-screen">
+      <main className="min-h-screen dark:bg-gray-950 dark:text-gray-300">
         <Suspense
           fallback={
             <div className="min-h-screen flex items-center justify-center">
