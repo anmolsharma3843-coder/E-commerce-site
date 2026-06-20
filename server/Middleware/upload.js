@@ -1,5 +1,9 @@
 import multer from "multer";
 import path from "path";
+import fs from "fs";
+
+fs.mkdirSync("uploads/profiles", { recursive: true });
+fs.mkdirSync("uploads/products", { recursive: true });
 
 const fileFilter = (req, file, cb) => {
   const allowedTypes = /jpeg|jpg|png|webp/;
