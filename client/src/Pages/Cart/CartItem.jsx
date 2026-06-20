@@ -65,7 +65,7 @@ const CartItem = ({ item, onRemove }) => {
   "
 >
         <img
-          src={product.imageUrl}
+          src={item.imageUrl}
           alt={item.title}
           loading="lazy"
           width="128"
