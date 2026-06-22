@@ -12,12 +12,14 @@ const generateToken = (res, user) => {
   );
 
   console.log("SETTING JWT COOKIE");
+  console.log("JWT length:", token.length);
 
   res.cookie("jwt", token, {
     httpOnly: true,
     secure: true,
     sameSite: "None",
     maxAge: 5 * 24 * 60 * 60 * 1000,
+    path:"/"
   });
 
   return token;
