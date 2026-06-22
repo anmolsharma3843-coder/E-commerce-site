@@ -31,7 +31,9 @@ const Cart = () => {
 
         dispatch(cartActions.setCart(data));
       } catch (err) {
-        console.log(err);
+  console.error(err);
+  alert(err.message);
+
       } finally {
         setLoading(false);
       }
