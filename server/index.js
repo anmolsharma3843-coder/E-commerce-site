@@ -71,6 +71,13 @@ app.get("/set-test-cookie", (req, res) => {
 
   res.json({ success: true });
 });
+app.get("/debug-auth", (req, res) => {
+  console.log("Cookies:", req.cookies);
+
+  res.json({
+    cookies: req.cookies,
+  });
+});
 
 app.get("/read-test-cookie", (req, res) => {
   console.log("Cookies:", req.cookies);
