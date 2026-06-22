@@ -62,6 +62,20 @@ app.get("/health", (req, res) => {
     status: "OK",
   });
 });
+app.get("/set-test-cookie", (req, res) => {
+  res.cookie("test", "123", {
+    httpOnly: true,
+    secure: true,
+    sameSite: "None",
+  });
+
+  res.json({ success: true });
+});
+
+app.get("/read-test-cookie", (req, res) => {
+  console.log("Cookies:", req.cookies);
+  res.json(req.cookies);
+});
 /*Home Route */
 app.get("/", (req, res) => {
   res.send("UrbanMela API is running 🚀");
