@@ -61,9 +61,13 @@ export const removeItem = async (req, res) => {
   res.json(cart.items);
 };
 export const getCart = async (req, res) => {
-  const userId = req.user.id;
+  console.log("User ID:", req.user?.id);
 
-  const cart = await Cart.findOne({ userId });
+  const cart = await Cart.findOne({
+    userId: req.user.id,
+  });
+
+  console.log("Cart:", JSON.stringify(cart));
 
   res.json(cart ? cart.items : []);
 };
