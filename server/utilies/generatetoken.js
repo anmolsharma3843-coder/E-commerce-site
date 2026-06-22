@@ -14,7 +14,9 @@ res.cookie("jwt", token, {
   secure: true,
   sameSite: "None",
   maxAge: 5 * 24 * 60 * 60 * 1000,
+  path: "/",
 });
+console.log("NODE_ENV =", process.env.NODE_ENV);
   return token;
 };
 
