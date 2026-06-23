@@ -1,6 +1,12 @@
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
-const getToken = () => localStorage.getItem("token");
+const getToken = () => {
+  const user = JSON.parse(
+    localStorage.getItem("user")
+  );
+
+  return user?.token;
+};
 
 // GET ALL USERS
 export const FetchUsers = async () => {
