@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-import { FaEdit, FaTrash } from "react-icons/fa";
+import { FaEdit, FaTrash, FaSearch, FaUsers, FaUserShield } from "react-icons/fa";
 import LoadingSpinner from "../components/LoadingSpinner";
-import { FaSearch } from "react-icons/fa";
 import { deleteUserApi, FetchUsers } from "../services/UsersApi";
+
 const Users = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -16,126 +16,263 @@ const Users = () => {
         setUsers(data);
       } catch (err) {
         console.error(err);
-        toast.error("Failed to load users.");
+        toast.error("Failed to load users");
       } finally {
         setLoading(false);
       }
     };
+
     fetchUsers();
   }, []);
 
   const handleDelete = async (id) => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this user?");
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this user?"
+    );
+
     if (!confirmDelete) return;
 
     try {
-      const data = await deleteUserApi(id)
-      setUsers(users.filter((user) => user._id !== id));
-      console.log(data.message)
+      const data = await deleteUserApi(id);
+
+      setUsers((prev) =>
+        prev.filter((user) => user._id !== id)
+      );
+
       toast.success(data.message);
     } catch (err) {
-      toast.error("Failed to delete user.");
+      toast.error("Failed to delete user");
     }
   };
-  const filteredUsers = users.filter(user =>
-    user.username?.toLowerCase().includes(search.toLowerCase()) ||
-    user.email?.toLowerCase().includes(search.toLowerCase())
+
+  const filteredUsers = users.filter(
+    (user) =>
+      user.username
+        ?.toLowerCase()
+        .includes(search.toLowerCase()) ||
+      user.email
+        ?.toLowerCase()
+        .includes(search.toLowerCase())
   );
 
-  return (
-    <div className="p-4 sm:p-6 bg-gray-50 dark:bg-gray-950 min-h-screen text-gray-800 dark:text-gray-200">
+  const totalUsers = users.length;
+  const totalAdmins = users.filter(
+    (user) => user.isAdmin
+  ).length;
+  const activeUsers = users.filter(
+    (user) => user.active
+  ).length;
 
+  return (
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-950 p-4 sm:p-6">
       {/* Header */}
-      <div className="bg-linear-to-r from-indigo-500 to-purple-600 text-white p-4 sm:p-6 rounded-lg shadow-md mb-6">
-        <h1 className="text-2xl sm:text-3xl font-bold">User Management</h1>
-        <p className="text-xs sm:text-sm opacity-80">
-          Manage all registered users here
+      <div className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-3xl p-6 text-white shadow-lg mb-6">
+        <h1 className="text-3xl font-bold">
+          User Management
+        </h1>
+
+        <p className="mt-2 opacity-90">
+          Manage all registered users from one place.
         </p>
       </div>
 
+      {/* Stats */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+        <div className="bg-white dark:bg-gray-900 p-5 rounded-2xl shadow border border-gray-200 dark:border-gray-800">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-gray-500 text-sm">
+                Total Users
+              </p>
+
+              <h2 className="text-3xl font-bold text-gray-800 dark:text-white">
+                {totalUsers}
+              </h2>
+            </div>
+
+            <FaUsers className="text-3xl text-indigo-500" />
+          </div>
+        </div>
+
+        <div className="bg-white dark:bg-gray-900 p-5 rounded-2xl shadow border border-gray-200 dark:border-gray-800">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-gray-500 text-sm">
+                Active Users
+              </p>
+
+              <h2 className="text-3xl font-bold text-green-600">
+                {activeUsers}
+              </h2>
+            </div>
+
+            <span className="text-3xl">🟢</span>
+          </div>
+        </div>
+
+        <div className="bg-white dark:bg-gray-900 p-5 rounded-2xl shadow border border-gray-200 dark:border-gray-800">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-gray-500 text-sm">
+                Admins
+              </p>
+
+              <h2 className="text-3xl font-bold text-purple-600">
+                {totalAdmins}
+              </h2>
+            </div>
+
+            <FaUserShield className="text-3xl text-purple-500" />
+          </div>
+        </div>
+      </div>
+
       {/* Search */}
-      <div className="mb-4 relative w-full md:w-1/3">
+      <div className="relative mb-6 max-w-md">
         <input
           type="text"
-          placeholder="Search User by name or email..."
+          placeholder="Search users..."
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="w-full px-4 py-2 pr-10 border rounded-lg shadow-sm 
-        bg-white dark:bg-gray-900 
-        border-gray-300 dark:border-gray-700
-        text-gray-800 dark:text-gray-200
-        focus:ring-2 focus:ring-indigo-400 outline-none"
+          onChange={(e) =>
+            setSearch(e.target.value)
+          }
+          className="
+            w-full
+            pl-4
+            pr-11
+            py-3
+            rounded-xl
+            border
+            border-gray-300
+            dark:border-gray-700
+            bg-white
+            dark:bg-gray-900
+            text-gray-800
+            dark:text-white
+            focus:ring-2
+            focus:ring-indigo-500
+            outline-none
+          "
         />
-        <FaSearch className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500" />
+
+        <FaSearch className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400" />
       </div>
 
       {loading ? (
         <LoadingSpinner />
+      ) : filteredUsers.length === 0 ? (
+        <div className="bg-white dark:bg-gray-900 rounded-2xl shadow p-10 text-center">
+          <h3 className="text-xl font-semibold text-gray-700 dark:text-gray-200">
+            No users found
+          </h3>
+
+          <p className="text-gray-500 mt-2">
+            Try another search keyword.
+          </p>
+        </div>
       ) : (
         <>
-          {/* TABLE (Desktop) */}
-          <div className="hidden md:block overflow-x-auto">
-            <table className="min-w-full rounded-lg shadow-lg overflow-hidden 
-          bg-white dark:bg-gray-900">
-
+          {/* Desktop Table */}
+          <div className="hidden lg:block overflow-hidden rounded-2xl shadow border border-gray-200 dark:border-gray-800">
+            <table className="w-full bg-white dark:bg-gray-900">
               <thead>
-                <tr className="bg-gray-200 dark:bg-gray-800 text-left text-gray-700 dark:text-gray-300">
-                  <th className="py-3 px-4">ID</th>
-                  <th className="py-3 px-4">Name</th>
-                  <th className="py-3 px-4">Email</th>
-                  <th className="py-3 px-4">Role</th>
-                  <th className="py-3 px-4">Status</th>
-                  <th className="py-3 px-4">Actions</th>
+                <tr className="bg-gray-100 dark:bg-gray-800 text-left">
+                  <th className="p-4">User</th>
+                  <th>Email</th>
+                  <th>Role</th>
+                  <th>Status</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
 
               <tbody>
-                {filteredUsers.map(user => (
+                {filteredUsers.map((user) => (
                   <tr
                     key={user._id}
-                    className="border-b border-gray-200 dark:border-gray-700
-                  md:hover:bg-gray-100 dark:md:hover:bg-gray-800 transition"
+                    className="border-t border-gray-200 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800 transition"
                   >
-                    <td className="py-3 px-4 text-sm">{user._id}</td>
+                    <td className="p-4">
+                      <div className="flex items-center gap-3">
+                        {user.profileImage ? (
+                          <img
+                            src={user.profileImage}
+                            alt={user.username}
+                            className="w-10 h-10 rounded-full object-cover"
+                          />
+                        ) : (
+                          <div className="w-10 h-10 rounded-full bg-indigo-500 text-white flex items-center justify-center font-bold">
+                            {user.username
+                              ?.charAt(0)
+                              .toUpperCase()}
+                          </div>
+                        )}
 
-                    <td className="py-3 px-4 font-medium">
-                      {user.username}
+                        <div>
+                          <p className="font-semibold dark:text-white">
+                            {user.username}
+                          </p>
+
+                          <p className="text-xs text-gray-500">
+                            {user._id.slice(-8)}
+                          </p>
+                        </div>
+                      </div>
                     </td>
 
-                    <td className="py-3 px-4 wrap-break-word">
+                    <td className="dark:text-gray-300">
                       {user.email}
                     </td>
 
-                    <td className={`px-3 py-4 text-sm ${user.isAdmin
-                        ? "text-green-600 dark:text-green-400 font-bold"
-                        : "text-blue-500 dark:text-blue-400 font-semibold"
-                      }`}>
-                      {user.isAdmin ? "Admin" : "User"}
-                    </td>
-
-                    <td className="py-3 px-4">
-                      <span className={`px-2 py-1 rounded-full text-xs font-semibold ${user.active
-                          ? "bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300"
-                          : "bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-300"
-                        }`}>
-                        {user.active ? "Active" : "Inactive"}
+                    <td>
+                      <span
+                        className={`font-semibold ${
+                          user.isAdmin
+                            ? "text-purple-600"
+                            : "text-blue-600"
+                        }`}
+                      >
+                        {user.isAdmin
+                          ? "Admin"
+                          : "User"}
                       </span>
                     </td>
 
-                    <td className="py-3 px-4 flex gap-2">
-                      <button
-                        className="flex items-center gap-1 bg-indigo-500 md:hover:bg-indigo-600 text-white px-3 py-1 rounded-lg shadow-sm transition"
-                        onClick={() => toast.info("Edit user feature coming soon")}
+                    <td>
+                      <span
+                        className={`px-3 py-1 rounded-full text-xs ${
+                          user.active
+                            ? "bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300"
+                            : "bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-300"
+                        }`}
                       >
-                        <FaEdit /> Edit
-                      </button>
+                        {user.active
+                          ? "Active"
+                          : "Inactive"}
+                      </span>
+                    </td>
 
-                      <button
-                        className="flex items-center gap-1 bg-red-500 md:hover:bg-red-600 text-white px-3 py-1 rounded-lg shadow-sm transition"
-                        onClick={() => handleDelete(user._id)}
-                      >
-                        <FaTrash /> Delete
-                      </button>
+                    <td>
+                      <div className="flex gap-2">
+                        <button
+                          onClick={() =>
+                            toast.info(
+                              "Edit feature coming soon"
+                            )
+                          }
+                          className="bg-indigo-500 hover:bg-indigo-600 text-white px-3 py-2 rounded-lg"
+                        >
+                          <FaEdit />
+                        </button>
+
+                        <button
+                          onClick={() =>
+                            handleDelete(user._id)
+                          }
+                          className="bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-lg"
+                        >
+                          <FaTrash />
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))}
@@ -143,51 +280,84 @@ const Users = () => {
             </table>
           </div>
 
-          {/* MOBILE CARDS */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:hidden">
-            {filteredUsers.map(user => (
+          {/* Mobile Cards */}
+          <div className="grid gap-4 lg:hidden">
+            {filteredUsers.map((user) => (
               <div
                 key={user._id}
-                className="bg-white dark:bg-gray-900 
-              shadow-md rounded-lg p-4 flex flex-col gap-2
-              border border-gray-200 dark:border-gray-700"
+                className="bg-white dark:bg-gray-900 rounded-2xl p-4 shadow border border-gray-200 dark:border-gray-800"
               >
-                <h2 className="text-lg font-bold">
-                  {user.username}
-                </h2>
+                <div className="flex items-center gap-3">
+                  {user.profileImage ? (
+                    <img
+                      src={user.profileImage}
+                      alt={user.username}
+                      className="w-14 h-14 rounded-full object-cover"
+                    />
+                  ) : (
+                    <div className="w-14 h-14 rounded-full bg-indigo-500 text-white flex items-center justify-center text-xl font-bold">
+                      {user.username
+                        ?.charAt(0)
+                        .toUpperCase()}
+                    </div>
+                  )}
 
-                <p className="text-sm text-gray-700 dark:text-gray-300 wrap-break-word">
-                  {user.email}
-                </p>
+                  <div>
+                    <h3 className="font-semibold dark:text-white">
+                      {user.username}
+                    </h3>
 
-                <div className="flex justify-between">
-                  <p className={`text-sm ${user.isAdmin
-                      ? "text-green-600 dark:text-green-400 font-bold"
-                      : "text-blue-500 dark:text-blue-400 font-semibold"
-                    }`}>
-                    {user.isAdmin ? "Admin" : "User"}
-                  </p>
+                    <p className="text-sm text-gray-500">
+                      {user.email}
+                    </p>
+                  </div>
+                </div>
 
-                  <span className={`px-2 py-1 rounded-full text-xs font-semibold ${user.active
-                      ? "bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300"
-                      : "bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-300"
-                    }`}>
-                    {user.active ? "Active" : "Inactive"}
+                <div className="flex justify-between mt-4">
+                  <span
+                    className={`font-semibold ${
+                      user.isAdmin
+                        ? "text-purple-600"
+                        : "text-blue-600"
+                    }`}
+                  >
+                    {user.isAdmin
+                      ? "Admin"
+                      : "User"}
+                  </span>
+
+                  <span
+                    className={`px-3 py-1 rounded-full text-xs ${
+                      user.active
+                        ? "bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300"
+                        : "bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-300"
+                    }`}
+                  >
+                    {user.active
+                      ? "Active"
+                      : "Inactive"}
                   </span>
                 </div>
 
-                <div className="flex gap-2 mt-2">
+                <div className="flex gap-2 mt-4">
                   <button
-                    className="flex items-center gap-1 bg-indigo-500 md:hover:bg-indigo-600 text-white px-3 py-1 rounded-lg shadow-sm transition w-full justify-center"
+                    className="flex-1 bg-indigo-500 text-white py-2 rounded-lg"
+                    onClick={() =>
+                      toast.info(
+                        "Edit feature coming soon"
+                      )
+                    }
                   >
-                    <FaEdit /> Edit
+                    Edit
                   </button>
 
                   <button
-                    className="flex items-center gap-1 bg-red-500 md:hover:bg-red-600 text-white px-3 py-1 rounded-lg shadow-sm transition w-full justify-center"
-                    onClick={() => handleDelete(user._id)}
+                    className="flex-1 bg-red-500 text-white py-2 rounded-lg"
+                    onClick={() =>
+                      handleDelete(user._id)
+                    }
                   >
-                    <FaTrash /> Delete
+                    Delete
                   </button>
                 </div>
               </div>

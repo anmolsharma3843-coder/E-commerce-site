@@ -84,23 +84,36 @@ const Adminpanel = () => {
     );
   });
 
-  const stats = [
-    { title: "Revenue", value:Total.totalSales
-      , icon: "💰", link: '/admin' },
-    {
-      title: "Orders",
-      value: orders.length,
-      icon: "🧾",
-      link: '/admin/orders'
-    },
-    { title: "Users", value: users.length, icon: "👥", link: '/admin/users' },
-    {
-      title: "Products",
-      value: Products.length,
-      icon: "📦",
-      link: '/admin/products'
-    },
-  ];
+ const stats = [
+  {
+    title: "Revenue",
+    value: `₹${Total?.totalSales?.toLocaleString() || 0}`,
+    icon: "💰",
+    color: "from-green-500 to-emerald-600",
+    link: "/admin",
+  },
+  {
+    title: "Orders",
+    value: orders.length,
+    icon: "🧾",
+    color: "from-blue-500 to-cyan-600",
+    link: "/admin/orders",
+  },
+  {
+    title: "Users",
+    value: users.length,
+    icon: "👥",
+    color: "from-purple-500 to-indigo-600",
+    link: "/admin/users",
+  },
+  {
+    title: "Products",
+    value: Products.length,
+    icon: "📦",
+    color: "from-orange-500 to-red-500",
+    link: "/admin/products",
+  },
+];
 
   const actions = [
     {
@@ -184,33 +197,73 @@ const Adminpanel = () => {
         ) : (
           <>
             {/* 📊 Stats */}
-            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
-              {stats.map((stat, i) => (
-                <Link key={i} to={stat.link}>
-                  <div
-                    className="bg-white dark:bg-gray-800 p-4 sm:p-5 rounded-2xl border 
-                  border-gray-200 dark:border-gray-700 shadow-sm md:hover:shadow-md transition"
-                  >
-                    <div className="flex items-center justify-between">
-                      <div
-                        className="w-10 h-10 flex items-center justify-center 
-                      rounded-lg bg-indigo-50 dark:bg-indigo-900 text-indigo-600 dark:text-indigo-300"
-                      >
-                        {stat.icon}
-                      </div>
-                    </div>
+           <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
+  {stats.map((stat, i) => (
+    <Link key={i} to={stat.link}>
+      <div
+        className={`bg-gradient-to-r ${stat.color}
+        p-5 rounded-2xl text-white shadow-lg
+        hover:scale-105 transition-all duration-300`}
+      >
+        <div className="flex justify-between items-center">
+          <span className="text-3xl">{stat.icon}</span>
 
-                    <h2 className="text-sm text-gray-500 dark:text-gray-400 mt-3">
-                      {stat.title}
-                    </h2>
+          <div className="text-right">
+            <p className="text-sm opacity-90">
+              {stat.title}
+            </p>
 
-                    <p className="text-xl sm:text-2xl font-semibold text-gray-800 dark:text-gray-100">
-                      {stat.value}
-                    </p>
-                  </div>
-                </Link>
-              ))}
-            </div>
+            <h2 className="text-2xl font-bold">
+              {stat.title === "Revenue"
+  ? stat.value
+  : stat.value.toLocaleString()}
+            </h2>
+          </div>
+        </div>
+      </div>
+    </Link>
+  ))}
+</div>
+
+<div className="grid md:grid-cols-3 gap-5">
+  <div className="bg-white dark:bg-gray-800 rounded-2xl p-5 shadow">
+    <h3 className="font-semibold mb-2">
+      Pending Orders
+    </h3>
+
+    <p className="text-3xl font-bold text-yellow-500">
+      {
+        orders.filter(
+          (o) => o.status === "Pending"
+        ).length
+      }
+    </p>
+  </div>
+
+  <div className="bg-white dark:bg-gray-800 rounded-2xl p-5 shadow">
+    <h3 className="font-semibold mb-2">
+      Delivered Orders
+    </h3>
+
+    <p className="text-3xl font-bold text-green-500">
+      {
+        orders.filter(
+          (o) => o.status === "Delivered"
+        ).length
+      }
+    </p>
+  </div>
+
+  <div className="bg-white dark:bg-gray-800 rounded-2xl p-5 shadow">
+    <h3 className="font-semibold mb-2">
+      Total Customers
+    </h3>
+
+    <p className="text-3xl font-bold text-indigo-500">
+      {users.length}
+    </p>
+  </div>
+</div>
 
             {/* ⚡ Actions */}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
@@ -238,7 +291,41 @@ const Adminpanel = () => {
                 </Link>
               ))}
             </div>
+ 
+ <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow">
+  <h2 className="font-semibold mb-4">
+    Recent Users
+  </h2>
 
+  <div className="space-y-3">
+    {users.slice(0, 5).map((user) => (
+      <div
+        key={user._id}
+        className="flex justify-between items-center border-b pb-2"
+      >
+        <div>
+          <p className="font-medium">
+            {user.username}
+          </p>
+
+          <p className="text-xs text-gray-500">
+            {user.email}
+          </p>
+        </div>
+
+        <span
+          className={`text-xs px-2 py-1 rounded-full ${
+            user.active
+              ? "bg-green-100 text-green-600"
+              : "bg-red-100 text-red-600"
+          }`}
+        >
+          {user.active ? "Active" : "Inactive"}
+        </span>
+      </div>
+    ))}
+  </div>
+</div>
             {/* 📦 Orders */}
             <div
               className="bg-white dark:bg-gray-800 rounded-2xl border 
@@ -260,7 +347,13 @@ const Adminpanel = () => {
                     </tr>
                   </thead>
 
+
                   <tbody>
+                    {filteredOrders.length === 0 && (
+  <div className="text-center py-10 text-gray-500">
+    No orders found
+  </div>
+)}
                     {filteredOrders
                       .slice(0, 5)
                       .map((order) => {
