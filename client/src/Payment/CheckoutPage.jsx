@@ -18,70 +18,171 @@ const CheckoutPage = ({ nextStep }) => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 flex justify-center items-center p-4">
-      <div className="w-full max-w-3xl">
+    <form
+      onSubmit={handleSubmit}
+      className="space-y-5"
+    >
+      {/* Heading */}
+      <div>
+        <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+          Delivery Details
+        </h3>
 
-        {/* Card */}
-        <form
-          onSubmit={handleSubmit}
-          className="bg-white dark:bg-gray-800 shadow-lg rounded-2xl p-6 space-y-5"
-        >
-          <h2 className="text-2xl font-bold dark:text-white">
-            🚚 Delivery Details
-          </h2>
+        <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+          Enter your shipping information
+        </p>
+      </div>
 
-          {/* Inputs */}
-          <div className="grid md:grid-cols-2 gap-4">
-            <input
-              name="name"
-              type="text"
-              placeholder="Full Name"
-              onChange={handleChange}
-              className="w-full border rounded-lg p-3 focus:ring-2 focus:ring-blue-500 outline-none dark:bg-gray-700 dark:text-white"
-              required
-            />
-
-            <input
-              name="phone"
-              placeholder="Phone Number"
-              onChange={handleChange}
-              className="w-full border rounded-lg p-3 focus:ring-2 focus:ring-blue-500 outline-none dark:bg-gray-700 dark:text-white"
-              required
-            />
-          </div>
+      {/* Name + Phone */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <label className="block text-sm font-medium mb-1 dark:text-gray-300">
+            Full Name
+          </label>
 
           <input
-            name="address"
-            placeholder="Street Address"
+            name="name"
+            type="text"
+            value={form.name}
             onChange={handleChange}
-            className="w-full border rounded-lg p-3 focus:ring-2 focus:ring-blue-500 outline-none dark:bg-gray-700 dark:text-white"
+            placeholder="Enter your name"
             required
+            className="
+              w-full
+              rounded-xl
+              border border-gray-300 dark:border-gray-600
+              bg-white dark:bg-gray-700
+              px-4 py-3
+              text-gray-900 dark:text-white
+              focus:outline-none
+              focus:ring-2 focus:ring-purple-500
+            "
           />
-          <div className="grid md:grid-cols-2 gap-4">
-            <input
-              name="city"
-              placeholder="City"
-              onChange={handleChange}
-              className="w-full border rounded-lg p-3 focus:ring-2 focus:ring-blue-500 outline-none dark:bg-gray-700 dark:text-white"
-              required
-            />
+        </div>
 
-            <input
-              name="pincode"
-              placeholder="Pincode"
-              onChange={handleChange}
-              className="w-full border rounded-lg p-3 focus:ring-2 focus:ring-blue-500 outline-none dark:bg-gray-700 dark:text-white"
-              required
-            />
-          </div>
+        <div>
+          <label className="block text-sm font-medium mb-1 dark:text-gray-300">
+            Phone Number
+          </label>
 
-          {/* CTA */}
-          <button className="w-full bg-blue-600 text-white py-3 rounded-lg text-lg font-semibold md:hover:bg-blue-700 transition">
-            Continue to Payment →
-          </button>
-        </form>
+          <input
+            name="phone"
+            type="tel"
+            value={form.phone}
+            onChange={handleChange}
+            placeholder="9876543210"
+            required
+            className="
+              w-full
+              rounded-xl
+              border border-gray-300 dark:border-gray-600
+              bg-white dark:bg-gray-700
+              px-4 py-3
+              text-gray-900 dark:text-white
+              focus:outline-none
+              focus:ring-2 focus:ring-purple-500
+            "
+          />
+        </div>
       </div>
-    </div>
+
+      {/* Address */}
+      <div>
+        <label className="block text-sm font-medium mb-1 dark:text-gray-300">
+          Street Address
+        </label>
+
+        <textarea
+          name="address"
+          rows="3"
+          value={form.address}
+          onChange={handleChange}
+          placeholder="House No, Street, Area"
+          required
+          className="
+            w-full
+            rounded-xl
+            border border-gray-300 dark:border-gray-600
+            bg-white dark:bg-gray-700
+            px-4 py-3
+            text-gray-900 dark:text-white
+            focus:outline-none
+            focus:ring-2 focus:ring-purple-500
+            resize-none
+          "
+        />
+      </div>
+
+      {/* City + Pincode */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <label className="block text-sm font-medium mb-1 dark:text-gray-300">
+            City
+          </label>
+
+          <input
+            name="city"
+            value={form.city}
+            onChange={handleChange}
+            placeholder="Enter city"
+            required
+            className="
+              w-full
+              rounded-xl
+              border border-gray-300 dark:border-gray-600
+              bg-white dark:bg-gray-700
+              px-4 py-3
+              text-gray-900 dark:text-white
+              focus:outline-none
+              focus:ring-2 focus:ring-purple-500
+            "
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium mb-1 dark:text-gray-300">
+            Pincode
+          </label>
+
+          <input
+            name="pincode"
+            value={form.pincode}
+            onChange={handleChange}
+            placeholder="123456"
+            required
+            className="
+              w-full
+              rounded-xl
+              border border-gray-300 dark:border-gray-600
+              bg-white dark:bg-gray-700
+              px-4 py-3
+              text-gray-900 dark:text-white
+              focus:outline-none
+              focus:ring-2 focus:ring-purple-500
+            "
+          />
+        </div>
+      </div>
+
+      {/* Button */}
+      <button
+        type="submit"
+        className="
+          w-full
+          sm:w-auto
+          bg-purple-600
+          hover:bg-purple-700
+          text-white
+          font-semibold
+          px-8 py-3
+          rounded-xl
+          transition
+          shadow-sm
+        "
+      >
+        Continue to Payment →
+      </button>
+    </form>
   );
 };
 

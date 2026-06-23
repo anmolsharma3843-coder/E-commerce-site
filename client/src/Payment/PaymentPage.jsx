@@ -16,146 +16,268 @@ const PaymentPage = ({ nextStep, prevStep }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    nextStep(form);
+
+    nextStep({
+      payment:
+        method === "card"
+          ? "Credit / Debit Card"
+          : method === "upi"
+          ? "UPI"
+          : "Cash on Delivery",
+      ...form,
+    });
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 flex justify-center items-center p-4">
-      <div className="w-full max-w-4xl">
+    <form onSubmit={handleSubmit} className="space-y-6">
+      {/* Heading */}
+      <div>
+        <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+          Choose Payment Method
+        </h3>
 
-        {/* Main Card */}
-        <form
-          onSubmit={handleSubmit}
-          className="bg-white dark:bg-gray-800 shadow-xl rounded-2xl p-6 space-y-6"
+        <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+          Select how you'd like to pay
+        </p>
+      </div>
+
+      {/* Payment Options */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <button
+          type="button"
+          onClick={() => setMethod("card")}
+          className={`rounded-xl border p-4 text-sm font-medium transition ${
+            method === "card"
+              ? "border-purple-600 bg-purple-50 dark:bg-purple-900/20 text-purple-600"
+              : "border-gray-300 dark:border-gray-600"
+          }`}
         >
-          <h2 className="text-2xl font-bold dark:text-white">
-            💳 Payment Method
-          </h2>
+          💳 Card
+        </button>
 
-          {/* Payment Options */}
-          <div className="flex gap-4">
-            <button
-              type="button"
-              onClick={() => setMethod("card")}
-              className={`flex-1 p-3 rounded-lg border ${
-                method === "card"
-                  ? "border-blue-600 bg-blue-50"
-                  : "border-gray-300"
-              }`}
-            >
-              💳 Card
-            </button>
+        <button
+          type="button"
+          onClick={() => setMethod("upi")}
+          className={`rounded-xl border p-4 text-sm font-medium transition ${
+            method === "upi"
+              ? "border-purple-600 bg-purple-50 dark:bg-purple-900/20 text-purple-600"
+              : "border-gray-300 dark:border-gray-600"
+          }`}
+        >
+          📱 UPI
+        </button>
 
-            <button
-              type="button"
-              onClick={() => setMethod("upi")}
-              className={`flex-1 p-3 rounded-lg border ${
-                method === "upi"
-                  ? "border-blue-600 bg-blue-50"
-                  : "border-gray-300"
-              }`}
-            >
-              📱 UPI
-            </button>
+        <button
+          type="button"
+          onClick={() => setMethod("cod")}
+          className={`rounded-xl border p-4 text-sm font-medium transition ${
+            method === "cod"
+              ? "border-purple-600 bg-purple-50 dark:bg-purple-900/20 text-purple-600"
+              : "border-gray-300 dark:border-gray-600"
+          }`}
+        >
+          💵 COD
+        </button>
+      </div>
+
+      {/* CARD */}
+      {method === "card" && (
+        <>
+          {/* Card Preview */}
+          <div className="rounded-2xl bg-gradient-to-r from-purple-600 to-indigo-600 text-white p-5 shadow-md">
+            <p className="text-xs opacity-70 mb-2">
+              Credit / Debit Card
+            </p>
+
+            <p className="tracking-[3px] text-lg sm:text-xl font-medium">
+              {form.cardNumber || "•••• •••• •••• ••••"}
+            </p>
+
+            <div className="flex justify-between mt-5">
+              <div>
+                <p className="text-xs opacity-70">
+                  Card Holder
+                </p>
+
+                <p className="text-sm">
+                  {form.name || "YOUR NAME"}
+                </p>
+              </div>
+
+              <div>
+                <p className="text-xs opacity-70">
+                  Expiry
+                </p>
+
+                <p className="text-sm">
+                  {form.expiry || "MM/YY"}
+                </p>
+              </div>
+            </div>
           </div>
 
-          {/* CARD FORM */}
-          {method === "card" && (
-            <>
-              {/* Card Preview */}
-              <div className="bg-[url(https://t3.ftcdn.net/jpg/01/97/84/44/360_F_197844441_Febp1tgrOZtBPJxLIirtYKobhi4j04Z6.jpg)] text-white rounded-xl p-5 shadow-lg">
-                <p className="text-sm opacity-80">Card Number</p>
-                <h3 className="text-lg tracking-widest">
-                  {form.cardNumber || "XXXX XXXX XXXX XXXX"}
-                </h3>
-
-                <div className="flex justify-between mt-4 text-sm">
-                  <div>
-                    <p className="opacity-80">Name</p>
-                    <p>{form.name || "Your Name"}</p>
-                  </div>
-                  <div>
-                    <p className="opacity-80">Expiry</p>
-                    <p>{form.expiry || "MM/YY"}</p>
-                  </div>
-                </div>
-              </div>
+          <div className="space-y-4">
+            <div>
+              <label className="block text-sm mb-1 dark:text-gray-300">
+                Card Holder Name
+              </label>
 
               <input
                 name="name"
-                placeholder="Card Holder Name"
+                value={form.name}
                 onChange={handleChange}
-                className="w-full border rounded-lg p-3 focus:ring-2 focus:ring-blue-500 outline-none dark:bg-gray-700 dark:text-white"
                 required
+                placeholder="John Doe"
+                className="
+                  w-full rounded-xl border
+                  border-gray-300 dark:border-gray-600
+                  bg-white dark:bg-gray-700
+                  px-4 py-3
+                  dark:text-white
+                  focus:ring-2 focus:ring-purple-500
+                  outline-none
+                "
               />
+            </div>
+
+            <div>
+              <label className="block text-sm mb-1 dark:text-gray-300">
+                Card Number
+              </label>
 
               <input
                 name="cardNumber"
-                placeholder="Card Number"
+                value={form.cardNumber}
                 onChange={handleChange}
-                maxLength={10}
-                className="w-full border rounded-lg p-3 focus:ring-2 focus:ring-blue-500 outline-none dark:bg-gray-700 dark:text-white"
+                maxLength={19}
                 required
+                placeholder="1234 5678 9012 3456"
+                className="
+                  w-full rounded-xl border
+                  border-gray-300 dark:border-gray-600
+                  bg-white dark:bg-gray-700
+                  px-4 py-3
+                  dark:text-white
+                  focus:ring-2 focus:ring-purple-500
+                  outline-none
+                "
+              />
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <input
+                name="expiry"
+                value={form.expiry}
+                onChange={handleChange}
+                required
+                placeholder="MM/YY"
+                className="
+                  rounded-xl border
+                  border-gray-300 dark:border-gray-600
+                  bg-white dark:bg-gray-700
+                  px-4 py-3
+                  dark:text-white
+                  focus:ring-2 focus:ring-purple-500
+                  outline-none
+                "
               />
 
-              <div className="grid grid-cols-2 gap-4">
-                <input
-                  name="expiry"
-                  placeholder="MM/YY"
-                  onChange={handleChange}
-                  className="w-full border rounded-lg p-3 focus:ring-2 focus:ring-blue-500 outline-none dark:bg-gray-700 dark:text-white"
-                  required
-                />
-
-                <input
-                  name="cvv"
-                  placeholder="CVV"
-                  type="password"
-                  maxLength={4}
-                  onChange={handleChange}
-                  className="w-full border rounded-lg p-3 focus:ring-2 focus:ring-blue-500 outline-none dark:bg-gray-700 dark:text-white"
-                  required
-                />
-              </div>
-            </>
-          )}
-
-          {/* UPI FORM */}
-          {method === "upi" && (
-            <input
-              name="upi"
-              placeholder="Enter UPI ID (example@upi)"
-              onChange={handleChange}
-              className="w-full border rounded-lg p-3 focus:ring-2 focus:ring-blue-500 outline-none dark:bg-gray-700 dark:text-white"
-              required
-            />
-          )}
-
-          {/* Buttons */}
-          <div className="flex justify-between gap-4 pt-4">
-            <button
-              type="button"
-              onClick={prevStep}
-              className="w-1/2 bg-gray-400 text-white py-3 rounded-lg md:hover:bg-gray-500 transition"
-            >
-              ← Back
-            </button>
-
-            <button
-              type="submit"
-              className="w-1/2 bg-blue-600 text-white py-3 rounded-lg text-lg font-semibold md:hover:bg-blue-700 transition"
-            >
-              Review Order →
-            </button>
+              <input
+                name="cvv"
+                type="password"
+                value={form.cvv}
+                onChange={handleChange}
+                maxLength={4}
+                required
+                placeholder="CVV"
+                className="
+                  rounded-xl border
+                  border-gray-300 dark:border-gray-600
+                  bg-white dark:bg-gray-700
+                  px-4 py-3
+                  dark:text-white
+                  focus:ring-2 focus:ring-purple-500
+                  outline-none
+                "
+              />
+            </div>
           </div>
+        </>
+      )}
 
-          {/* Security Note */}
-          <p className="text-xs text-gray-500 text-center mt-2">
-            🔒 Your payment information is securely encrypted
+      {/* UPI */}
+      {method === "upi" && (
+        <div>
+          <label className="block text-sm mb-1 dark:text-gray-300">
+            UPI ID
+          </label>
+
+          <input
+            name="upi"
+            value={form.upi}
+            onChange={handleChange}
+            required
+            placeholder="example@upi"
+            className="
+              w-full rounded-xl border
+              border-gray-300 dark:border-gray-600
+              bg-white dark:bg-gray-700
+              px-4 py-3
+              dark:text-white
+              focus:ring-2 focus:ring-purple-500
+              outline-none
+            "
+          />
+        </div>
+      )}
+
+      {/* COD */}
+      {method === "cod" && (
+        <div className="rounded-xl bg-green-50 dark:bg-green-900/20 p-4">
+          <p className="text-sm text-green-700 dark:text-green-400">
+            Pay with cash when your order is delivered.
           </p>
-        </form>
+        </div>
+      )}
+
+      {/* Buttons */}
+      <div className="flex flex-col-reverse sm:flex-row gap-3 pt-2">
+        <button
+          type="button"
+          onClick={prevStep}
+          className="
+            w-full sm:w-auto
+            px-6 py-3
+            rounded-xl
+            bg-gray-200 dark:bg-gray-700
+            dark:text-white
+            font-medium
+          "
+        >
+          ← Back
+        </button>
+
+        <button
+          type="submit"
+          className="
+            w-full sm:flex-1
+            bg-purple-600
+            hover:bg-purple-700
+            text-white
+            font-semibold
+            py-3
+            rounded-xl
+            transition
+          "
+        >
+          Review Order →
+        </button>
       </div>
-    </div>
+
+      <p className="text-center text-xs text-gray-500">
+        🔒 Your payment information is securely encrypted
+      </p>
+    </form>
   );
 };
 
