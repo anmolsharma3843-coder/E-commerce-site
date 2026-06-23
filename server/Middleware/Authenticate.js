@@ -1,41 +1,45 @@
-import jwt from 'jsonwebtoken'
-import { user } from "../Model/UserModelSchema.js";
+import jwt from "jsonwebtoken";
+
 const authenticate = async (req, res, next) => {
-  console.log("Cookies:", req.cookies);
+  try {
+    const authHeader = req.headers.authorization;
 
-  const token = req.cookies?.jwt;
-
-  console.log("Token:", token);
-
-  if (token) {
-    try {
-      const decoded = jwt.verify(token, process.env.SECRET_KEY);
-
-      console.log("Decoded:", decoded);
-
-      req.user = decoded;
-      next();
-    } catch (error) {
-      console.log("JWT ERROR:", error.message);
-
+    if (
+      !authHeader ||
+      !authHeader.startsWith("Bearer ")
+    ) {
       return res.status(401).json({
-        message: "Token Failed",
+        message: "Not Authorized, No Token",
       });
     }
-  } else {
-    console.log("NO TOKEN FOUND");
+
+    const token = authHeader.split(" ")[1];
+
+    const decoded = jwt.verify(
+      token,
+      process.env.SECRET_KEY
+    );
+
+    req.user = decoded;
+
+    next();
+  } catch (error) {
+    console.error("JWT ERROR:", error.message);
 
     return res.status(401).json({
-      message: "Invalid credentials",
+      message: "Token Failed",
     });
   }
 };
-const authorizeAdmin = (req, res, next) => {
-    if (req.user && req.user.isAdmin) {
-        next()
-    } else {
-        res.status(401).json({ error: 'Not Authorized as Admin' });
 
-    }
-}
+const authorizeAdmin = (req, res, next) => {
+  if (req.user && req.user.isAdmin) {
+    next();
+  } else {
+    return res.status(401).json({
+      error: "Not Authorized as Admin",
+    });
+  }
+};
+
 export { authenticate, authorizeAdmin };

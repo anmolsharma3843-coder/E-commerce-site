@@ -1,11 +1,16 @@
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
+const getToken = () => localStorage.getItem("token");
+
 // 🛒 Get cart
 export const getCart = async () => {
   const res = await fetch(`${BASE_URL}/cart`, {
-    method:"GET",
-    credentials: "include",
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${getToken()}`,
+    },
   });
+
   return res.json();
 };
 
@@ -15,10 +20,11 @@ export const addToCart = async (product) => {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${getToken()}`,
     },
-    credentials: "include",
     body: JSON.stringify({ product }),
   });
+
   return res.json();
 };
 
@@ -28,18 +34,22 @@ export const updateCartQty = async (id, action) => {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${getToken()}`,
     },
-    credentials: "include",
     body: JSON.stringify({ action }),
   });
+
   return res.json();
 };
 
-// ❌ Remove
+// ❌ Remove item
 export const removeFromCart = async (id) => {
   const res = await fetch(`${BASE_URL}/cart/${id}`, {
     method: "DELETE",
-    credentials: "include",
+    headers: {
+      Authorization: `Bearer ${getToken()}`,
+    },
   });
+
   return res.json();
 };

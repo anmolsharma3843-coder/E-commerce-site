@@ -1,18 +1,21 @@
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
+const getToken = () => localStorage.getItem("token");
+
 // ✅ Get Wishlist
 export const getWishlist = async () => {
   try {
     const res = await fetch(`${BASE_URL}/wishlist`, {
       method: "GET",
-      credentials: "include",
       headers: {
         "Content-Type": "application/json",
-        // Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${getToken()}`,
       },
     });
 
-    if (!res.ok) throw new Error("Failed to fetch wishlist");
+    if (!res.ok) {
+      throw new Error("Failed to fetch wishlist");
+    }
 
     return await res.json();
   } catch (err) {
@@ -26,15 +29,16 @@ export const toggleWishlist = async (productId) => {
   try {
     const res = await fetch(`${BASE_URL}/wishlist`, {
       method: "POST",
-      credentials: "include",
       headers: {
         "Content-Type": "application/json",
-        // Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${getToken()}`,
       },
       body: JSON.stringify({ productId }),
     });
 
-    if (!res.ok) throw new Error("Failed to update wishlist");
+    if (!res.ok) {
+      throw new Error("Failed to update wishlist");
+    }
 
     return await res.json();
   } catch (err) {
