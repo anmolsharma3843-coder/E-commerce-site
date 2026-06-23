@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   FaHome,
@@ -17,11 +16,13 @@ const Sidebar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const [profileImage, setProfileImage] = useState(null);
+
   const user = useSelector((store) => store.auth.user);
+
   const handleLogout = async () => {
     try {
       const response = await logoutUser();
+
       localStorage.removeItem("theme");
 
       if (response.ok) {
@@ -31,97 +32,176 @@ const Sidebar = () => {
       }
     } catch (error) {
       console.error("Logout error:", error);
+      toast.error("Logout failed");
     }
   };
 
   const menu = [
-    { name: "Dashboard", path: "/admin", icon: <FaHome /> },
-    { name: "Add Product", path: "/admin/add-product", icon: <FaPlus /> },
-    { name: "Products", path: "/admin/products", icon: <FaBox /> },
-    { name: "Orders", path: "/admin/orders", icon: <FaFileInvoice /> },
-    { name: "Users", path: "/admin/users", icon: <FaUsers /> },
+    {
+      name: "Dashboard",
+      path: "/admin",
+      icon: <FaHome />,
+    },
+    {
+      name: "Add",
+      path: "/admin/add-product",
+      icon: <FaPlus />,
+    },
+    {
+      name: "Products",
+      path: "/admin/products",
+      icon: <FaBox />,
+    },
+    {
+      name: "Orders",
+      path: "/admin/orders",
+      icon: <FaFileInvoice />,
+    },
+    {
+      name: "Users",
+      path: "/admin/users",
+      icon: <FaUsers />,
+    },
   ];
 
   return (
-    <aside
-      className="shrink-0 group flex flex-col justify-between
-  h-screen w-24 md:hover:w-64
-  bg-white dark:bg-linear-to-b dark:from-[#0f172a] dark:via-[#111827] dark:to-[#020617]
-  text-gray-700 dark:text-gray-300
-  shadow-xl transition-all duration-300 ease-in-out"
-    >
-      {/* Logo */}
-      <div className="flex items-center gap-4 px-4 py-6">
-        <div className="w-9 h-9 bg-gray-200 dark:bg-gray-600 rounded-full overflow-clip shrink-0">
-          {user?.profileImage ? (<img
-            src={user.profileImage}
-            alt="Admin"
-            className="w-full h-full object-cover"
-          />) :
-            user.username?.charAt(0).toUpperCase()
-          }
-        </div>
+    <>
+      {/* Desktop Sidebar */}
+      <aside
+        className="
+        hidden lg:flex
+        w-72
+        h-screen
+        sticky top-0
+        flex-col
+        justify-between
+        bg-white dark:bg-gray-900
+        border-r
+        border-gray-200
+        dark:border-gray-800
+      "
+      >
+        <div>
+          {/* User */}
+          <div className="flex items-center gap-3 p-6 border-b border-gray-200 dark:border-gray-800">
+            <div className="w-12 h-12 rounded-full overflow-hidden bg-indigo-100 flex items-center justify-center font-bold text-indigo-600">
+              {user?.profileImage ? (
+                <img
+                  src={user.profileImage}
+                  alt="Admin"
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                user?.username?.charAt(0).toUpperCase()
+              )}
+            </div>
 
-        <span className="text-lg font-semibold opacity-0 md:group-hover:opacity-100 transition whitespace-nowrap">
-          Anmol
-        </span>
-      </div>
+            <div>
+              <h3 className="font-semibold text-gray-800 dark:text-white">
+                {user?.username}
+              </h3>
 
-      {/* Menu */}
-      <nav className="flex flex-col gap-3 px-3">
-        {menu.map((item, i) => {
-          const isActive = location.pathname === item.path;
-
-          return (
-            <Link
-              key={i}
-              to={item.path}
-              className={`flex items-center gap-4 px-3 py-3 rounded-xl transition
-          ${isActive
-                  ? "bg-indigo-100 text-indigo-600 dark:bg-indigo-600/20 dark:text-white"
-                  : "md:hover:bg-gray-100 dark:md:hover:bg-white/5 md:hover:text-gray-900 dark:md:hover:text-white"
-                }`}
-            >
-              {/* Icon */}
-              <div
-                className={`w-10 h-10 min-w-10 min-h-10 flex items-center justify-center rounded-lg
-            ${isActive
-                    ? "bg-indigo-600 text-white"
-                    : "bg-gray-100 dark:bg-white/5"
-                  }`}
-              >
-                {item.icon}
-              </div>
-
-              {/* Text */}
-              <span className="opacity-0 md:group-hover:opacity-100 transition whitespace-nowrap">
-                {item.name}
-              </span>
-            </Link>
-          );
-        })}
-      </nav>
-
-      {/* Logout */}
-      <div className="p-4">
-        <button
-          onClick={handleLogout}
-          className="flex items-center gap-4 w-full px-3 py-3 rounded-xl
-      bg-red-100 text-red-600 
-      dark:bg-red-500/10 dark:text-red-400
-      md:hover:bg-red-500 md:hover:text-white transition md:hover:cursor-pointer"
-        >
-          <div className="w-10 h-10 flex items-center justify-center rounded-lg 
-        bg-red-200 dark:bg-red-500/20 shrink-0">
-            <FaSignOutAlt className="text-lg" />
+              <p className="text-sm text-gray-500">
+                Administrator
+              </p>
+            </div>
           </div>
 
-          <span className="opacity-0 md:group-hover:opacity-100 transition whitespace-nowrap">
+          {/* Menu */}
+          <nav className="p-4 space-y-2">
+            {menu.map((item) => {
+              const isActive =
+                location.pathname === item.path;
+
+              return (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all
+                  ${
+                    isActive
+                      ? "bg-indigo-600 text-white"
+                      : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+                  }`}
+                >
+                  <span className="text-lg">
+                    {item.icon}
+                  </span>
+
+                  <span>{item.name}</span>
+                </Link>
+              );
+            })}
+          </nav>
+        </div>
+
+        {/* Logout */}
+        <div className="p-4">
+          <button
+            onClick={handleLogout}
+            className="
+            flex items-center gap-3
+            w-full
+            px-4 py-3
+            rounded-xl
+            bg-red-100
+            text-red-600
+            dark:bg-red-900/20
+            dark:text-red-400
+            hover:bg-red-500
+            hover:text-white
+            transition
+          "
+          >
+            <FaSignOutAlt />
             Logout
-          </span>
-        </button>
+          </button>
+        </div>
+      </aside>
+
+      {/* Mobile Bottom Navigation */}
+      <div
+        className="
+        lg:hidden
+        fixed bottom-0 left-0 right-0
+        z-50
+        bg-white dark:bg-gray-900
+        border-t
+        border-gray-200 dark:border-gray-800
+        shadow-lg
+      "
+      >
+        <div className="grid grid-cols-5">
+          {menu.map((item) => {
+            const isActive =
+              location.pathname === item.path;
+
+            return (
+              <Link
+                key={item.path}
+                to={item.path}
+                className={`
+                flex flex-col items-center justify-center
+                py-3
+                text-xs
+                ${
+                  isActive
+                    ? "text-indigo-600"
+                    : "text-gray-500 dark:text-gray-400"
+                }
+              `}
+              >
+                <span className="text-lg mb-1">
+                  {item.icon}
+                </span>
+
+                <span>{item.name}</span>
+              </Link>
+            );
+          })}
+        </div>
       </div>
-    </aside>
+    </>
   );
 };
 
