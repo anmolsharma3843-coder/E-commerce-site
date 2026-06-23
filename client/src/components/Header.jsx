@@ -15,7 +15,10 @@ import { uploadImageApi } from "../services/UsersApi";
 
 const Header = () => {
   const cartitem = useSelector((state) => state.cart);
-  const user = useSelector((store) => store.auth.user);
+  const user = useSelector((store) => store.user);
+  const state = useSelector((state) => state);
+
+console.log(state);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
