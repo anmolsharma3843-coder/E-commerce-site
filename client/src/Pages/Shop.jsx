@@ -254,7 +254,7 @@ const Shop = () => {
                     <h2 className="mt-1 text-sm md:text-base font-bold text-gray-900 dark:text-gray-100 line-clamp-1 leading-6" >
                       {item.title}
                     </h2>
-                    <h3 className="text-xs md:text-sm  text-gray-500 dark:text-gray-300 line-clamp-2 leading-tight min-h-9" >
+                    <h3 className="text-xs md:text-sm  text-gray-500 dark:text-gray-300 line-clamp-2 leading-tight min-h-8" >
                       {item.description}
                     </h3>
 
