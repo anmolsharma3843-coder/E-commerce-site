@@ -171,7 +171,7 @@ const Sidebar = () => {
         shadow-lg
       "
       >
-        <div className="grid grid-cols-5">
+        <div className="grid grid-cols-6">
           {menu.map((item) => {
             const isActive =
               location.pathname === item.path;
@@ -199,6 +199,20 @@ const Sidebar = () => {
               </Link>
             );
           })}
+          <button
+  onClick={handleLogout}
+  className="
+    flex flex-col
+    items-center
+    justify-center
+    py-3
+    text-xs
+    text-red-500
+  "
+>
+  <FaSignOutAlt className="text-lg mb-1" />
+  <span>Logout</span>
+  </button>
         </div>
       </div>
     </>
