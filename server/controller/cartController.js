@@ -60,16 +60,22 @@ export const removeItem = async (req, res) => {
   await cart.save();
   res.json(cart.items);
 };
-export const getCart = async () => {
-  const res = await fetch(`${BASE_URL}/cart`, {
-    credentials: "include",
-  });
+export const getCart = async (req, res) => {
+  try {
+    const userId = req.user.id;
 
-  const data = await res.json();
+    const cart = await Cart.findOne({ userId });
 
-  if (!res.ok) {
-    throw new Error(data.message || "Failed to load cart");
+    if (!cart) {
+      return res.json([]);
+    }
+
+    res.json(cart.items);
+  } catch (error) {
+    console.error("Get Cart Error:", error);
+
+    res.status(500).json({
+      message: "Failed to load cart",
+    });
   }
-
-  return data;
 };
