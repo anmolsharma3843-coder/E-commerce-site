@@ -82,16 +82,10 @@ const ManageProducts = () => {
     );
   }, [products]);
 
-  const inStockProducts = products.filter(
-    (product) =>
-      product.stock > 0 ||
-      product.quantity > 0
-  ).length;
-
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-4 md:p-6">
       {/* Header */}
-      <div className="bg-gradient-to-r from-purple-600 to-indigo-600 rounded-3xl p-6 text-white shadow-lg mb-6">
+      <div className="bg-linear-to-r from-purple-600 to-indigo-600 rounded-3xl p-6 text-white shadow-lg mb-6">
         <h1 className="text-3xl font-bold">
           Product Management
         </h1>
@@ -119,16 +113,6 @@ const ManageProducts = () => {
 
         <div className="bg-white dark:bg-gray-800 rounded-2xl p-5 shadow">
           <p className="text-sm text-gray-500">
-            In Stock
-          </p>
-
-          <h2 className="text-3xl font-bold text-green-600 mt-2">
-            {inStockProducts}
-          </h2>
-        </div>
-
-        <div className="bg-white dark:bg-gray-800 rounded-2xl p-5 shadow">
-          <p className="text-sm text-gray-500">
             Average Price
           </p>
 
@@ -147,25 +131,7 @@ const ManageProducts = () => {
           onChange={(e) =>
             setSearch(e.target.value)
           }
-          className="
-            w-full
-            pl-4
-            pr-10
-            py-3
-            rounded-xl
-            border
-            border-gray-300
-            dark:border-gray-700
-            bg-white
-            dark:bg-gray-800
-            text-gray-800
-            dark:text-white
-            outline-none
-            focus:ring-2
-            focus:ring-purple-500
-          "
-        />
-
+          className=" w-full pl-4 pr-10 py-3 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-800 dark:text-white outline-none focus:ring-2 focus:ring-purple-500 " />
         <FaSearch className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400" />
       </div>
 
@@ -185,31 +151,11 @@ const ManageProducts = () => {
         </div>
       ) : (
         <div
-          className="
-            grid
-            grid-cols-1
-            sm:grid-cols-2
-            lg:grid-cols-3
-            xl:grid-cols-4
-            gap-6
-          "
-        >
+          className=" grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 " >
           {filteredProducts.map((product) => (
             <div
               key={product._id}
-              className="
-                bg-white
-                dark:bg-gray-800
-                rounded-2xl
-                shadow-md
-                overflow-hidden
-                border
-                border-gray-200
-                dark:border-gray-700
-                hover:shadow-xl
-                transition
-              "
-            >
+              className=" bg-white dark:bg-gray-800 rounded-2xl shadow-md overflow-hidden border border-gray-200 dark:border-gray-700 hover:shadow-xl transition " >
               {/* Image */}
               <div className="h-52 bg-gray-100 dark:bg-gray-900 flex items-center justify-center p-4">
                 <img
@@ -235,23 +181,8 @@ const ManageProducts = () => {
                   </span>
 
                   <span
-                    className={`
-                      text-xs
-                      px-2
-                      py-1
-                      rounded-full
-                      ${
-                        product.stock > 0 ||
-                        product.quantity > 0
-                          ? "bg-green-100 text-green-600"
-                          : "bg-red-100 text-red-600"
-                      }
-                    `}
-                  >
-                    {product.stock > 0 ||
-                    product.quantity > 0
-                      ? "In Stock"
-                      : "Out of Stock"}
+                    className=" text-xs px-2 py-1 rounded-full bg-green-100 text-green-600"
+                  > In Stock
                   </span>
                 </div>
 
@@ -288,19 +219,7 @@ const ManageProducts = () => {
                     onClick={() =>
                       editProduct(product._id)
                     }
-                    className="
-                      flex-1
-                      flex
-                      items-center
-                      justify-center
-                      gap-2
-                      bg-yellow-400
-                      hover:bg-yellow-500
-                      py-2
-                      rounded-lg
-                      font-medium
-                    "
-                  >
+                    className=" flex-1 flex items-center justify-center gap-2 bg-yellow-400 hover:bg-yellow-500 py-2 rounded-lg font-medium " >
                     <FaEdit />
                     Edit
                   </button>
@@ -309,20 +228,7 @@ const ManageProducts = () => {
                     onClick={() =>
                       deleteProduct(product._id)
                     }
-                    className="
-                      flex-1
-                      flex
-                      items-center
-                      justify-center
-                      gap-2
-                      bg-red-500
-                      hover:bg-red-600
-                      text-white
-                      py-2
-                      rounded-lg
-                      font-medium
-                    "
-                  >
+                    className=" flex-1 flex items-center justify-center gap-2 bg-red-500 hover:bg-red-600 text-white py-2 rounded-lg font-medium " >
                     <FaTrash />
                     Delete
                   </button>

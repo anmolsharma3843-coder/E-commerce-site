@@ -59,14 +59,11 @@ const Users = () => {
   const totalAdmins = users.filter(
     (user) => user.isAdmin
   ).length;
-  const activeUsers = users.filter(
-    (user) => user.active
-  ).length;
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-950 p-4 sm:p-6">
       {/* Header */}
-      <div className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-3xl p-6 text-white shadow-lg mb-6">
+      <div className="bg-linear-to-r from-indigo-600 to-purple-600 rounded-3xl p-6 text-white shadow-lg mb-6">
         <h1 className="text-3xl font-bold">
           User Management
         </h1>
@@ -94,21 +91,6 @@ const Users = () => {
           </div>
         </div>
 
-        <div className="bg-white dark:bg-gray-900 p-5 rounded-2xl shadow border border-gray-200 dark:border-gray-800">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-gray-500 text-sm">
-                Active Users
-              </p>
-
-              <h2 className="text-3xl font-bold text-green-600">
-                {activeUsers}
-              </h2>
-            </div>
-
-            <span className="text-3xl">🟢</span>
-          </div>
-        </div>
 
         <div className="bg-white dark:bg-gray-900 p-5 rounded-2xl shadow border border-gray-200 dark:border-gray-800">
           <div className="flex items-center justify-between">
@@ -136,24 +118,7 @@ const Users = () => {
           onChange={(e) =>
             setSearch(e.target.value)
           }
-          className="
-            w-full
-            pl-4
-            pr-11
-            py-3
-            rounded-xl
-            border
-            border-gray-300
-            dark:border-gray-700
-            bg-white
-            dark:bg-gray-900
-            text-gray-800
-            dark:text-white
-            focus:ring-2
-            focus:ring-indigo-500
-            outline-none
-          "
-        />
+          className=" w-full pl-4 pr-11 py-3 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-800 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none " />
 
         <FaSearch className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400" />
       </div>
@@ -239,15 +204,9 @@ const Users = () => {
 
                     <td>
                       <span
-                        className={`px-3 py-1 rounded-full text-xs ${
-                          user.active
-                            ? "bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300"
-                            : "bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-300"
-                        }`}
+                        className="px-3 py-1 rounded-full text-xs bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300"
                       >
-                        {user.active
-                          ? "Active"
-                          : "Inactive"}
+                      Active
                       </span>
                     </td>
 

@@ -150,7 +150,7 @@ const SignIn = () => {
 
             {/* Login Button */}
             <button type="submit" className=" w-full py-3 rounded-xl font-semibold text-white bg-linear-to-r from-purple-600 to-indigo-600 hover:scale-[1.02] transition-all duration-300 " >
-              Log In
+              Log in
             </button>
           </form>
 

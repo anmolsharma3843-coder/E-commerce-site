@@ -26,7 +26,7 @@ const Adminpanel = () => {
       try {
         setLoading(true);
 
-        const [TotalData,productsData, usersData, ordersData] =
+        const [TotalData, productsData, usersData, ordersData] =
           await Promise.all([
             getTotalRevenue(),
             fetchAllproduct(),
@@ -84,36 +84,36 @@ const Adminpanel = () => {
     );
   });
 
- const stats = [
-  {
-    title: "Revenue",
-    value: `₹${Total?.totalSales?.toLocaleString() || 0}`,
-    icon: "💰",
-    color: "from-green-500 to-emerald-600",
-    link: "/admin",
-  },
-  {
-    title: "Orders",
-    value: orders.length,
-    icon: "🧾",
-    color: "from-blue-500 to-cyan-600",
-    link: "/admin/orders",
-  },
-  {
-    title: "Users",
-    value: users.length,
-    icon: "👥",
-    color: "from-purple-500 to-indigo-600",
-    link: "/admin/users",
-  },
-  {
-    title: "Products",
-    value: Products.length,
-    icon: "📦",
-    color: "from-orange-500 to-red-500",
-    link: "/admin/products",
-  },
-];
+  const stats = [
+    {
+      title: "Revenue",
+      value: `₹${Total?.totalSales?.toLocaleString() || 0}`,
+      icon: "💰",
+      color: "from-green-500 to-emerald-600",
+      link: "/admin",
+    },
+    {
+      title: "Orders",
+      value: orders.length,
+      icon: "🧾",
+      color: "from-blue-500 to-cyan-600",
+      link: "/admin/orders",
+    },
+    {
+      title: "Users",
+      value: users.length,
+      icon: "👥",
+      color: "from-purple-500 to-indigo-600",
+      link: "/admin/users",
+    },
+    {
+      title: "Products",
+      value: Products.length,
+      icon: "📦",
+      color: "from-orange-500 to-red-500",
+      link: "/admin/products",
+    },
+  ];
 
   const actions = [
     {
@@ -132,7 +132,25 @@ const Adminpanel = () => {
       icon: "🧾",
     },
   ];
+  const getStatusStyle = (status) => {
+    switch (status) {
+      case "Delivered":
+        return "bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300";
 
+      case "Cancelled":
+        return "bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-300";
+
+      case "Shipped":
+      case "Out for Delivery":
+        return "bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300";
+
+      case "Confirmed":
+        return "bg-purple-100 text-purple-700 dark:bg-purple-900 dark:text-purple-300";
+
+      default:
+        return "bg-yellow-100 text-yellow-700 dark:bg-yellow-900 dark:text-yellow-300";
+    }
+  };
   return (
     <div className="flex-1 flex flex-col min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* 🔝 Topbar */}
@@ -177,12 +195,12 @@ const Adminpanel = () => {
 
             <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full overflow-hidden border-2 border-indigo-500">
               {user?.profileImage ? (<img
-                src={user.profileImage }
+                src={user.profileImage}
                 alt="Admin"
                 className="w-full h-full object-cover"
-              />):
-              user.username?.charAt(0).toUpperCase()
-}
+              />) :
+                user.username?.charAt(0).toUpperCase()
+              }
             </div>
           </label>
         </div>
@@ -197,73 +215,73 @@ const Adminpanel = () => {
         ) : (
           <>
             {/* 📊 Stats */}
-           <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
-  {stats.map((stat, i) => (
-    <Link key={i} to={stat.link}>
-      <div
-        className={`bg-gradient-to-r ${stat.color}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
+              {stats.map((stat, i) => (
+                <Link key={i} to={stat.link}>
+                  <div
+                    className={`bg-linear-to-r ${stat.color}
         p-5 rounded-2xl text-white shadow-lg
         hover:scale-105 transition-all duration-300`}
-      >
-        <div className="flex justify-between items-center">
-          <span className="text-3xl">{stat.icon}</span>
+                  >
+                    <div className="flex justify-between items-center">
+                      <span className="text-3xl">{stat.icon}</span>
 
-          <div className="text-right">
-            <p className="text-sm opacity-90">
-              {stat.title}
-            </p>
+                      <div className="text-right">
+                        <p className="text-sm opacity-90">
+                          {stat.title}
+                        </p>
 
-            <h2 className="text-2xl font-bold">
-              {stat.title === "Revenue"
-  ? stat.value
-  : stat.value.toLocaleString()}
-            </h2>
-          </div>
-        </div>
-      </div>
-    </Link>
-  ))}
-</div>
+                        <h2 className="text-2xl font-bold">
+                          {stat.title === "Revenue"
+                            ? stat.value
+                            : stat.value.toLocaleString()}
+                        </h2>
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
 
-<div className="grid md:grid-cols-3 gap-5">
-  <div className="bg-white dark:bg-gray-800 rounded-2xl p-5 shadow">
-    <h3 className="font-semibold mb-2">
-      Pending Orders
-    </h3>
+            <div className="grid md:grid-cols-3 gap-5 dark:text-gray-100">
+              <div className="bg-white dark:bg-gray-800 rounded-2xl p-5 shadow">
+                <h3 className="font-semibold mb-2">
+                  Pending Orders
+                </h3>
 
-    <p className="text-3xl font-bold text-yellow-500">
-      {
-        orders.filter(
-          (o) => o.status === "Pending"
-        ).length
-      }
-    </p>
-  </div>
+                <p className="text-3xl font-bold text-yellow-500">
+                  {
+                    orders.filter(
+                      (o) => o.status === "Pending"
+                    ).length
+                  }
+                </p>
+              </div>
 
-  <div className="bg-white dark:bg-gray-800 rounded-2xl p-5 shadow">
-    <h3 className="font-semibold mb-2">
-      Delivered Orders
-    </h3>
+              <div className="bg-white dark:bg-gray-800 rounded-2xl p-5 shadow">
+                <h3 className="font-semibold mb-2">
+                  Delivered Orders
+                </h3>
 
-    <p className="text-3xl font-bold text-green-500">
-      {
-        orders.filter(
-          (o) => o.status === "Delivered"
-        ).length
-      }
-    </p>
-  </div>
+                <p className="text-3xl font-bold text-green-500">
+                  {
+                    orders.filter(
+                      (o) => o.status === "Delivered"
+                    ).length
+                  }
+                </p>
+              </div>
 
-  <div className="bg-white dark:bg-gray-800 rounded-2xl p-5 shadow">
-    <h3 className="font-semibold mb-2">
-      Total Customers
-    </h3>
+              <div className="bg-white dark:bg-gray-800 rounded-2xl p-5 shadow">
+                <h3 className="font-semibold mb-2">
+                  Total Customers
+                </h3>
 
-    <p className="text-3xl font-bold text-indigo-500">
-      {users.length}
-    </p>
-  </div>
-</div>
+                <p className="text-3xl font-bold text-indigo-500">
+                  {users.length}
+                </p>
+              </div>
+            </div>
 
             {/* ⚡ Actions */}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
@@ -291,41 +309,37 @@ const Adminpanel = () => {
                 </Link>
               ))}
             </div>
- 
- <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow">
-  <h2 className="font-semibold mb-4">
-    Recent Users
-  </h2>
 
-  <div className="space-y-3">
-    {users.slice(0, 5).map((user) => (
-      <div
-        key={user._id}
-        className="flex justify-between items-center border-b pb-2"
-      >
-        <div>
-          <p className="font-medium">
-            {user.username}
-          </p>
+            <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow dark:text-gray-200">
+              <h2 className="font-semibold mb-4">
+                Recent Users
+              </h2>
 
-          <p className="text-xs text-gray-500">
-            {user.email}
-          </p>
-        </div>
+              <div className="space-y-3">
+                {users.slice(0, 5).map((user) => (
+                  <div
+                    key={user._id}
+                    className="flex justify-between items-center border-b pb-2"
+                  >
+                    <div>
+                      <p className="font-medium">
+                        {user.username}
+                      </p>
 
-        <span
-          className={`text-xs px-2 py-1 rounded-full ${
-            user.active
-              ? "bg-green-100 text-green-600"
-              : "bg-red-100 text-red-600"
-          }`}
-        >
-          {user.active ? "Active" : "Inactive"}
-        </span>
-      </div>
-    ))}
-  </div>
-</div>
+                      <p className="text-xs text-gray-500">
+                        {user.email}
+                      </p>
+                    </div>
+
+                    <span
+                      className="text-xs px-2 py-1 rounded-full bg-green-100 text-green-600"
+                    >
+                      Active
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
             {/* 📦 Orders */}
             <div
               className="bg-white dark:bg-gray-800 rounded-2xl border 
@@ -350,10 +364,10 @@ const Adminpanel = () => {
 
                   <tbody>
                     {filteredOrders.length === 0 && (
-  <div className="text-center py-10 text-gray-500">
-    No orders found
-  </div>
-)}
+                      <div className="text-center py-10 text-gray-500 dark:text-gray-200">
+                        No orders found
+                      </div>
+                    )}
                     {filteredOrders
                       .slice(0, 5)
                       .map((order) => {
@@ -369,7 +383,7 @@ const Adminpanel = () => {
                             onClick={() =>
                               setSelectedOrder(order)
                             }
-                            className="cursor-pointer border-b md:hover:bg-gray-50 dark:md:hover:bg-gray-700 dark:text-gray-300"
+                            className="cursor-pointer border-b md:hover:bg-gray-50 dark:md:hover:bg-gray-700 dark:text-gray-200"
                           >
                             <td className="py-3 font-medium">
                               #{order._id.slice(-5)}
@@ -384,9 +398,14 @@ const Adminpanel = () => {
                             </td>
 
                             <td>
-                              <span className="px-3 py-1 rounded-full text-xs bg-gray-200 dark:bg-gray-700">
+                              <span
+                                className={`px-3 py-1 rounded-full text-xs ${getStatusStyle(
+                                  order.status
+                                )}`}
+                              >
                                 {order.status}
                               </span>
+
                             </td>
                           </tr>
                         );

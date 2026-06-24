@@ -104,7 +104,7 @@ const CategoryStrip = () => {
   );
 
   return (
-    <section className="bg-white dark:bg-gray-900 py-5 px-4 shadow-sm">
+    <section className="bg-white dark:bg-gray-900 py-5 px-2 md:px-4 shadow-sm">
       <div className="flex gap-2 md:gap-6 overflow-x-auto scrollbar-hide">
         {categories.map((cat) => (
           <button

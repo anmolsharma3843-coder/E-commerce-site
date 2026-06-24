@@ -42,7 +42,7 @@ const Wishlist = () => {
   // ✅ Loading State
   if (loading) {
     return (
-      <div className="text-center mt-20 text-gray-500 text-xl">
+      <div className="text-center  text-gray-500 text-xl">
         Loading wishlist...
       </div>
     );

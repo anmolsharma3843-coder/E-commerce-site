@@ -31,7 +31,7 @@ const MyOrders = () => {
 
   if (loading)
     return (
-      <div className="text-center mt-10 animate-pulse">
+      <div className="text-center  animate-pulse">
         Loading your orders...
       </div>
     );

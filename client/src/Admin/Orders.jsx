@@ -211,9 +211,9 @@ const Orders = () => {
                         value={order.status}
                         disabled={
                           order.status ===
-                            "Delivered" ||
+                          "Delivered" ||
                           order.status ===
-                            "Cancelled"
+                          "Cancelled"
                         }
                         onChange={(e) =>
                           updateStatus(
